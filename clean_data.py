@@ -32,6 +32,18 @@ for filename in glob.glob(path):
 			corpus_word += line.split(' ')
 
 #print corpus_word # this is a list of words
+#print corpus_sentence # this is a list of sentences
+
+# create a corpus_sentence with <s> and </s>
+for sentence in corpus_sentence:
+	sentence = '<s> ' + sentence.encode('utf-8') + ' </s>'
+	corpus_sentence_boundary.append(sentence)
+
+#print corpus_sentence_boundary # this is a list of sentences with <s> and </s>
+
+##############################################################
+
+### UNIGRAM RANDOM SENTENCE GENERATION ###
 
 unigram_counter = collections.Counter(corpus_word)
 unigram_counter_sum = sum(unigram_counter.values())
@@ -62,12 +74,7 @@ print unigram_sentence_generator()
 #for key in counter:
 #	counter[key] /= float(counter_sum)
 
-#print corpus_sentence # this is a list of sentences
-
-# create a corpus_sentence with <s> and </s>
-for sentence in corpus_sentence:
-	sentence = '<s> ' + sentence.encode('utf-8') + ' </s>'
-	corpus_sentence_boundary.append(sentence)
+### BIGRAM RANDOM SENTENCE GENERATION ###
 
 bigram_list = []
 
@@ -106,4 +113,3 @@ def bigram_sentence_generator ():
 print '---------------------BIGRAM----------------------'
 print bigram_sentence_generator()
 
-#print corpus_sentence_boundary # this is a list of sentences with <s> and </s>
