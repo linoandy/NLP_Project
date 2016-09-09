@@ -1,6 +1,9 @@
 import re
 import glob
+import collections
+import random
 from nltk import tokenize
+import nltk
 
 corpus_word = []
 corpus_sentence = []
@@ -28,15 +31,79 @@ for filename in glob.glob(path):
 			# build corpus of words
 			corpus_word += line.split(' ')
 
-print corpus_word # this is a list of words
-print corpus_sentence # this is a list of sentences
+#print corpus_word # this is a list of words
+
+unigram_counter = collections.Counter(corpus_word)
+unigram_counter_sum = sum(unigram_counter.values())
+
+# randomly select a unigram from corpus
+def rand_select_unigram ():
+	# random integer [0..(counter_sum - 1)]
+	rand_int = random.randrange(0, unigram_counter_sum)
+	temp = 0
+	for key in unigram_counter:
+		temp += unigram_counter[key]
+		if rand_int < temp:
+			return key
+
+# generate one sentence from unigrams
+def unigram_sentence_generator ():
+	sentence = ''
+	while True:
+		rand_word = rand_select_unigram ()
+		sentence += rand_word + " "
+		if rand_word == "." or rand_word == "!" or rand_word == "?":
+			return sentence
+
+print '---------------------UNIGRAM---------------------'
+print unigram_sentence_generator()
+
+# if probabilities are needed:
+#for key in counter:
+#	counter[key] /= float(counter_sum)
+
+#print corpus_sentence # this is a list of sentences
 
 # create a corpus_sentence with <s> and </s>
 for sentence in corpus_sentence:
 	sentence = '<s> ' + sentence.encode('utf-8') + ' </s>'
 	corpus_sentence_boundary.append(sentence)
 
-print corpus_sentence_boundary # this is a list of sentences with <s> and </s>
+bigram_list = []
 
+# build bigram list from boundary-applied sentences
+for sentence in corpus_sentence_boundary:
+	word_list = sentence.split(' ')
+	bigram = list(nltk.bigrams(word_list))
+	bigram_list += bigram
 
+# randomly select a bigram, given the previous word
+def rand_select_bigram (given_word):
+	# selecting only the bigrams that start with the given word
+	selected_bigram_list = [x for x in bigram_list if x[0] == given_word]
+	counter = collections.Counter(selected_bigram_list)
+	counter_sum = sum(counter.values())
+	# random integer [0..(counter_sum - 1)]
+	rand_int = random.randrange(0, counter_sum)
+	temp = 0
+	for key in counter:
+		temp += counter[key]
+		if rand_int < temp:
+			# return only the newly selected word of the tuple
+			return key[1]
 
+# generates one random bigram sentence
+def bigram_sentence_generator ():
+	sentence = '<s> '
+	given_word = '<s>'
+	while True:
+		rand_word = rand_select_bigram(given_word)
+		sentence += rand_word + ' '
+		if(rand_word == '</s>'):
+			return sentence
+		given_word = rand_word
+
+print '---------------------BIGRAM----------------------'
+print bigram_sentence_generator()
+
+#print corpus_sentence_boundary # this is a list of sentences with <s> and </s>
