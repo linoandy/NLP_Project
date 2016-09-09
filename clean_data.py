@@ -81,8 +81,12 @@ bigram_list = []
 # build bigram list from boundary-applied sentences
 for sentence in corpus_sentence_boundary:
 	word_list = sentence.split(' ')
-	bigram = list(nltk.bigrams(word_list))
-	bigram_list += bigram
+	bigram_in_sentence = []
+	for i in range(1, len(word_list)):
+		# append tuple (prev, next)
+		bigram_in_sentence.append((word_list[i-1], word_list[i]))
+	# add bigrams from each sentence to the bigram list
+	bigram_list += bigram_in_sentence
 
 # randomly select a bigram, given the previous word
 def rand_select_bigram (given_word):
