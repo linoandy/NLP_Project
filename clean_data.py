@@ -4,10 +4,17 @@ import collections
 import random
 from nltk import tokenize
 import nltk
+import csv
 
 corpus_word = []
 corpus_sentence = []
 corpus_sentence_boundary = []
+
+def writetoCSV(newrow, filename):
+	filename = filename + ".csv"
+	c = csv.writer(open(filename, "a"))
+	c.writerow(newrow)
+	# c.close()
 
 corpusName = raw_input('Please enter the type of corpus: ')
 path = "./data_corrected/classification_task/%s/train_docs/*.txt" % (corpusName)
@@ -68,7 +75,9 @@ def unigram_sentence_generator ():
 			return sentence
 
 print '---------------------UNIGRAM---------------------'
-print unigram_sentence_generator()
+writetoCSV(['---------------------UNIGRAM---------------------'], corpusName)
+for i in range(5):
+	writetoCSV([unigram_sentence_generator()], corpusName)
 
 # if probabilities are needed:
 #for key in counter:
@@ -115,5 +124,7 @@ def bigram_sentence_generator ():
 		given_word = rand_word
 
 print '---------------------BIGRAM----------------------'
-print bigram_sentence_generator()
+writetoCSV(['---------------------BIGRAM----------------------'], corpusName)
+for i in range(5):
+	writetoCSV([bigram_sentence_generator()], corpusName)
 
