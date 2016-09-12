@@ -54,18 +54,25 @@ for sentence in corpus_sentence:
 
 unigram_counter = collections.Counter(corpus_word)
 unigram_counter_sum = sum(unigram_counter.values())
+unigram_probabilities = dict()
 
-# for each unigram, compute the probability of each
+# for each unigram, compute the probability of each and store in dictionary
 for key in unigram_counter:
-	unigram_counter[key] /= float(unigram_counter_sum)
+	unigram_probabilities[key] = unigram_counter[key] / float(unigram_counter_sum)
+
+sum_unigram = 0
+for key in unigram_probabilities:
+	sum_unigram += unigram_probabilities[key]
+
+print sum_unigram
 
 # randomly select a unigram from corpus
-def rand_select_unigram ():
+def rand_select_unigram():
 	# [0..1)
 	rand_float = random.random()
 	temp = 0
-	for key in unigram_counter:
-		temp += unigram_counter[key]
+	for key in unigram_probabilities:
+		temp += unigram_probabilities[key]
 		if rand_float < temp:
 			return key
 
