@@ -16,8 +16,12 @@ def writetoCSV(newrow, filename):
 	c.writerow(newrow)
 	# c.close()
 
+# read in all the txt file from a specific training data folder, given user's input
+# please extract the data.zip 
+# and put the extracted data folder in the same folder as this script 
+# and then run the code
 corpusName = raw_input('Please enter the training data folder name of corpus, for example, autos: ')
-path = "./data_corrected/classification_task/%s/train_docs/*.txt" % (corpusName)
+path = "./data_corrected/classification task/%s/train_docs/*.txt" % (corpusName)
 for filename in glob.glob(path):
 	with open(filename, 'r') as f:
 		for line in f:
