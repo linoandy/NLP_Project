@@ -16,7 +16,7 @@ def writetoCSV(newrow, filename):
 	c.writerow(newrow)
 	# c.close()
 
-corpusName = raw_input('Please enter the type of corpus: ')
+corpusName = raw_input('Please enter the training data folder name of corpus, for example, autos: ')
 path = "./data_corrected/classification_task/%s/train_docs/*.txt" % (corpusName)
 for filename in glob.glob(path):
 	with open(filename, 'r') as f:
