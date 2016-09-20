@@ -5,6 +5,7 @@ import random
 from nltk import tokenize
 import nltk
 import csv
+from operator import itemgetter
 
 corpus_word = []
 corpus_sentence = []
@@ -68,7 +69,7 @@ sum_unigram = 0
 for key in unigram_probabilities:
 	sum_unigram += unigram_probabilities[key]
 
-print sum_unigram
+# print sum_unigram
 
 # randomly select a unigram from corpus
 def rand_select_unigram():
@@ -90,9 +91,9 @@ def unigram_sentence_generator ():
 			return sentence
 
 print '---------------------UNIGRAM---------------------'
-writetoCSV(['---------------------UNIGRAM---------------------'], corpusName)
-for i in range(5):
-	writetoCSV([unigram_sentence_generator()], corpusName)
+# writetoCSV(['---------------------UNIGRAM---------------------'], corpusName)
+# for i in range(5):
+# 	writetoCSV([unigram_sentence_generator()], corpusName)
 
 #for i in range(10):
 #	print unigram_sentence_generator()
@@ -151,8 +152,57 @@ def bigram_sentence_generator ():
 		given_word = rand_word
 
 print '---------------------BIGRAM----------------------'
-writetoCSV(['---------------------BIGRAM----------------------'], corpusName)
-for i in range(5):
-	writetoCSV([bigram_sentence_generator()], corpusName)
+# writetoCSV(['---------------------BIGRAM----------------------'], corpusName)
+# for i in range(5):
+# 	writetoCSV([bigram_sentence_generator()], corpusName)
 #for i in range(10):
 #	print bigram_sentence_generator()
+
+
+
+print 'number of token: ', len(corpus_word)
+print 'number of word type: ', len(unigram_counter)
+
+# Unknown words: replacing all words that occur only once with "<UNK>"
+def unknown_word_processor (words_counter):
+	unknown_word_counter = {}
+	for key, value in words_counter.iteritems():
+		unknown_word_counter.setdefault('<UNK>', 0)
+		if value == 1:
+			unknown_word_counter['<UNK>'] += 1
+		else:
+			unknown_word_counter[key] = value
+	return unknown_word_counter
+
+# print unknown_word_processor(bigram_counter)
+
+def count_of_counts (words_counter):
+	counts_counter_temp = {}
+	for key, value in words_counter.iteritems():
+		counts_counter_temp.setdefault(str(value), 0)
+		counts_counter_temp[str(value)] += 1
+
+	counts_counter = []
+	for key, value in counts_counter_temp.iteritems():
+		counts_counter.append((int(key), value))
+
+	counts_counter = sorted(counts_counter, key=itemgetter(0))
+	return counts_counter
+
+
+print count_of_counts(unknown_word_processor(bigram_counter))
+
+# Good-Turing
+# def good_turing (counter_of_counts, original_word_counter):
+# 	new_counter_of_counts = []
+# 	for i in range(len(count_of_counts)):
+# 		new_count = i[0]
+# 	good_turing_counter = {}
+# 	for 
+
+
+
+
+
+
+
