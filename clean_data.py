@@ -188,14 +188,10 @@ def unknown_word_processor (words_counter):
 # print unknown_word_processor(bigram_counter)
 
 def count_of_counts (original_word_counter):
-	words_counter = unknown_word_processor(original_word_counter)
 	counts_counter_temp = {}
-	for key, value in words_counter.iteritems():
+	for key, value in original_word_counter.iteritems():
 		counts_counter_temp.setdefault(str(value), 0)
 		counts_counter_temp[str(value)] += 1
-
-	counts_counter_temp['0'] = len(original_word_counter) * len(original_word_counter) - len(original_word_counter)
-	counts_counter_temp['1'] = (counts_counter_temp['0'] + counts_counter_temp['2']) / 2
 
 	counts_counter = []
 	for key, value in counts_counter_temp.iteritems():
@@ -229,9 +225,8 @@ def good_turing (counter_of_counts, original_word_counter):
 
 # print good_turing(count_of_counts(unknown_word_processor(bigram_counter)), unknown_word_processor(bigram_counter))
 
-for key, value in good_turing(count_of_counts(bigram_counter), unknown_word_processor(bigram_counter)).iteritems():
-	if value > 15 and type(value) == float:
-		print key, value
+for key, value in good_turing(count_of_counts(bigram_counter), bigram_counter).iteritems():
+	print key, value
 
 
 
