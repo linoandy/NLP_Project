@@ -158,10 +158,21 @@ print '---------------------BIGRAM----------------------'
 #for i in range(10):
 #	print bigram_sentence_generator()
 
+###############################################################################
 
 
-print 'number of token: ', len(corpus_word)
-print 'number of word type: ', len(unigram_counter)
+
+
+
+
+
+###############################################################################
+
+print 'unigram - number of token: ', len(corpus_word)
+print 'unigram - number of word type: ', len(unigram_counter)
+
+print 'bigram - number of token: ', len(bigram_list)
+print 'bigram - number of word type: ', len(bigram_counter)
 
 # Unknown words: replacing all words that occur only once with "<UNK>"
 def unknown_word_processor (words_counter):
@@ -176,11 +187,15 @@ def unknown_word_processor (words_counter):
 
 # print unknown_word_processor(bigram_counter)
 
-def count_of_counts (words_counter):
+def count_of_counts (original_word_counter):
+	words_counter = unknown_word_processor(original_word_counter)
 	counts_counter_temp = {}
 	for key, value in words_counter.iteritems():
 		counts_counter_temp.setdefault(str(value), 0)
 		counts_counter_temp[str(value)] += 1
+
+	counts_counter_temp['0'] = len(original_word_counter) * len(original_word_counter) - len(original_word_counter)
+	counts_counter_temp['1'] = (counts_counter_temp['0'] + counts_counter_temp['2']) / 2
 
 	counts_counter = []
 	for key, value in counts_counter_temp.iteritems():
@@ -190,15 +205,33 @@ def count_of_counts (words_counter):
 	return counts_counter
 
 
-print count_of_counts(unknown_word_processor(bigram_counter))
+# print count_of_counts(unknown_word_processor(bigram_counter))
 
 # Good-Turing
-# def good_turing (counter_of_counts, original_word_counter):
-# 	new_counter_of_counts = []
-# 	for i in range(len(count_of_counts)):
-# 		new_count = i[0]
-# 	good_turing_counter = {}
-# 	for 
+def good_turing (counter_of_counts, original_word_counter):
+	new_counter_of_counts = []
+	for i in range(len(counter_of_counts)):
+		if counter_of_counts[i][0] < 15:
+			new_count = (counter_of_counts[i][0] + 1) * counter_of_counts[i][1] / float(counter_of_counts[i+1][1])
+			new_counter_of_counts.append((new_count, counter_of_counts[i][0], counter_of_counts[i][1]))
+		else:
+			new_count = counter_of_counts[i][0]
+			new_counter_of_counts.append((new_count, counter_of_counts[i][0], counter_of_counts[i][1]))
+	
+	good_turing_counter = {}
+	for new_counter in new_counter_of_counts:
+		for key, value in original_word_counter.iteritems():
+			if int(value) == new_counter[1]:
+				good_turing_counter[key] = new_counter[0]
+
+	# return new_counter_of_counts
+	return good_turing_counter
+
+# print good_turing(count_of_counts(unknown_word_processor(bigram_counter)), unknown_word_processor(bigram_counter))
+
+for key, value in good_turing(count_of_counts(bigram_counter), unknown_word_processor(bigram_counter)).iteritems():
+	if value > 15 and type(value) == float:
+		print key, value
 
 
 
