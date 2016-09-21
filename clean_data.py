@@ -160,8 +160,55 @@ print '---------------------BIGRAM----------------------'
 
 ###############################################################################
 
+corpus_boundary_and_unk = []
+bigram_with_unk = []
+unigram_with_unk = []
+
+# From sentence to list of words
+for sentence in corpus_sentence_boundary:
+	word_list = sentence.split()
+	corpus_boundary_and_unk += word_list
+
+print corpus_boundary_and_unk
+
+print len(unigram_with_boundary_counter)
+# replace instances of occurrence of 1 with <UNK>
+for key, value in unigram_with_boundary_counter.iteritems():
+	#print 'BBB'
+	if(value == 1):
+		#print 'BBB'
+		for i, val in enumerate(corpus_boundary_and_unk):
+			if val == key:
+				corpus_boundary_and_unk[i] = '<UNK>'
+
+for i in range(1, len(corpus_boundary_and_unk)):
+	# temp for alias; name too long
+	temp = corpus_boundary_and_unk
+	if (temp[i] == '</s>'):
+		continue
+	bigram_with_unk.append((temp[i-1], temp[i]))
 
 
+bigram_with_unk_counter = collections.Counter(bigram_with_unk)
+
+
+for word in corpus_boundary_and_unk:
+	unigram_with_unk.append(word)
+
+for word in unigram_with_unk:
+	# if starting with </s>, skip
+	if word == '</s>':
+		continue
+	for word2 in unigram_with_unk:
+		# if ending with <s>, skip
+		if word2 == '<s>':
+			continue
+		if bigram_with_unk_counter.get((word, word2)) == None:
+			bigram_with_unk_counter[(word, word2)] = 0
+
+
+print unigram_with_unk
+print bigram_with_unk_counter
 
 
 
@@ -197,7 +244,10 @@ def count_of_counts (original_word_counter):
 	for key, value in counts_counter_temp.iteritems():
 		counts_counter.append((int(key), value))
 
+
 	counts_counter = sorted(counts_counter, key=itemgetter(0))
+	print counts_counter
+
 	return counts_counter
 
 
@@ -227,6 +277,7 @@ def good_turing (counter_of_counts, original_word_counter):
 
 for key, value in good_turing(count_of_counts(bigram_counter), bigram_counter).iteritems():
 	print key, value
+
 
 
 
