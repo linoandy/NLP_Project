@@ -228,6 +228,42 @@ def good_turing (counter_of_counts, original_word_counter):
 for key, value in good_turing(count_of_counts(bigram_counter), bigram_counter).iteritems():
 	print key, value
 
+# Perplexity
+# process the test data files
+corpus_sentence_test_data = []
+corpus_word_test_data = []
+path_test_data = "./data_corrected/classification task/test_for_classification/*.txt"
+for filename_test_data in glob.glob(path_test_data):
+	with open(filename_test_data, 'r') as g:
+		for line in g:
+			# find "From : email" and replace them with empty string
+			email = re.findall(r"From\s*:\s*[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\s", line)
+			if len(email) > 0:
+				line = line.replace(email[0].encode('utf-8'), '', 1)
+
+			# find first "Subject : " and replace with empty string
+			line = line.replace('Subject : ', '', 1)
+
+			# find ' >' and replace with empty string
+			line = line.replace(' >', '')
+
+			# build corpus of sentences
+			corpus_sentence_test_data += tokenize.sent_tokenize(line)
+
+			# build corpus of words
+			corpus_word_test_data += line.split(' ')
+
+
+# unigram_counter_good_turing = good_turing(count_of_counts(unigram_counter), unigram_counter)
+# unigram_counter_sum_good_turing = sum(unigram_counter_good_turing.values())
+# unigram_probabilities_good_turing = dict()
+
+# # for each unigram, compute the probability of each and store in dictionary
+# for key in unigram_counter:
+# 	unigram_probabilities_good_turing[key] = unigram_counter_good_turing[key] / float(unigram_counter_sum_good_turing)
+
+# unigram_perplexity = 
+
 
 
 
