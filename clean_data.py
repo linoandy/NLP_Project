@@ -6,6 +6,8 @@ from nltk import tokenize
 import nltk
 import csv
 from operator import itemgetter
+from threading import Thread
+import math
 
 corpus_word = []
 corpus_sentence = []
@@ -160,6 +162,84 @@ print '---------------------BIGRAM----------------------'
 
 ###############################################################################
 
+corpus_boundary_and_unk = []
+bigram_with_unk = []
+unigram_with_unk = []
+
+# From sentence to list of words
+for sentence in corpus_sentence_boundary:
+	word_list = sentence.split()
+	corpus_boundary_and_unk += word_list
+
+# print corpus_boundary_and_unk
+
+# print len(unigram_with_boundary_counter)
+print 'replace with <UNK> ...'
+
+# replace instances of occurrence of 1 with <UNK>
+for key, value in unigram_with_boundary_counter.iteritems():
+	#print 'BBB'
+	if value == 1:
+		#print 'BBB'
+		for i, val in enumerate(corpus_boundary_and_unk):
+			if val == key:
+				corpus_boundary_and_unk[i] = '<UNK>'
+
+print 'generate bigram with <UNK> ...'
+for i in range(1, len(corpus_boundary_and_unk)):
+	# temp for alias; name too long
+	temp = corpus_boundary_and_unk
+	if (temp[i] == '</s>'):
+		continue
+	bigram_with_unk.append((temp[i-1], temp[i]))
+
+# print bigram_with_unk
+
+bigram_with_unk_counter = collections.Counter(bigram_with_unk)
+# add in the counts fo unseen bigram
+# bigram_with_unk_counter['Unseen_Bigram_Never_Exist'] = len(bigram_with_unk) * len(bigram_with_unk) - len(bigram_with_unk)
+
+
+for word in corpus_boundary_and_unk:
+	unigram_with_unk.append(word)
+
+# def generate_unexisted_bigram (word1, unigram_list):
+# 	for word2 in unigram_list:
+# 		# if ending with <s>, skip
+# 		if word2 == '<s>':
+# 			continue
+# 		if bigram_with_unk_counter.get((word1, word2)) == None:
+# 			bigram_with_unk_counter[(word1, word2)] = 0
+# 			# print (word1, word2)
+
+
+# list_threads = []
+# for word in unigram_with_unk:
+# 	# if starting with </s>, skip
+# 	if word == '</s>':
+# 		continue
+
+# 	t = Thread(target=generate_unexisted_bigram, args=(word, unigram_with_unk))
+# 	list_threads.append(t)
+# 	t.start()
+# 	if len(list_threads) > 50:
+# 		for j in list_threads:
+# 			j.join()
+# 		list_threads = []
+
+	# for word2 in unigram_with_unk:
+	# 	# if ending with <s>, skip
+	# 	if word2 == '<s>':
+	# 		continue
+	# 	if bigram_with_unk_counter.get((word, word2)) == None:
+	# 		bigram_with_unk_counter[(word, word2)] = 0
+	# 		print (word, word2)
+
+unigram_with_unk_counter = collections.Counter(unigram_with_unk)
+# print unigram_with_unk
+# print bigram_with_unk_counter
+
+
 
 
 
@@ -168,11 +248,11 @@ print '---------------------BIGRAM----------------------'
 
 ###############################################################################
 
-print 'unigram - number of token: ', len(corpus_word)
-print 'unigram - number of word type: ', len(unigram_counter)
+# print 'unigram - number of token: ', len(corpus_word)
+# print 'unigram - number of word type: ', len(unigram_counter)
 
-print 'bigram - number of token: ', len(bigram_list)
-print 'bigram - number of word type: ', len(bigram_counter)
+# print 'bigram - number of token: ', len(bigram_list)
+# print 'bigram - number of word type: ', len(bigram_counter)
 
 # Unknown words: replacing all words that occur only once with "<UNK>"
 def unknown_word_processor (words_counter):
@@ -187,11 +267,16 @@ def unknown_word_processor (words_counter):
 
 # print unknown_word_processor(bigram_counter)
 
-def count_of_counts (original_word_counter):
+# generate a dictionary containing count of word counts, for Good-Turing
+def count_of_counts (original_word_counter, original_n_gram, n_gram_type):
 	counts_counter_temp = {}
 	for key, value in original_word_counter.iteritems():
 		counts_counter_temp.setdefault(str(value), 0)
 		counts_counter_temp[str(value)] += 1
+	
+	# add in the counts fo unseen bigram
+	if n_gram_type == 'bigram':
+		counts_counter_temp['0'] = len(original_n_gram) * len(original_n_gram) - len(original_n_gram)
 
 	counts_counter = []
 	for key, value in counts_counter_temp.iteritems():
@@ -201,21 +286,25 @@ def count_of_counts (original_word_counter):
 	return counts_counter
 
 
-# print count_of_counts(unknown_word_processor(bigram_counter))
+# print count_of_counts(bigram_with_unk_counter, bigram_with_unk, 'bigram')
 
 # Good-Turing
-def good_turing (counter_of_counts, original_word_counter):
+def good_turing (counter_of_counts, original_word_counter, n_gram_type):
 	new_counter_of_counts = []
 	for i in range(len(counter_of_counts)):
-		if counter_of_counts[i][0] < 15:
+		if counter_of_counts[i][0] < 5:
 			new_count = (counter_of_counts[i][0] + 1) * counter_of_counts[i][1] / float(counter_of_counts[i+1][1])
 			new_counter_of_counts.append((new_count, counter_of_counts[i][0], counter_of_counts[i][1]))
 		else:
 			new_count = counter_of_counts[i][0]
 			new_counter_of_counts.append((new_count, counter_of_counts[i][0], counter_of_counts[i][1]))
-	
+
 	good_turing_counter = {}
 	for new_counter in new_counter_of_counts:
+		# add in one key-value pair to stand for adjusted counts of unseen bigram in corpus
+		if new_counter[1] == 0 and n_gram_type == 'bigram':
+			good_turing_counter['Unseen_Bigram_Never_Exist'] = new_counter[0]
+		# adjust counts of existing bigram
 		for key, value in original_word_counter.iteritems():
 			if int(value) == new_counter[1]:
 				good_turing_counter[key] = new_counter[0]
@@ -223,15 +312,16 @@ def good_turing (counter_of_counts, original_word_counter):
 	# return new_counter_of_counts
 	return good_turing_counter
 
-# print good_turing(count_of_counts(unknown_word_processor(bigram_counter)), unknown_word_processor(bigram_counter))
+bigram_counter_good_turing = good_turing(count_of_counts(bigram_with_unk_counter, bigram_with_unk, 'bigram'), bigram_with_unk_counter, 'bigram')
+unigram_counter_good_turing = good_turing(count_of_counts(unigram_with_unk_counter, unigram_with_unk, 'unigram'), unigram_with_unk_counter, 'unigram')
 
-for key, value in good_turing(count_of_counts(bigram_counter), bigram_counter).iteritems():
-	print key, value
+# for key, value in good_turing(count_of_counts(bigram_with_unk_counter, bigram_with_unk, 'bigram'), bigram_with_unk_counter, 'bigram').iteritems():
+# 	print key, value
 
-# Perplexity
+######################### Perplexity ############################
+
 # process the test data files
-corpus_sentence_test_data = []
-corpus_word_test_data = []
+csv_data_dump = [corpusName]
 path_test_data = "./data_corrected/classification task/test_for_classification/*.txt"
 for filename_test_data in glob.glob(path_test_data):
 	with open(filename_test_data, 'r') as g:
@@ -247,22 +337,50 @@ for filename_test_data in glob.glob(path_test_data):
 			# find ' >' and replace with empty string
 			line = line.replace(' >', '')
 
+			# build unigram from test data corpus
+			unigram_test_data = line.split(' ')
+
 			# build corpus of sentences
-			corpus_sentence_test_data += tokenize.sent_tokenize(line)
+			corpus_sentence_test_data = tokenize.sent_tokenize(line)
+			for index, item in enumerate(corpus_sentence_test_data):
+				corpus_sentence_test_data[index] = '<s> ' + item + ' </s>'
 
-			# build corpus of words
-			corpus_word_test_data += line.split(' ')
+			# build bigram from test data corpus
+			corpus_test_data = ''
+			for sentence_test_data in corpus_sentence_test_data:
+				corpus_test_data += (' ' + sentence_test_data)
+			corpus_test_data_word_list = corpus_test_data.split(' ')
 
 
-# unigram_counter_good_turing = good_turing(count_of_counts(unigram_counter), unigram_counter)
-# unigram_counter_sum_good_turing = sum(unigram_counter_good_turing.values())
-# unigram_probabilities_good_turing = dict()
+			bigram_test_data = []
+			for i in range(1, len(corpus_test_data_word_list)):
+				# temp for alias; name too long
+				temp = corpus_test_data_word_list
+				if (temp[i] == '</s>'):
+					continue
+				bigram_test_data.append((temp[i-1], temp[i]))
 
-# # for each unigram, compute the probability of each and store in dictionary
-# for key in unigram_counter:
-# 	unigram_probabilities_good_turing[key] = unigram_counter_good_turing[key] / float(unigram_counter_sum_good_turing)
+			# print unigram_test_data, bigram_test_data
 
-# unigram_perplexity = 
+			sum_negative_log_bigram = 0
+			for bigram in bigram_test_data:
+				if bigram_counter_good_turing.get(bigram) == None:
+					count_bigram_good_turing = float(bigram_counter_good_turing['Unseen_Bigram_Never_Exist'])
+				else:
+					count_bigram_good_turing = float(bigram_counter_good_turing[bigram])
+
+				if unigram_counter_good_turing.get(bigram[0]) == None:
+					count_unigram_good_turing = unigram_counter_good_turing['<UNK>']
+				else:
+					count_unigram_good_turing = unigram_counter_good_turing[bigram[0]]
+				
+				sum_negative_log_bigram += (0.0 - math.log(count_bigram_good_turing / count_unigram_good_turing))
+			print 'sum_negative_log_bigram', sum_negative_log_bigram
+			perplexity_bigram = math.exp(sum_negative_log_bigram/len(bigram_test_data))
+			print 'perplexity_bigram', perplexity_bigram
+			csv_data_dump.append(perplexity_bigram)
+
+writetoCSV(csv_data_dump, 'perplexity')
 
 
 
