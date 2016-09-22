@@ -323,7 +323,9 @@ unigram_counter_good_turing = good_turing(count_of_counts(unigram_with_unk_count
 # process the test data files
 csv_data_dump = [corpusName]
 path_test_data = "./data_corrected/classification task/test_for_classification/*.txt"
-for filename_test_data in glob.glob(path_test_data):
+print "length of", len(glob.glob(path_test_data))
+for k in range(len(glob.glob(path_test_data))):
+	filename_test_data = glob.glob(path_test_data)[k]
 	with open(filename_test_data, 'r') as g:
 		for line in g:
 			# find "From : email" and replace them with empty string
@@ -374,13 +376,14 @@ for filename_test_data in glob.glob(path_test_data):
 				else:
 					count_unigram_good_turing = unigram_counter_good_turing[bigram[0]]
 				
-				sum_negative_log_bigram += (0.0 - math.log(count_bigram_good_turing / count_unigram_good_turing))
-			print 'sum_negative_log_bigram', sum_negative_log_bigram
+				sum_negative_log_bigram += ( - math.log(count_bigram_good_turing / count_unigram_good_turing))
+			# print 'sum_negative_log_bigram', sum_negative_log_bigram
 			perplexity_bigram = math.exp(sum_negative_log_bigram/len(bigram_test_data))
-			print 'perplexity_bigram', perplexity_bigram
+			# print 'perplexity_bigram', perplexity_bigram
 			csv_data_dump.append(perplexity_bigram)
+			print k, filename_test_data
 
-writetoCSV(csv_data_dump, 'perplexity')
+writetoCSV(csv_data_dump, 'perplexity1')
 
 
 
