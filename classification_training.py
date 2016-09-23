@@ -8,6 +8,7 @@ import csv
 from operator import itemgetter
 from threading import Thread
 import math
+import json
 
 corpus_word = []
 corpus_sentence = []
@@ -25,7 +26,17 @@ def writetoCSV(newrow, filename):
 # and then run the code
 corpusName = raw_input('Please enter the training data folder name of corpus, for example, autos: ')
 path = "./data_corrected/classification task/%s/train_docs/*.txt" % (corpusName)
-for filename in glob.glob(path):
+
+# breaking up the data set
+training_set = []
+development_set = []
+for file_name in glob.glob(path):
+	if int(re.findall('[0-9]+', file_name)[0]) < 240:
+		training_set.append(file_name)
+	else:
+		development_set.append(file_name)
+
+for filename in training_set:
 	with open(filename, 'r') as f:
 		for line in f:
 			# find "From : email" and replace them with empty string
@@ -289,10 +300,10 @@ def count_of_counts (original_word_counter, original_n_gram, n_gram_type):
 # print count_of_counts(bigram_with_unk_counter, bigram_with_unk, 'bigram')
 
 # Good-Turing
-def good_turing (counter_of_counts, original_word_counter, n_gram_type):
+def good_turing (counter_of_counts, original_word_counter, n_gram_type, max_count_to_smooth):
 	new_counter_of_counts = []
 	for i in range(len(counter_of_counts)):
-		if counter_of_counts[i][0] < 5:
+		if counter_of_counts[i][0] < max_count_to_smooth:
 			new_count = (counter_of_counts[i][0] + 1) * counter_of_counts[i][1] / float(counter_of_counts[i+1][1])
 			new_counter_of_counts.append((new_count, counter_of_counts[i][0], counter_of_counts[i][1]))
 		else:
@@ -307,106 +318,141 @@ def good_turing (counter_of_counts, original_word_counter, n_gram_type):
 		# adjust counts of existing bigram
 		for key, value in original_word_counter.iteritems():
 			if int(value) == new_counter[1]:
-				good_turing_counter[key] = new_counter[0]
+				good_turing_counter[str(key)] = new_counter[0]
 
 	# return new_counter_of_counts
 	return good_turing_counter
 
-bigram_counter_good_turing = good_turing(count_of_counts(bigram_with_unk_counter, bigram_with_unk, 'bigram'), bigram_with_unk_counter, 'bigram')
-unigram_counter_good_turing = good_turing(count_of_counts(unigram_with_unk_counter, unigram_with_unk, 'unigram'), unigram_with_unk_counter, 'unigram')
-
-sum_unigram_token_good_turing = 0
-for key, value in unigram_counter_good_turing.iteritems():
-	sum_unigram_token_good_turing += value
-
-# for key, value in good_turing(count_of_counts(bigram_with_unk_counter, bigram_with_unk, 'bigram'), bigram_with_unk_counter, 'bigram').iteritems():
-# 	print key, value
-
-######################### Perplexity ############################
-
-# process the test data files
-csv_data_dump_bigram = [corpusName+'_bigram']
-csv_data_dump_unigram = [corpusName+'_unigram']
-csv_data_dump_filename = ['']
-path_test_data = "./data_corrected/classification task/test_for_classification/*.txt"
-print "length of", len(glob.glob(path_test_data))
-for filename_test_data in glob.glob(path_test_data):
-	with open(filename_test_data, 'r') as g:
-		for line in g:
-			# find "From : email" and replace them with empty string
-			email = re.findall(r"From\s*:\s*[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\s", line)
-			if len(email) > 0:
-				line = line.replace(email[0].encode('utf-8'), '', 1)
-
-			# find first "Subject : " and replace with empty string
-			line = line.replace('Subject : ', '', 1)
-
-			# find ' >' and replace with empty string
-			line = line.replace(' >', '')
-
-			# build unigram from test data corpus
-			unigram_test_data = line.split(' ')
-
-			# build corpus of sentences
-			corpus_sentence_test_data = tokenize.sent_tokenize(line)
-			for index, item in enumerate(corpus_sentence_test_data):
-				corpus_sentence_test_data[index] = '<s> ' + item + ' </s>'
-
-			# build bigram from test data corpus
-			corpus_test_data = ''
-			for sentence_test_data in corpus_sentence_test_data:
-				corpus_test_data += (' ' + sentence_test_data)
-			corpus_test_data_word_list = corpus_test_data.split(' ')
+model_selection = {}
+training_result = {}
+max_counts = [5, 10]
+for max_count in max_counts:
+	bigram_counter_good_turing = good_turing(count_of_counts(bigram_with_unk_counter, bigram_with_unk, 'bigram'), bigram_with_unk_counter, 'bigram', max_count)
+	unigram_counter_good_turing = good_turing(count_of_counts(unigram_with_unk_counter, unigram_with_unk, 'unigram'), unigram_with_unk_counter, 'unigram', max_count)
+	training_result['unigram_'+str(max_count)] = unigram_counter_good_turing
+	training_result['bigram_'+str(max_count)] = bigram_counter_good_turing
 
 
-			bigram_test_data = []
-			for i in range(1, len(corpus_test_data_word_list)):
-				# temp for alias; name too long
-				temp = corpus_test_data_word_list
-				if (temp[i] == '</s>'):
-					continue
-				bigram_test_data.append((temp[i-1], temp[i]))
+	sum_unigram_token_good_turing = 0
+	for key, value in unigram_counter_good_turing.iteritems():
+		sum_unigram_token_good_turing += value
 
-			# print unigram_test_data, bigram_test_data
+	# for key, value in good_turing(count_of_counts(bigram_with_unk_counter, bigram_with_unk, 'bigram'), bigram_with_unk_counter, 'bigram').iteritems():
+	# 	print key, value
 
-			sum_negative_log_bigram = 0
-			for bigram in bigram_test_data:
-				if bigram_counter_good_turing.get(bigram) == None:
-					count_bigram_good_turing = float(bigram_counter_good_turing['Unseen_Bigram_Never_Exist'])
-				else:
-					count_bigram_good_turing = float(bigram_counter_good_turing[bigram])
+	######################### Perplexity ############################
 
-				if unigram_counter_good_turing.get(bigram[0]) == None:
-					count_unigram_good_turing = unigram_counter_good_turing['<UNK>']
-				else:
-					count_unigram_good_turing = unigram_counter_good_turing[bigram[0]]
-				
-				sum_negative_log_bigram += ( - math.log(count_bigram_good_turing / count_unigram_good_turing))
-			# print 'sum_negative_log_bigram', sum_negative_log_bigram
-			perplexity_bigram = math.exp(sum_negative_log_bigram / len(bigram_test_data))
-			# print 'perplexity_bigram', perplexity_bigram
-			csv_data_dump_bigram.append(perplexity_bigram)
-			print filename_test_data
+	# process the test data files
+	perplexity_bigram_for_average = []
+	perplexity_unigram_for_average = []
+	csv_data_dump_bigram = [corpusName+'_bigram']
+	csv_data_dump_unigram = [corpusName+'_unigram']
+	csv_data_dump_filename = ['']
+	print development_set, len(development_set)
+	for filename_test_data in development_set:
+		with open(filename_test_data, 'r') as g:
+			for line in g:
+				# find "From : email" and replace them with empty string
+				email = re.findall(r"From\s*:\s*[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\s", line)
+				if len(email) > 0:
+					line = line.replace(email[0].encode('utf-8'), '', 1)
 
-			sum_negative_log_unigram = 0
-			for unigram in unigram_test_data:
-				if unigram_counter_good_turing.get(unigram) == None:
-					count_unigram_good_turing = float(unigram_counter_good_turing['<UNK>'])
-				else:
-					count_unigram_good_turing = float(unigram_counter_good_turing[unigram])
+				# find first "Subject : " and replace with empty string
+				line = line.replace('Subject : ', '', 1)
 
-				sum_negative_log_unigram += ( - math.log(count_unigram_good_turing / sum_unigram_token_good_turing))
+				# find ' >' and replace with empty string
+				line = line.replace(' >', '')
 
-			perplexity_unigram = math.exp(sum_negative_log_unigram / len(unigram_test_data))
-			csv_data_dump_unigram.append(perplexity_unigram)
+				# build unigram from test data corpus
+				unigram_test_data = line.split(' ')
 
-			csv_data_dump_filename.append(re.findall('file_[0-9]+', filename_test_data)[0].encode('utf-8'))
+				# build corpus of sentences
+				corpus_sentence_test_data = tokenize.sent_tokenize(line)
+				for index, item in enumerate(corpus_sentence_test_data):
+					corpus_sentence_test_data[index] = '<s> ' + item + ' </s>'
 
-# transpose and print to csv
-l = [csv_data_dump_filename, csv_data_dump_unigram, csv_data_dump_bigram]
-l = zip(*l)
-for item in l:
-	writetoCSV(item, corpusName)
+				# build bigram from test data corpus
+				corpus_test_data = ''
+				for sentence_test_data in corpus_sentence_test_data:
+					corpus_test_data += (' ' + sentence_test_data)
+				corpus_test_data_word_list = corpus_test_data.split(' ')
+
+
+				bigram_test_data = []
+				for i in range(1, len(corpus_test_data_word_list)):
+					# temp for alias; name too long
+					temp = corpus_test_data_word_list
+					if (temp[i] == '</s>'):
+						continue
+					bigram_test_data.append((temp[i-1], temp[i]))
+
+				# print unigram_test_data, bigram_test_data
+
+				sum_negative_log_bigram = 0
+				for bigram in bigram_test_data:
+					if bigram_counter_good_turing.get(bigram) == None:
+						count_bigram_good_turing = float(bigram_counter_good_turing['Unseen_Bigram_Never_Exist'])
+					else:
+						count_bigram_good_turing = float(bigram_counter_good_turing[bigram])
+
+					if unigram_counter_good_turing.get(bigram[0]) == None:
+						count_unigram_good_turing = unigram_counter_good_turing['<UNK>']
+					else:
+						count_unigram_good_turing = unigram_counter_good_turing[bigram[0]]
+					
+					sum_negative_log_bigram += ( - math.log(count_bigram_good_turing / count_unigram_good_turing))
+				# print 'sum_negative_log_bigram', sum_negative_log_bigram
+				perplexity_bigram = math.exp(sum_negative_log_bigram / len(bigram_test_data))
+				# print 'perplexity_bigram', perplexity_bigram
+				csv_data_dump_bigram.append(perplexity_bigram)
+				perplexity_bigram_for_average.append(perplexity_bigram)
+				print filename_test_data
+
+				sum_negative_log_unigram = 0
+				for unigram in unigram_test_data:
+					if unigram_counter_good_turing.get(unigram) == None:
+						count_unigram_good_turing = float(unigram_counter_good_turing['<UNK>'])
+					else:
+						count_unigram_good_turing = float(unigram_counter_good_turing[unigram])
+
+					sum_negative_log_unigram += ( - math.log(count_unigram_good_turing / sum_unigram_token_good_turing))
+
+				perplexity_unigram = math.exp(sum_negative_log_unigram / len(unigram_test_data))
+				csv_data_dump_unigram.append(perplexity_unigram)
+				perplexity_unigram_for_average.append(perplexity_unigram)
+
+				csv_data_dump_filename.append(re.findall('file[0-9]+', filename_test_data)[0].encode('utf-8'))
+
+	model_selection['average_perplexity_unigram_'+str(max_count)] = sum(perplexity_unigram_for_average) / float(len(perplexity_unigram_for_average))
+	model_selection['average_perplexity_bigram_'+str(max_count)] = sum(perplexity_bigram_for_average) / float(len(perplexity_bigram_for_average))
+	
+	# transpose and print to csv
+	l = [csv_data_dump_filename, csv_data_dump_unigram, csv_data_dump_bigram]
+	l = zip(*l)
+	for item in l:
+		writetoCSV(item, './classification_training_results/'+corpusName+str(max_count))
+
+
+print 'model_selection', model_selection
+if int(re.findall('[0-9]+', min(model_selection, key=model_selection.get))[0]) == 5:
+	training_result['bigram'] = training_result['bigram_5']
+	training_result['unigram'] = training_result['unigram_5']
+	del training_result['unigram_10']
+	del training_result['bigram_10']
+	del training_result['unigram_5']
+	del training_result['bigram_5']
+	training_result['model_selection'] = 'bigram_5'
+else:
+	training_result['bigram'] = training_result['bigram_10']
+	training_result['unigram'] = training_result['unigram_10']
+	del training_result['unigram_10']
+	del training_result['bigram_10']
+	del training_result['unigram_5']
+	del training_result['bigram_5']
+	training_result['model_selection'] = 'bigram_10'
+
+with open('./classification_training_results/'+corpusName+'.json', 'w') as outfile:
+	json.dump(training_result, outfile, indent=4)
 
 
 
