@@ -433,11 +433,20 @@ with open('prediction_perplexity.csv', 'rb') as f:
 
 writetoCSV(['Id', 'Prediction'], 'prediction_result')
 category_name = result_list[0][1:]
+category_name[category_name.index('atheism')] = 0
+category_name[category_name.index('autos')] = 1
+category_name[category_name.index('graphics')] = 2
+category_name[category_name.index('medicine')] = 3
+category_name[category_name.index('motorcycles')] = 4
+category_name[category_name.index('religion')] = 5
+category_name[category_name.index('space')] = 6
+
+
 print category_name
 
 for i in range(1, len(result_list)):
 	new_result_list = result_list[i][1:]
-	file_name_for_prediction = result_list[i][0]
+	file_name_for_prediction = result_list[i][0] + '.txt'
 	prediction = category_name[new_result_list.index(max(new_result_list))]
 	writetoCSV([file_name_for_prediction, prediction], 'prediction_result')
 
