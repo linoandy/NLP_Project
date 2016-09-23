@@ -25,6 +25,8 @@ def writetoCSV(newrow, filename):
 # and then run the code
 corpusName = raw_input('Please enter the training data folder name of corpus, for example, autos: ')
 path = "./data_corrected/classification task/%s/train_docs/*.txt" % (corpusName)
+lambda_1 = float(raw_input('For interpolation, please enter the lambda value of bigram probability, for example, 0.8: '))
+lambda_2 = 1 - lambda_1
 for filename in glob.glob(path):
 	with open(filename, 'r') as f:
 		for line in f:
@@ -327,6 +329,7 @@ for key, value in unigram_counter_good_turing.iteritems():
 # process the test data files
 csv_data_dump_bigram = [corpusName+'_bigram']
 csv_data_dump_unigram = [corpusName+'_unigram']
+csv_data_dump_interpolation = [corpusName+'_interpolation']
 csv_data_dump_filename = ['']
 path_test_data = "./data_corrected/classification task/test_for_classification/*.txt"
 print "length of", len(glob.glob(path_test_data))
@@ -400,13 +403,33 @@ for filename_test_data in glob.glob(path_test_data):
 			perplexity_unigram = math.exp(sum_negative_log_unigram / len(unigram_test_data))
 			csv_data_dump_unigram.append(perplexity_unigram)
 
+			# interpolation
+			sum_negative_log_interpolation = 0
+			for bigram in bigram_test_data:
+				if bigram_counter_good_turing.get(bigram) == None:
+					count_bigram_good_turing = float(bigram_counter_good_turing['Unseen_Bigram_Never_Exist'])
+				else:
+					count_bigram_good_turing = float(bigram_counter_good_turing[bigram])
+
+				if unigram_counter_good_turing.get(bigram[0]) == None:
+					count_unigram_good_turing = unigram_counter_good_turing['<UNK>']
+				else:
+					count_unigram_good_turing = unigram_counter_good_turing[bigram[0]]
+
+				interpolated_probability = lambda_1 * (count_bigram_good_turing / count_unigram_good_turing) + lambda_2 * (count_unigram_good_turing / sum_unigram_token_good_turing)
+
+				sum_negative_log_interpolation += ( - math.log(interpolated_probability))
+
+			perplexity_interpolation = math.exp(sum_negative_log_interpolation / len(bigram_test_data))
+			csv_data_dump_interpolation.append(perplexity_interpolation)
 			csv_data_dump_filename.append(re.findall('file_[0-9]+', filename_test_data)[0].encode('utf-8'))
+			
 
 # transpose and print to csv
-l = [csv_data_dump_filename, csv_data_dump_unigram, csv_data_dump_bigram]
+l = [csv_data_dump_filename, csv_data_dump_unigram, csv_data_dump_bigram, csv_data_dump_interpolation]
 l = zip(*l)
 for item in l:
-	writetoCSV(item, corpusName)
+	writetoCSV(item, './smoothing_perplexity/'+corpusName+str(lambda_1))
 
 
 
