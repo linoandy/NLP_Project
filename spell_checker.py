@@ -4,6 +4,14 @@ import nltk
 import collections
 import codecs
 import os
+from operator import itemgetter
+
+
+#################################################################################
+# TO RUN, put the spell checking data as "spell_checking_task_v2" under ./data_corrected
+
+
+
 
 corpus_names = ['atheism','autos','graphics','medicine','motorcycles','religion','space']
 #corpus_names = ['temp']
@@ -12,7 +20,7 @@ corpus_names = ['atheism','autos','graphics','medicine','motorcycles','religion'
 
 confusion_set = []
 # getting rid of UTF-8 BOM at the beginning, converting to ascii
-f = codecs.open('./data_corrected/spell_checking_task/confusion_set.txt', encoding='ascii', errors='ignore')
+f = codecs.open('./data_corrected/spell_checking_task_v2/confusion_set.txt', encoding='ascii', errors='ignore')
 for line in f:
 	words = line.split()
 	for i in range(1):
@@ -23,12 +31,12 @@ for line in f:
 		# special treatment for may be
 		words[1] = 'mayxyzbe'
 	confusion_set.append((words[0], words[1]))
-print confusion_set
+#print confusion_set
 
 def preprocess(corpus_name):
 	corpus_sentence = []
 	corpus_word = []
-	path_train = "./data_corrected/spell_checking_task/%s/train_docs/*.txt" % corpus_name
+	path_train = "./data_corrected/spell_checking_task_v2/%s/train_docs/*.txt" % corpus_name
 	glob_temp = glob.glob(path_train)
 	glob_length = len(glob_temp)
 	total_doc_number = glob_length
@@ -45,6 +53,7 @@ def preprocess(corpus_name):
 				# find first "Subject : " and replace with empty string
 				line = line.replace('Subject : ', '', 1)
 
+				# special treatment for may be
 				line = line.replace('may be', 'mayxyzbe')
 				line = line.replace('May be', 'Mayxyzbe')
 				
@@ -57,7 +66,7 @@ def preprocess(corpus_name):
 
 				# build corpus of words
 				corpus_word += line.split(' ')
-	print corpus_word
+	#print corpus_word
 	return corpus_sentence, corpus_word, total_doc_number, train_length
 
 def generate_sentence_markers(corpus_sentence):
@@ -79,7 +88,7 @@ def generate_unigrams(corpus_word):
 	unigram_probabilities = {}
 	for key in unigram_counter:
 		unigram_probabilities[key] = unigram_counter[key] / float(unigram_sum)
-	return unigram_counter, unigram_probabilities
+	return corpus_word, unigram_counter, unigram_probabilities
 
 # returns 0 if there are no matching keys
 def get_value(key, dict):
@@ -197,7 +206,7 @@ def generate_bigrams(corpus_sentence):
 	for key in bigram_counter:
 		bigram_prob[key] = bigram_counter[key] / float(unigram_counter[key[0]])
 	#print bigram_prob
-	return bigram_prob
+	return bigram_list, bigram_counter, bigram_prob
 
 # modified sentence boundary
 def bigram_prob_word(prob, word, prev, next):
@@ -232,6 +241,7 @@ def spell_check_bigram(sentence_boundary, prob):
 			if(word == '<s>' or word == '</s>'):
 				continue
 			result.append(word)
+			continue
 		word_lower = word.lower()
 		# candidate word
 		cand_word = word
@@ -281,6 +291,61 @@ def spell_check_bigram(sentence_boundary, prob):
 
 ########################################################################
 ########################################################################
+########################################################################
+#######               BIGRAMS  WITH SMOOTHING                    #######
+
+# generate a dictionary containing count of word counts, for Good-Turing
+def count_of_counts (original_word_counter, original_n_gram, n_gram_type):
+	counts_counter_temp = {}
+	for key, value in original_word_counter.iteritems():
+		counts_counter_temp.setdefault(str(value), 0)
+		counts_counter_temp[str(value)] += 1
+	
+	# add in the counts fo unseen bigram
+	if n_gram_type == 'bigram':
+		counts_counter_temp['0'] = len(original_n_gram) * len(original_n_gram) - len(original_n_gram)
+
+	counts_counter = []
+	for key, value in counts_counter_temp.iteritems():
+		counts_counter.append((int(key), value))
+
+	counts_counter = sorted(counts_counter, key=itemgetter(0))
+	return counts_counter
+
+
+# print count_of_counts(bigram_with_unk_counter, bigram_with_unk, 'bigram')
+
+# Good-Turing
+def good_turing (counter_of_counts, original_word_counter, n_gram_type):
+	new_counter_of_counts = []
+	for i in range(len(counter_of_counts)):
+		if counter_of_counts[i][0] < 5:
+			new_count = (counter_of_counts[i][0] + 1) * counter_of_counts[i][1] / float(counter_of_counts[i+1][1])
+			new_counter_of_counts.append((new_count, counter_of_counts[i][0], counter_of_counts[i][1]))
+		else:
+			new_count = counter_of_counts[i][0]
+			new_counter_of_counts.append((new_count, counter_of_counts[i][0], counter_of_counts[i][1]))
+
+	good_turing_counter = {}
+	for new_counter in new_counter_of_counts:
+		# add in one key-value pair to stand for adjusted counts of unseen bigram in corpus
+		if new_counter[1] == 0 and n_gram_type == 'bigram':
+			good_turing_counter['Unseen_Bigram_Never_Exist'] = new_counter[0]
+		# adjust counts of existing bigram
+		for key, value in original_word_counter.iteritems():
+			if int(value) == new_counter[1]:
+				good_turing_counter[key] = new_counter[0]
+
+	# return new_counter_of_counts
+	return good_turing_counter
+
+
+
+
+
+
+########################################################################
+########################################################################
 ####   PROCESSING, AND TAKING CARE OF IO FOR TEXT TO BE CHECKED   ######
 
 # returns number of corrections that should have been made, but not
@@ -315,9 +380,41 @@ def compare_texts (mod, train):
 	# print sum_diff
 	return sum_diff
 
-def run_spell_check_development (corpus_name, unigram_prob, bigram_prob, total_doc_number,train_length):
+# replace back to may be
+def post_process(result_list):
+	text = ' '.join(result_list)
+	text = text.replace('mayxyzbe', 'may be')
+	text = text.replace('Mayxyzbe', 'May be')
+	return text.split(' ')
+
+def run_spell_check_test (corpus_name, prob):
+	path_read = "./data_corrected/spell_checking_task_v2/%s/test_modified_docs/*.txt" % corpus_name
+	dir_write = "./data_corrected/spell_checking_task_v2/%s/test_docs/" % corpus_name
+
+	for filename in glob.glob(path_read):
+		modified_sentence = []
+		modified_words = []
+		with open(filename, 'r') as f:
+			for line in f:
+				line = line.replace('may be', 'mayxyzbe')
+				line = line.replace('May be', 'Mayxyzbe')
+				modified_sentence += nltk.tokenize.sent_tokenize(line)
+				modified_words += line.split(' ')
+		modified_sentence_boundary = generate_sentence_markers(modified_sentence)
+		corrected_words = spell_check_bigram(modified_sentence_boundary, prob)
+		corrected_words = post_process(corrected_words)
+
+		temp = filename.split('/')
+		file_path_w = temp[len(temp)-1]
+		file_path_w = dir_write + '/' + file_path_w
+		f = open(file_path_w, 'w')
+		f.write(' '.join(corrected_words))
+	return
+
+
+def run_spell_check_development (corpus_name, unigram_prob, bigram_prob, bigram_smooth_counter, total_doc_number,train_length):
 	result_spell_check = []
-	path_mod = "./data_corrected/spell_checking_task/%s/train_modified_docs/*.txt" % corpus_name
+	path_mod = "./data_corrected/spell_checking_task_v2/%s/train_modified_docs/*.txt" % corpus_name
 	# CHANGE 
 	for i in range(train_length, total_doc_number):
 	#for i in range(total_doc_number):
@@ -333,6 +430,8 @@ def run_spell_check_development (corpus_name, unigram_prob, bigram_prob, total_d
 		#print filename
 		with open(filename_modified, 'r') as f:
 			for line in f:
+				line = line.replace('may be', 'mayxyzbe')
+				line = line.replace('May be', 'Mayxyzbe')
 				modified_sentence += nltk.tokenize.sent_tokenize(line)
 				modified_words += line.split(' ')
 			#print text_words
@@ -342,28 +441,29 @@ def run_spell_check_development (corpus_name, unigram_prob, bigram_prob, total_d
 		unigram_corrected_words = spell_check_unigram(modified_words, unigram_prob)
 		modified_sentence_boundary = generate_sentence_markers(modified_sentence)
 		bigram_corrected_words = spell_check_bigram(modified_sentence_boundary, bigram_prob)
+		bigram_smooth_corrected_words = spell_check_bigram(modified_sentence_boundary, bigram_smooth_counter)
+
+		unigram_corrected_words = post_process(unigram_corrected_words)
+		bigram_corrected_words = post_process(bigram_corrected_words)
+		bigram_smooth_corrected_words = post_process(bigram_smooth_corrected_words)
 
 
 		#print train_words
 		#print unigram_corrected_words
 		num_uncorrected_unigram = compare_texts(unigram_corrected_words, train_words)
 		num_uncorrected_bigram = compare_texts(bigram_corrected_words, train_words)
+		num_uncorrected_bigram_smooth = compare_texts(bigram_smooth_corrected_words, train_words)
 		#print num_uncorrected
-		result_spell_check.append((filename_modified, bigram_corrected_words, num_uncorrected_bigram, unigram_corrected_words, num_uncorrected_unigram))
-
-	#print result_spell_check
-
-	print 'total number'
-	print total_doc_number
-	print 'num_training'
-	print train_length
+		result_spell_check.append((filename_modified, bigram_smooth_corrected_words, num_uncorrected_bigram_smooth,\
+		bigram_corrected_words, num_uncorrected_bigram, unigram_corrected_words, num_uncorrected_unigram))
 	return result_spell_check
 
 def analyze_and_write_development (result_spell_check, corpus_name):
-	write_path_uni = "./data_corrected/spell_checking_task/%s_result_unigram.txt" % corpus_name
-	write_path_bi = "./data_corrected/spell_checking_task/%s_result_bigram.txt" % corpus_name
+	write_path_uni = "./data_corrected/spell_checking_task_v2/%s_result_unigram.txt" % corpus_name
+	write_path_bi = "./data_corrected/spell_checking_task_v2/%s_result_bigram.txt" % corpus_name
+	write_path_s = "./data_corrected/spell_checking_task_v2/%s_result_bigram_smooth.txt" % corpus_name
 
-	directory = "./data_corrected/spell_checking_task/%s/checked_modified_docs" % corpus_name
+	directory = "./data_corrected/spell_checking_task_v2/%s/checked_modified_docs" % corpus_name
 	# make the folder
 	try: 
 		os.makedirs(directory)
@@ -372,49 +472,55 @@ def analyze_and_write_development (result_spell_check, corpus_name):
 			raise
 	sum_diff_uni = 0
 	sum_diff_bi = 0
+	sum_diff_s = 0
 	f_uni = open(write_path_uni, 'w')
 	f_bi = open(write_path_bi, 'w')
+	f_s = open(write_path_s, 'w')
 	lines_uni = []
 	lines_bi = []
-	for name, text_bi, num_bi, text_uni, num_uni in result_spell_check:
+	lines_s = []
+	for name, text_s, num_s,text_bi, num_bi, text_uni, num_uni in result_spell_check:
 		temp = name.split('/')
 		filename = temp[len(temp)-1]
 
 		lines_uni.append(filename + ' ' + str(num_uni) + '\n')
 		lines_bi.append(filename + ' ' + str(num_bi) + '\n')
+		lines_s.append(filename + ' ' + str(num_s) + '\n')
 
 		sum_diff_uni += num_uni
 		sum_diff_bi += num_bi
+		sum_diff_s += num_s
 
 		text_directory = directory + '/' + filename
 		f2 = open(text_directory, 'w')
 		f2.write(' '.join(text_bi))
 	f_uni.write('TOTAL NUM ERRORS:' + str(sum_diff_uni) + '\n')
 	f_bi.write('TOTAL NUM ERRORS:' + str(sum_diff_bi) + '\n')
+	f_s.write('TOTAL NUM ERRORS:' + str(sum_diff_s) + '\n')
 	for l in lines_uni:
 		f_uni.write(l)
 	for l in lines_bi:
 		f_bi.write(l)
-
-	# TODO : loop through the corpora
-# TODO : bigram 
+	for l in lines_s:
+		f_s.write(l)
 
 def run():
 	for corpus in corpus_names:
 		print 'checking ' + corpus + '...'
+		sentence, word, total_num, train_num = preprocess(corpus)
+		unigram, unigram_counter, unigram_prob = generate_unigrams(word)
+		bigram, bigram_counter, bigram_prob = generate_bigrams(sentence)
+		#print unigram_counter
+		#print count_of_counts(unigram_counter, unigram, 'unigram')
 
+		bigram_smooth_counter = good_turing(count_of_counts(bigram_counter, bigram, 'bigram'), bigram_counter, 'bigram')
 
-		temp_sentence, temp_word, total_num, train_num = preprocess(corpus)
-		temp_unigram, temp_unigram_probabilities = generate_unigrams(temp_word)
-
-		temp_bigram_prob = generate_bigrams(temp_sentence)
-
-		#print temp_unigram
-		#print temp_unigram_probabilities
-		# spell_check_unigram(temp_word, temp_unigram_probabilities)
-
-		result = run_spell_check_development(corpus, temp_unigram_probabilities, temp_bigram_prob, total_num, train_num)
+		unigram_smooth_counter = good_turing(count_of_counts(unigram_counter, unigram, 'unigram'), unigram_counter, 'unigram')
+		
+		# bigram_smooth_counter can be used directly; it is only looking for relative probability
+		# counter and prob can be used interchangeably
+		result = run_spell_check_development(corpus, unigram_prob, bigram_prob, bigram_smooth_counter, total_num, train_num)
 		analyze_and_write_development(result, corpus)
-
-		generate_bigrams(temp_sentence)
+		# USE BIGRAM MODEL AS IT WORKS BEST
+		run_spell_check_test(corpus, bigram_prob)
 run()
