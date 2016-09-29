@@ -27,6 +27,19 @@ def BIO_tagger(file): # this function processes the document passed in, and repl
 					token_lists[i][2] = 'I-CUE'
 	return token_lists
 
+# baseline system
+baseline_dictionary = []
+path = "./nlp_project2_uncertainty/train/*.txt"
+for file_name in glob.glob(path):
+	training_set_threshold = len(glob.glob(path)) * 0.01
+	if int(re.findall('[0-9]+', file_name)[1]) < training_set_threshold:
+		baseline_set = BIO_tagger(file_name)
+	for baseline in baseline_set:
+		if (baseline[2] == 'B-CUE' or baseline[2] == 'I-CUE') and baseline[0] not in baseline_dictionary:
+			baseline_dictionary.append(baseline[0])
+print baseline_dictionary
+
+
 # breaking up the data set
 training_set = []
 development_set = []
