@@ -9,22 +9,25 @@ def BIO_tagger(file): # this function processes the document passed in, and repl
 	with open(file, 'r') as f:
 		for line in f:
 			# split by tab
-			if len(line.split('	')) == 3: # filter out the very last line of each document, usually it's '\n'
-				token_lists.append(line.split('	'))
+			if len(line.split('\t')) == 3: # filter out the very last line of each document, usually it's '\n'
+				token_lists.append(line.split('\t'))
 
 		# replace '_\n' with tag 'O'
 		for token_list in token_lists:
 			if token_list[2] == '_\n':
 				token_list[2] = 'O'
 
+		previous_tagger = ''
 		for i in range(len(token_lists)):
+			previous_tagger_temp = token_lists[i][2]
 			if token_lists[i][2].find('CUE') != -1:
-				# replace 'CUE-n' directly after tag 'O' with 'B-CUE' 
-				if i == 0 or token_lists[i-1][2] == 'O':
+				# replace 'CUE-n' that don't equal to the tag of 'CUE-(n-1)' with 'B-CUE' 
+				if i == 0 or token_lists[i][2] != previous_tagger:
 					token_lists[i][2] = 'B-CUE'
 				# replace other 'CUE-n' with 'I-CUE'
 				else:
 					token_lists[i][2] = 'I-CUE'
+			previous_tagger = previous_tagger_temp
 	return token_lists
 
 # breaking up the data set
@@ -38,13 +41,12 @@ for file_name in glob.glob(path):
 	else:
 		development_set.append(file_name)
 
-# # process training set by BIO tagging and concatenate tokens into sentence
-# for filename in training_set:
-# 	sentence = []
-# 	list_of_tokens = BIO_tagger(filename)
-# 	for token in list_of_tokens:
-# 		sentence.append(token[0])
-
+# process training set by BIO tagging and concatenate tokens into sentence
+for filename in training_set:
+	sentence = []
+	list_of_tokens = BIO_tagger(filename)
+	for token in list_of_tokens:
+		sentence.append(token[0])
 # 	# play with it in nltk tagger
 # 	nltk_pos_tag_result = nltk.pos_tag(sentence)
 # 	error = 0
@@ -57,6 +59,7 @@ for file_name in glob.glob(path):
 # baseline system
 def baseline_dict(path):
 	baseline_list = []
+	baseline_set = []
 	for file_name in glob.glob(path):
 		training_set_threshold = len(glob.glob(path)) * 0.01
 		if int(re.findall('[0-9]+', file_name)[1]) < training_set_threshold:
