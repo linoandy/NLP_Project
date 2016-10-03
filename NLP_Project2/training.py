@@ -1,5 +1,11 @@
 #coding=utf-8 
 
+###############
+# please unzip the data file, and put the folder nlp_project2_uncertainty 
+# in the same location as this script, training.py
+# then run training.py and you should get the baseline output on screen and in csv
+###############
+
 import glob
 import re
 import nltk
