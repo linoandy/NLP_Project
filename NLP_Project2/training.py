@@ -166,6 +166,6 @@ def write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_re
 word_result_pu, sentence_result_pu = test_baseline(test_public_path, baseline_dictionary)
 word_result_pr, sentence_result_pr = test_baseline(test_private_path, baseline_dictionary)
 write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_result_pr)
-print baseline_dictionary
+# print baseline_dictionary
 
 
