@@ -3,6 +3,8 @@
 import glob
 import re
 import nltk
+import csv
+
 
 def BIO_tagger(file): # this function processes the document passed in, and replace CUE tags with BIO tags
 	token_lists = []
@@ -92,6 +94,72 @@ baseline_dictionary = baseline_dict("./nlp_project2_uncertainty/train/*.txt")
 for filename in development_set:
 	print baseline_calculation(filename, baseline_dictionary)
 
+test_public_path = './nlp_project2_uncertainty/test-public/*.txt'
+test_private_path = './nlp_project2_uncertainty/test-private/*.txt'
 
+def test_baseline(path, baseline_data_set):
+	word_result = []
+	sentence_result = []
+	word_num = 0
+	sentence_num = 0
+	for filename in glob.glob(path):
+		with open(filename, 'r') as f:
+			sentence_bool = 0
+			prev_line_blank = False
+			for line in f:
+				words = line.split()
+
+				if len(words) == 0:
+					if(prev_line_blank == True):
+						continue
+					prev_line_blank = True
+					sentence_num += 1
+					continue
+				else:
+					prev_line_blank = False
+
+				if words[0] in baseline_data_set:
+					word_result.append(word_num)
+					sentence_result.append(sentence_num)
+				word_num += 1
+	sentence_result = list(set(sentence_result))
+	print sentence_num
+	return word_result, sentence_result
+
+def write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_result_pr):
+	def syntax_word(result):
+		l = []
+		s = ''
+		for r in result:
+			s += str(r) + '-' + str(r) +' '
+		l.append(s)
+		return l
+	def syntax_sentence(result):
+		l = []
+		s = ''
+		for r in result:
+			s += str(r) + ' '
+		l.append(s)
+		return l
+	w_pu = syntax_word(word_result_pu)
+	w_pr = syntax_word(word_result_pr)
+	s_pu = syntax_sentence(sentence_result_pu)
+	s_pr = syntax_sentence(sentence_result_pr)
+	with open('word_result_baseline.csv', 'wb') as f:
+		a = csv.writer(f)
+		a.writerow(['Type', 'Spans'])
+		a.writerow(['CUE-public'] + w_pu)
+		a.writerow(['CUE-private'] + w_pr)
+	with open('sentence_result_baseline.csv', 'wb') as f:
+		a = csv.writer(f)
+		a.writerow(['Type', 'Indices'])
+		a.writerow(['SENTENCE-public'] + s_pu)
+		a.writerow(['SENTENCE-private'] + s_pr)
+	return
+
+word_result_pu, sentence_result_pu = test_baseline(test_public_path, baseline_dictionary)
+word_result_pr, sentence_result_pr = test_baseline(test_private_path, baseline_dictionary)
+write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_result_pr)
+print baseline_dictionary
 
 
