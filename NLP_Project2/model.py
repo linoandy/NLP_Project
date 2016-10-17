@@ -39,7 +39,7 @@ def BIO_tagger(file): # this function processes the document passed in, and repl
 	return token_lists
 
 # breaking up the data set
-print 'breaking up the data set into training and development in progress...\n\n\n'
+print '\n\n\nbreaking up the data set into training and development in progress...'
 training_set = []
 development_set = []
 path = "./nlp_project2_uncertainty/train/*.txt"
@@ -93,36 +93,153 @@ def data_formater(dataset):
 		list_of_tokens = BIO_tagger(filename)
 		for token in list_of_tokens:
 			# for some reason, we MUST use text in unicode 
-			sentence.append((token[0].decode('utf-8'), token[2]))
+			sentence.append((token[0].lower().decode('utf-8'), token[2]))
 		formatted_sentence.append(sentence)
 	return formatted_sentence
 
 # process training set by BIO tagging and concatenate tokens into sentence
-print 'formatting training data set in progress...\n\n\n'
+print '\n\n\nformatting training data set in progress...'
 training_sentence = data_formater(training_set)
 
 # process development set by BIO tagging and concatenate tokens into sentence
-print 'formatting development data set in progress...\n\n\n'
+print '\n\n\nformatting development data set in progress...'
 development_sentence = data_formater(development_set)
 
 # train and evaluate nltk tagging crf module
-print 'training crf model in progress...\n\n\n'
+print '\n\n\ntraining crf model in progress...'
 ct = nltk.tag.CRFTagger()
 ct.train(training_sentence,'model.crf.tagger')
 ct.set_model_file('model.crf.tagger')
-print "evaluation of crf model: %.3f%%\n\n\n" % (100 * ct.evaluate(development_sentence))
+print "\n\n\nevaluation of crf model: %.3f%%" % (100 * ct.evaluate(development_sentence))
 
 # train and evaluate nltk tagging hmm module
-print 'training hmm model in progress...\n\n\n'
+print '\n\n\ntraining hmm model in progress...'
 ht = nltk.tag.hmm.HiddenMarkovModelTrainer()
 tagger = ht.train_supervised(training_sentence)
-print "evaluation of hmm model: %.3f%%\n\n\n" % (100 * tagger.evaluate(development_sentence))
+print "\n\n\nevaluation of hmm model: %.3f%%" % (100 * tagger.evaluate(development_sentence))
 
 # train and evaluate nltk tagging perceptron module
-print 'training perceptron model in progress...\n\n\n'
-ht = nltk.tag.perceptron.PerceptronTagger(load=False)
-ht.train(training_sentence, 'model.perceptron.tagger', nr_iter=5)
-print "evaluation of perceptron model: %.3f%%\n\n\n" % (100 * ht.evaluate(development_sentence))
+print '\n\n\ntraining perceptron model in progress...'
+pt = nltk.tag.perceptron.PerceptronTagger(load=False)
+pt.train(training_sentence, 'model.perceptron.tagger', nr_iter=8)
+print "\n\n\nevaluation of perceptron model: %.3f%%" % (100 * pt.evaluate(development_sentence))
 
-# test_public_path = './nlp_project2_uncertainty/test-public/*.txt'
-# test_private_path = './nlp_project2_uncertainty/test-private/*.txt'
+test_public_path = './nlp_project2_uncertainty/test-public/*.txt'
+test_private_path = './nlp_project2_uncertainty/test-private/*.txt'
+
+def test_baseline(path, baseline_data_set):
+	word_result = []
+	sentence_result = []
+	word_num = 0
+	sentence_num = 0
+	for filename in glob.glob(path):
+		with open(filename, 'r') as f:
+			sentence_bool = 0
+			prev_line_blank = False
+			for line in f:
+				words = line.split()
+
+				if len(words) == 0:
+					if(prev_line_blank == True):
+						continue
+					prev_line_blank = True
+					sentence_num += 1
+					continue
+				else:
+					prev_line_blank = False
+
+				if words[0] in baseline_data_set:
+					word_result.append(word_num)
+					sentence_result.append(sentence_num)
+				word_num += 1
+	sentence_result = list(set(sentence_result))
+	print sentence_num
+	return word_result, sentence_result
+
+def test_model(path, model):
+	word_result = []
+	sentence_result = []
+	word_num = 0
+	sentence_num = 0
+	test_sentence_set = []
+	for filename in glob.glob(path):
+		with open(filename, 'r') as f:
+			test_sentence = []
+			prev_line_blank = False
+			for line in f:
+				words = line.split()
+
+				if len(words) == 0:
+					if(prev_line_blank == True):
+						continue
+					prev_line_blank = True
+					test_sentence_set.append(test_sentence)
+					test_sentence = []
+					continue
+				else:
+					prev_line_blank = False
+					test_sentence.append(words[0].lower().decode('utf-8'))
+
+	if model == 'crf':
+		# make prediction using crf model
+		prediction = ct.tag_sents(test_sentence_set)
+	elif model == 'hmm':
+		# make prediction using hmm model
+		prediction = []
+		for test_sentence in test_sentence_set:
+			prediction.append(tagger.tag(test_sentence))
+	elif model == 'perceptron':
+		# make prediction using perceptron model
+		prediction = []
+		for test_sentence in test_sentence_set:
+			prediction.append(pt.tag(test_sentence))
+	
+	for single_sentence in prediction:
+		for single_token in single_sentence:
+			if single_token[1] == 'B-CUE' or single_token[1] == 'I-CUE':
+				word_result.append(word_num)
+				sentence_result.append(sentence_num)
+			word_num += 1
+		sentence_num += 1
+
+	print word_num, sentence_num
+	return word_result, sentence_result
+
+def write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_result_pr):
+	def syntax_word(result):
+		l = []
+		s = ''
+		for r in result:
+			s += str(r) + '-' + str(r) +' '
+		l.append(s)
+		return l
+	def syntax_sentence(result):
+		l = []
+		s = ''
+		for r in result:
+			s += str(r) + ' '
+		l.append(s)
+		return l
+	w_pu = syntax_word(word_result_pu)
+	w_pr = syntax_word(word_result_pr)
+	s_pu = syntax_sentence(sentence_result_pu)
+	s_pr = syntax_sentence(sentence_result_pr)
+	with open('word_result_crf.csv', 'wb') as f:
+		a = csv.writer(f)
+		a.writerow(['Type', 'Spans'])
+		a.writerow(['CUE-public'] + w_pu)
+		a.writerow(['CUE-private'] + w_pr)
+	with open('sentence_result_crf.csv', 'wb') as f:
+		a = csv.writer(f)
+		a.writerow(['Type', 'Indices'])
+		a.writerow(['SENTENCE-public'] + s_pu)
+		a.writerow(['SENTENCE-private'] + s_pr)
+	return
+
+word_result_pu, sentence_result_pu = test_model(test_public_path, 'perceptron')
+word_result_pr, sentence_result_pr = test_model(test_private_path, 'perceptron')
+# print word_result_pu
+# word_result_pu, sentence_result_pu = test_baseline(test_public_path, baseline_dictionary)
+# word_result_pr, sentence_result_pr = test_baseline(test_private_path, baseline_dictionary)
+write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_result_pr)
+# SENTENCE-privatent baseline_dictionary
