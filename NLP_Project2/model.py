@@ -10,7 +10,7 @@ import glob
 import re
 import nltk
 import csv
-
+import random
 
 def BIO_tagger(file): # this function processes the document passed in, and replace CUE tags with BIO tags
 	token_lists = []
@@ -88,41 +88,94 @@ def baseline_calculation(file, baseline_data_set):
 
 def data_formater(dataset):
 	formatted_sentence = []
+	formatted_pos_tag = []
 	for filename in dataset:
 		sentence = []
+		pos_tag = []
 		list_of_tokens = BIO_tagger(filename)
 		for token in list_of_tokens:
-			# for some reason, we MUST use text in unicode 
-			sentence.append((token[0].lower().decode('utf-8'), token[2]))
+			# for some reason, we MUST use text in unicode
+			# sentence.append((token[0].lower().decode('utf-8'), token[2]))
+			# replace I-tag with B-tag, using only BO tags
+			tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
+			# word_token = token[0].lower().decode('utf-8') if token[0] not in single_occurance_word else '<UNK>'.decode('utf-8')
+			sentence.append((token[0].lower().decode('utf-8'), tag))
+			pos_tag.append((token[1].decode('utf-8'), tag))
 		formatted_sentence.append(sentence)
-	return formatted_sentence
+		formatted_pos_tag.append(pos_tag)
+	return formatted_sentence, formatted_pos_tag
+
+def data_selector_formater(dataset):
+	formatted_sentence = []
+	formatted_pos_tag = []
+	for filename in dataset:
+		sentence = []
+		pos_tag = []
+		selector_flag = []
+		list_of_tokens = BIO_tagger(filename)
+		for token in list_of_tokens:
+			# for some reason, we MUST use text in unicode
+			# sentence.append((token[0].lower().decode('utf-8'), token[2]))
+			selector_flag.append(token[2])
+			# replace I-tag with B-tag, using only BO tags
+			tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
+			sentence.append((token[0].lower().decode('utf-8'), tag))
+			pos_tag.append((token[1].decode('utf-8'), tag)) 
+		# throw away files that don't have 'B-CUE' or 'I-CUE'
+		if 'B-CUE' in selector_flag or 'I-CUE' in selector_flag:
+			formatted_sentence.append(sentence)
+			formatted_pos_tag.append(pos_tag)
+		if 'B-CUE' not in selector_flag and 'I-CUE' not in selector_flag and random.random() >= 1.1:
+			formatted_sentence.append(sentence)
+			formatted_pos_tag.append(pos_tag)
+	# print len(formatted_sentence), len(formatted_pos_tag)
+	return formatted_sentence, formatted_pos_tag
+
+def counter(dataset):
+	corpus = []
+	for filename in dataset:
+		list_of_tokens = BIO_tagger(filename)
+		for token in list_of_tokens:
+			corpus.append(token[0])
+	counter_temp = nltk.FreqDist(corpus)
+	for word_count in counter_temp:
+		if counter_temp[word_count] == 1:
+			corpus.append(word_count)
+	return corpus
+
+# single_occurance_word = counter(training_set)
 
 # process training set by BIO tagging and concatenate tokens into sentence
 print '\n\n\nformatting training data set in progress...'
-training_sentence = data_formater(training_set)
+training_sentence, training_pos_tag = data_formater(training_set)
 
 # process development set by BIO tagging and concatenate tokens into sentence
 print '\n\n\nformatting development data set in progress...'
-development_sentence = data_formater(development_set)
+development_sentence, development_pos_tag = data_formater(development_set)
 
 # train and evaluate nltk tagging crf module
 print '\n\n\ntraining crf model in progress...'
 ct = nltk.tag.CRFTagger()
+ct_pos = nltk.tag.CRFTagger()
 ct.train(training_sentence,'model.crf.tagger')
+ct_pos.train(training_pos_tag, 'model.crf_pos.tagger')
 ct.set_model_file('model.crf.tagger')
 print "\n\n\nevaluation of crf model: %.3f%%" % (100 * ct.evaluate(development_sentence))
 
-# train and evaluate nltk tagging hmm module
-print '\n\n\ntraining hmm model in progress...'
-ht = nltk.tag.hmm.HiddenMarkovModelTrainer()
-tagger = ht.train_supervised(training_sentence)
-print "\n\n\nevaluation of hmm model: %.3f%%" % (100 * tagger.evaluate(development_sentence))
+# # train and evaluate nltk tagging hmm module
+# print '\n\n\ntraining hmm model in progress...'
+# ht = nltk.tag.hmm.HiddenMarkovModelTrainer()
+# tagger = ht.train_supervised(training_sentence)
+# tagger_pos = ht.train_supervised(training_pos_tag)
+# print "\n\n\nevaluation of hmm model: %.3f%%" % (100 * tagger.evaluate(development_sentence))
 
-# train and evaluate nltk tagging perceptron module
-print '\n\n\ntraining perceptron model in progress...'
-pt = nltk.tag.perceptron.PerceptronTagger(load=False)
-pt.train(training_sentence, 'model.perceptron.tagger', nr_iter=8)
-print "\n\n\nevaluation of perceptron model: %.3f%%" % (100 * pt.evaluate(development_sentence))
+# # train and evaluate nltk tagging perceptron module
+# print '\n\n\ntraining perceptron model in progress...'
+# pt = nltk.tag.perceptron.PerceptronTagger(load=False)
+# pt_pos = nltk.tag.perceptron.PerceptronTagger(load=False)
+# pt.train(training_sentence, 'model.perceptron.tagger', nr_iter=8)
+# pt_pos.train(training_pos_tag, 'model.perceptron_pos.tagger', nr_iter=8)
+# print "\n\n\nevaluation of perceptron model: %.3f%%" % (100 * pt.evaluate(development_sentence))
 
 test_public_path = './nlp_project2_uncertainty/test-public/*.txt'
 test_private_path = './nlp_project2_uncertainty/test-private/*.txt'
@@ -162,9 +215,11 @@ def test_model(path, model):
 	word_num = 0
 	sentence_num = 0
 	test_sentence_set = []
+	test_pos_set = []
 	for filename in glob.glob(path):
 		with open(filename, 'r') as f:
 			test_sentence = []
+			test_pos = []
 			prev_line_blank = False
 			for line in f:
 				words = line.split()
@@ -174,28 +229,47 @@ def test_model(path, model):
 						continue
 					prev_line_blank = True
 					test_sentence_set.append(test_sentence)
+					test_pos_set.append(test_pos)
 					test_sentence = []
+					test_pos = []
 					continue
 				else:
 					prev_line_blank = False
 					test_sentence.append(words[0].lower().decode('utf-8'))
+					test_pos.append(words[1].lower().decode('utf-8'))
 
 	if model == 'crf':
 		# make prediction using crf model
-		prediction = ct.tag_sents(test_sentence_set)
+		prediction_word = ct.tag_sents(test_sentence_set)
+		prediction_pos = ct_pos.tag_sents(test_pos_set)
 	elif model == 'hmm':
 		# make prediction using hmm model
-		prediction = []
+		prediction_word = []
+		prediction_pos = []
 		for test_sentence in test_sentence_set:
-			prediction.append(tagger.tag(test_sentence))
+			prediction_word.append(tagger.tag(test_sentence))
+		for test_pos in test_pos_set:
+			prediction_pos.append(tagger.tag(test_pos))
 	elif model == 'perceptron':
 		# make prediction using perceptron model
-		prediction = []
+		prediction_word = []
+		prediction_pos = []
 		for test_sentence in test_sentence_set:
-			prediction.append(pt.tag(test_sentence))
+			prediction_word.append(pt.tag(test_sentence))
+		for test_pos in test_pos_set:
+			prediction_pos.append(tagger.tag(test_pos))
+
+	for j in range(len(prediction_word)):
+		for k in range(len(prediction_word[j])):
+			if prediction_word[j][k][1] != prediction_pos[j][k][1] and prediction_word[j][k][0] == prediction_pos[j][k][0]:
+				# print prediction_word[j][k], prediction_pos[j][k]
+				lst = list(prediction_word[j][k])
+				lst[1] = 'O'
+				prediction_word[j][k] = tuple(lst)
 	
-	for single_sentence in prediction:
+	for single_sentence in prediction_word:
 		for single_token in single_sentence:
+			print single_token
 			if single_token[1] == 'B-CUE' or single_token[1] == 'I-CUE':
 				word_result.append(word_num)
 				sentence_result.append(sentence_num)
@@ -236,8 +310,8 @@ def write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_re
 		a.writerow(['SENTENCE-private'] + s_pr)
 	return
 
-word_result_pu, sentence_result_pu = test_model(test_public_path, 'perceptron')
-word_result_pr, sentence_result_pr = test_model(test_private_path, 'perceptron')
+word_result_pu, sentence_result_pu = test_model(test_public_path, 'crf')
+word_result_pr, sentence_result_pr = test_model(test_private_path, 'crf')
 # print word_result_pu
 # word_result_pu, sentence_result_pu = test_baseline(test_public_path, baseline_dictionary)
 # word_result_pr, sentence_result_pr = test_baseline(test_private_path, baseline_dictionary)
