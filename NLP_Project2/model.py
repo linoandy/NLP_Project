@@ -279,12 +279,26 @@ def test_model(path, model):
 	print word_num, sentence_num
 	return word_result, sentence_result
 
+
 def write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_result_pr):
 	def syntax_word(result):
 		l = []
 		s = ''
-		for r in result:
-			s += str(r) + '-' + str(r) +' '
+		temp_list = []
+		if len(result) == 0:
+			return l
+		temp_list.append(result[0])
+		for i in range(1, len(result)):
+			if result[i] == result[i-1]+1:
+				if len(temp_list) == 0:
+					temp_list.append(result[i-1])
+					temp_list.append(result[i])
+				else:
+					temp_list.append(result[i])
+			# no consecutive result AND there are some in temp list to be flushed
+			elif len(temp_list) != 0:
+				s += str(temp_list[0]) + '-' + str(temp_list[(len(temp_list)-1)]) + ' '
+				temp_list = []
 		l.append(s)
 		return l
 	def syntax_sentence(result):
@@ -309,7 +323,6 @@ def write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_re
 		a.writerow(['SENTENCE-public'] + s_pu)
 		a.writerow(['SENTENCE-private'] + s_pr)
 	return
-
 word_result_pu, sentence_result_pu = test_model(test_public_path, 'crf')
 word_result_pr, sentence_result_pr = test_model(test_private_path, 'crf')
 # print word_result_pu
