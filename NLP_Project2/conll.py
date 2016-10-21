@@ -66,7 +66,7 @@ def data_formater(dataset):
             # replace I-tag with B-tag, using only BO tags
             # tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
             # word_token = token[0].lower().decode('utf-8') if token[0] not in single_occurance_word else '<UNK>'.decode('utf-8')
-            sentence.append((token[0].lower().decode('utf-8'), token[1].decode('utf-8'), token[2]))
+            sentence.append((token[0].decode('utf-8'), token[1].decode('utf-8'), token[2]))
             pos_tag.append((token[1].decode('utf-8'), token[2]))
         formatted_sentence.append(sentence)
         formatted_pos_tag.append(pos_tag)
@@ -149,14 +149,16 @@ def word2features(sent, i):
     features = [
         'bias',
         'word.lower=' + word.lower(),
-        'word[-3:]=' + word[-3:],
-        'word[-2:]=' + word[-2:],
+        # 'word[-3:]=' + word[-3:],
+        # 'word[-2:]=' + word[-2:],
         'word.isupper=%s' % word.isupper(),
         'word.istitle=%s' % word.istitle(),
         'word.isdigit=%s' % word.isdigit(),
         'postag=' + postag,
-        'postag[:2]=' + postag[:2],
+        # 'word.maymight=%s' % str(not word.lower() in ['may', 'might', 'should', 'suggest']),
+        # 'postag[:2]=' + postag[:2],
     ]
+    # print features
     if i > 0:
         word1 = sent[i-1][0]
         postag1 = sent[i-1][1]
@@ -165,7 +167,7 @@ def word2features(sent, i):
             '-1:word.istitle=%s' % word1.istitle(),
             '-1:word.isupper=%s' % word1.isupper(),
             '-1:postag=' + postag1,
-            '-1:postag[:2]=' + postag1[:2],
+            # '-1:postag[:2]=' + postag1[:2],
         ])
     else:
         features.append('BOS')
@@ -178,7 +180,7 @@ def word2features(sent, i):
             '+1:word.istitle=%s' % word1.istitle(),
             '+1:word.isupper=%s' % word1.isupper(),
             '+1:postag=' + postag1,
-            '+1:postag[:2]=' + postag1[:2],
+            # '+1:postag[:2]=' + postag1[:2],
         ])
     else:
         features.append('EOS')
@@ -287,14 +289,150 @@ tagger.open('conll2002-esp.crfsuite')
 # Let's tag a sentence to see how it works:
 
 # In[14]:
+# for sents in test_sents:
+#     print tagger.tag(sent2features(sents))
 
-example_sent = test_sents[0]
-print(' '.join(sent2tokens(example_sent)))
+for i in range(len(test_sents)):
+    example_sent = test_sents[i]
+    for j in range(len(example_sent)):
+        if tagger.tag(sent2features(example_sent))[j] != sent2labels(example_sent)[j]:
+            print '(', example_sent[j][0], ', ', tagger.tag(sent2features(example_sent))[j], ', ', sent2labels(example_sent)[j],')'
+    # print(' '.join(sent2tokens(example_sent)))
 
-print("Predicted:", ' '.join(tagger.tag(sent2features(example_sent))))
-print("Correct:  ", ' '.join(sent2labels(example_sent)))
+    # print("Predicted:", ' '.join(tagger.tag(sent2features(example_sent))))
+    # print("Correct:  ", ' '.join(sent2labels(example_sent)))
+
+test_public_path = './nlp_project2_uncertainty/test-public/*.txt'
+test_private_path = './nlp_project2_uncertainty/test-private/*.txt'
+
+def test_model(path, model):
+    word_result = []
+    sentence_result = []
+    word_num = 0
+    sentence_num = 0
+    test_sentence_set = []
+    test_pos_set = []
+    for filename in glob.glob(path):
+        with open(filename, 'r') as f:
+            test_sentence = []
+            test_pos = []
+            prev_line_blank = False
+            for line in f:
+                words = line.split()
+
+                if len(words) == 0:
+                    if(prev_line_blank == True):
+                        continue
+                    prev_line_blank = True
+                    test_sentence_set.append(test_sentence)
+                    # test_pos_set.append(test_pos)
+                    test_sentence = []
+                    test_pos = []
+                    continue
+                else:
+                    prev_line_blank = False
+                    test_sentence.append((words[0].lower().decode('utf-8'), words[0].lower().decode('utf-8')))
+                    # test_pos.append(words[1].lower().decode('utf-8'))
+
+    prediction_result = []
+    for i in range(len(test_sentence_set)):
+        prediction_word = tagger.tag(sent2features(test_sentence_set[i]))
+        prediction_result_temp = []
+        for j in range(len(prediction_word)):
+            prediction_result_temp.append((test_sentence_set[i][j][0], prediction_word[j]))
+        prediction_result.append(prediction_result_temp)
+    # if model == 'crf':
+    #     # make prediction using crf model
+    #     prediction_word = ct.tag_sents(test_sentence_set)
+    #     prediction_pos = ct_pos.tag_sents(test_pos_set)
+    # elif model == 'hmm':
+    #     # make prediction using hmm model
+    #     prediction_word = []
+    #     prediction_pos = []
+    #     for test_sentence in test_sentence_set:
+    #         prediction_word.append(tagger.tag(test_sentence))
+    #     for test_pos in test_pos_set:
+    #         prediction_pos.append(tagger.tag(test_pos))
+    # elif model == 'perceptron':
+    #     # make prediction using perceptron model
+    #     prediction_word = []
+    #     prediction_pos = []
+    #     for test_sentence in test_sentence_set:
+    #         prediction_word.append(pt.tag(test_sentence))
+    #     for test_pos in test_pos_set:
+    #         prediction_pos.append(tagger.tag(test_pos))
+
+    # for j in range(len(prediction_word)):
+    #     for k in range(len(prediction_word[j])):
+    #         if prediction_word[j][k][1] != prediction_pos[j][k][1] and prediction_word[j][k][0] == prediction_pos[j][k][0]:
+    #             # print prediction_word[j][k], prediction_pos[j][k]
+    #             lst = list(prediction_word[j][k])
+    #             lst[1] = 'O'
+    #             prediction_word[j][k] = tuple(lst)
+    
+    for single_sentence in prediction_result:
+        for single_token in single_sentence:
+            print single_token
+            if single_token[1] == 'B-CUE' or single_token[1] == 'I-CUE':
+                word_result.append(word_num)
+                sentence_result.append(sentence_num)
+            word_num += 1
+        sentence_num += 1
+
+    print word_num, sentence_num
+    return word_result, sentence_result
 
 
+def write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_result_pr):
+    def syntax_word(result):
+        l = []
+        s = ''
+        temp_list = []
+        if len(result) == 0:
+            return l
+        temp_list.append(result[0])
+        for i in range(1, len(result)):
+            if result[i] == result[i-1]+1:
+                if len(temp_list) == 0:
+                    temp_list.append(result[i-1])
+                    temp_list.append(result[i])
+                else:
+                    temp_list.append(result[i])
+            # no consecutive result AND there are some in temp list to be flushed
+            elif len(temp_list) != 0:
+                s += str(temp_list[0]) + '-' + str(temp_list[(len(temp_list)-1)]) + ' '
+                temp_list = []
+        l.append(s)
+        return l
+    def syntax_sentence(result):
+        l = []
+        s = ''
+        l_temp = []
+        for r in result:
+            if r not in l_temp:
+                s += str(r) + ' '
+            l_temp.append(r)
+        l.append(s)
+        return l
+    w_pu = syntax_word(word_result_pu)
+    w_pr = syntax_word(word_result_pr)
+    s_pu = syntax_sentence(sentence_result_pu)
+    s_pr = syntax_sentence(sentence_result_pr)
+    with open('word_result_haha.csv', 'wb') as f:
+        a = csv.writer(f)
+        a.writerow(['Type', 'Spans'])
+        a.writerow(['CUE-public'] + w_pu)
+        a.writerow(['CUE-private'] + w_pr)
+    with open('sentence_result_haha.csv', 'wb') as f:
+        a = csv.writer(f)
+        a.writerow(['Type', 'Indices'])
+        a.writerow(['SENTENCE-public'] + s_pu)
+        a.writerow(['SENTENCE-private'] + s_pr)
+    return
+
+word_result_pu, sentence_result_pu = test_model(test_public_path, 'crf')
+word_result_pr, sentence_result_pr = test_model(test_private_path, 'crf')
+write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_result_pr)
 # ## Evaluate the model
 
 # In[15]:
