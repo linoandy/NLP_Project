@@ -98,6 +98,7 @@ def data_selector_formater(dataset):
     # print len(formatted_sentence), len(formatted_pos_tag)
     return formatted_sentence, formatted_pos_tag
 
+# this function get rid of all sentences that don't have B/I cues; however it doesn't work yet
 def data_selector_formater_1(dataset):
     formatted_sentence = []
     formatted_pos_tag = []
@@ -155,27 +156,7 @@ def data_selector_formater_1(dataset):
         if BI_exist == False:
             test_sentence_set.remove(sentences)
         print 'len(test_sentence_set)', len(test_sentence_set)
-        # sentence = []
-        # pos_tag = []
-        # selector_flag = []
-        # list_of_tokens = BIO_tagger(filename)
-        # for token in list_of_tokens:
-        #     # for some reason, we MUST use text in unicode
-        #     # sentence.append((token[0].lower().decode('utf-8'), token[2]))
-        #     selector_flag.append(token[2])
-        #     # replace I-tag with B-tag, using only BO tags
-        #     # tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
-        #     sentence.append((token[0].decode('utf-8'), token[1].decode('utf-8'), token[2]))
-        #     pos_tag.append((token[1].decode('utf-8'), token[2])) 
-        # # throw away files that don't have 'B-CUE' or 'I-CUE'
-        # if 'B-CUE' in selector_flag or 'I-CUE' in selector_flag:
-        #     formatted_sentence.append(sentence)
-        #     formatted_pos_tag.append(pos_tag)
-        # if 'B-CUE' not in selector_flag and 'I-CUE' not in selector_flag and random.random() >= 1.1:
-        #     formatted_sentence.append(sentence)
-        #     formatted_pos_tag.append(pos_tag)
-    # print len(formatted_sentence), len(formatted_pos_tag)
-    # print 'len(test_sentence_set)', len(test_sentence_set)
+
     return test_sentence_set, formatted_pos_tag
 
 # process training set by BIO tagging and concatenate tokens into sentence
@@ -186,41 +167,12 @@ training_sentence, training_pos_tag = data_selector_formater(training_set)
 print '\n\n\nformatting development data set in progress...'
 development_sentence, development_pos_tag = data_formater(development_set)
 
-print(sklearn.__version__)
-
-# print 'data_selector_formater_1(training_set)', data_selector_formater_1(training_set)
-# # Let's use CoNLL 2002 data to build a NER system
-# 
-# CoNLL2002 corpus is available in NLTK. We use Spanish data.
-
-# In[2]:
-
-# nltk.corpus.conll2002.fileids()
-
-
-# In[3]:
-
-train_sents = training_sentence + development_sentence
+train_sents = training_sentence
 test_sents = development_sentence
-
-
-# train_sents = list(nltk.corpus.conll2002.iob_sents('esp.train'))
-# test_sents = list(nltk.corpus.conll2002.iob_sents('esp.testb'))
-
-
-# Data format:
-
-# In[4]:
-
-# print train_sents[0]
-
 
 # ## Features
 # 
-# Next, define some features. In this example we use word identity, word suffix, word shape and word POS tag; also, some information from nearby words is used. 
-# 
-# This makes a simple baseline, but you certainly can add and remove some features to get (much?) better results - experiment with it.
-
+# Next, define some features. we use word identity, word shape and word POS tag; also, same information from nearby words is used. 
 # In[5]:
 
 def word2features(sent, i):
@@ -269,7 +221,6 @@ def word2features(sent, i):
         features.append('BOS')
 
     features.extend([
-        # 'bias',
         'word.lower=' + word.lower(),
         # 'word[-3:]=' + word[-3:],
         # 'word[-2:]=' + word[-2:],
@@ -335,13 +286,6 @@ def sent2tokens(sent):
     return [token for token, postag, label in sent]    
 
 
-# This is what word2features extracts:
-
-# In[6]:
-
-# print sent2features(train_sents[0])[0]
-
-
 # Extract the features from the data:
 
 # In[7]:
@@ -371,7 +315,7 @@ trainer.set_params({
     'c1': 1.0,   # coefficient for L1 penalty
     'c2': 1e-3,  # coefficient for L2 penalty
     'max_iterations': 50,  # stop earlier
-    'feature.minfreq': 1,
+    'feature.minfreq': 1, # ignore features that only occurred once
 
     # include transitions that are possible, but not observed
     # 'feature.possible_transitions': True
@@ -395,8 +339,6 @@ trainer.train('conll2002-esp.crfsuite')
 # trainer.train saves model to a file:
 
 # In[12]:
-
-# get_ipython().system(u'ls -lh ./conll2002-esp.crfsuite')
 
 
 # We can also get information about the final state of the model by looking at the trainer's logparser. If we had tagged our input data using the optional group argument in add, and had used the optional holdout argument during train, there would be information about the trainer's performance on the holdout set as well. 
@@ -423,7 +365,7 @@ tagger = pycrfsuite.Tagger()
 tagger.open('conll2002-esp.crfsuite')
 
 
-# Let's tag a sentence to see how it works:
+# Let's tag sentences in evaluation set to see and display the wrong predictions
 
 # In[14]:
 total_error_count = 0
@@ -479,34 +421,6 @@ def test_model(path, model):
         for j in range(len(prediction_word)):
             prediction_result_temp.append((test_sentence_set[i][j][0], prediction_word[j]))
         prediction_result.append(prediction_result_temp)
-    # if model == 'crf':
-    #     # make prediction using crf model
-    #     prediction_word = ct.tag_sents(test_sentence_set)
-    #     prediction_pos = ct_pos.tag_sents(test_pos_set)
-    # elif model == 'hmm':
-    #     # make prediction using hmm model
-    #     prediction_word = []
-    #     prediction_pos = []
-    #     for test_sentence in test_sentence_set:
-    #         prediction_word.append(tagger.tag(test_sentence))
-    #     for test_pos in test_pos_set:
-    #         prediction_pos.append(tagger.tag(test_pos))
-    # elif model == 'perceptron':
-    #     # make prediction using perceptron model
-    #     prediction_word = []
-    #     prediction_pos = []
-    #     for test_sentence in test_sentence_set:
-    #         prediction_word.append(pt.tag(test_sentence))
-    #     for test_pos in test_pos_set:
-    #         prediction_pos.append(tagger.tag(test_pos))
-
-    # for j in range(len(prediction_word)):
-    #     for k in range(len(prediction_word[j])):
-    #         if prediction_word[j][k][1] != prediction_pos[j][k][1] and prediction_word[j][k][0] == prediction_pos[j][k][0]:
-    #             # print prediction_word[j][k], prediction_pos[j][k]
-    #             lst = list(prediction_word[j][k])
-    #             lst[1] = 'O'
-    #             prediction_word[j][k] = tuple(lst)
     
     for single_sentence in prediction_result:
         for single_token in single_sentence:
@@ -599,14 +513,14 @@ def bio_classification_report(y_true, y_pred):
     )
 
 
-# Predict entity labels for all sentences in our testing set ('testb' Spanish data):
+# Predict entity labels for all sentences in our testing set:
 
 # In[16]:
 
 y_pred = [tagger.tag(xseq) for xseq in X_test]
 
-
-# ..and check the result. Note this report is not comparable to results in CONLL2002 papers because here we check per-token results (not per-entity). Per-entity numbers will be worse.  
+print 'y_pred', y_pred
+# ..and check the result. 
 
 # In[17]:
 
@@ -631,7 +545,6 @@ print("\nTop unlikely transitions:")
 print_transitions(Counter(info.transitions).most_common()[-15:])
 
 
-# We can see that, for example, it is very likely that the beginning of an organization name (B-ORG) will be followed by a token inside organization name (I-ORG), but transitions to I-ORG from tokens with other labels are penalized. Also note I-PER -> B-LOC transition: a positive weight means that model thinks that a person name is often followed by a location.
 # 
 # Check the state features:
 
@@ -647,18 +560,3 @@ print_state_features(Counter(info.state_features).most_common(20))
 print("\nTop negative:")
 print_state_features(Counter(info.state_features).most_common()[-20:])
 
-
-# Some observations:
-# 
-# * **8.743642 B-ORG  word.lower=psoe-progresistas** - the model remembered names of some entities - maybe it is overfit, or maybe our features are not adequate, or maybe remembering is indeed helpful;
-# * **5.195429 I-LOC  -1:word.lower=calle**: "calle" is a street in Spanish; model learns that if a previous word was "calle" then the token is likely a part of location;
-# * **-3.529449 O      word.isupper=True**, ** -2.913103 O      word.istitle=True **: UPPERCASED or TitleCased words are likely entities of some kind;
-# * **-2.585756 O      postag=NP** - proper nouns (NP is a proper noun in the Spanish tagset) are often entities.
-
-# ## What to do next
-# 
-# 1. Load 'testa' Spanish data.
-# 2. Use it to develop better features and to find best model parameters.
-# 3. Apply the model to 'testb' data again.
-# 
-# The model in this notebook is just a starting point; you certainly can do better!

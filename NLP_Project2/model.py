@@ -12,6 +12,10 @@ import nltk
 import csv
 import random
 from nltk.metrics.scores import f_measure
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.preprocessing import LabelBinarizer
+import sklearn
+from itertools import chain
 
 def BIO_tagger(file): # this function processes the document passed in, and replace CUE tags with BIO tags
 	token_lists = []
@@ -99,12 +103,13 @@ def data_formater(dataset):
 			# sentence.append((token[0].lower().decode('utf-8'), token[2]))
 			# replace I-tag with B-tag, using only BO tags
 			tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
-			word_token = token[0].lower().decode('utf-8') if token[0] not in single_occurance_word else '<UNK>'.decode('utf-8')
-			# sentence.append((token[0].lower().decode('utf-8'), token[2]))
-			sentence.append((word_token, token[2]))
+			# word_token = token[0].lower().decode('utf-8') if token[0] not in single_occurance_word else '<UNK>'.decode('utf-8')
+			sentence.append((token[0].decode('utf-8').lower(), tag))
+			# sentence.append((word_token, token[2]))
 			pos_tag.append((token[1].decode('utf-8'), token[2]))
 		formatted_sentence.append(sentence)
 		formatted_pos_tag.append(pos_tag)
+	# print len(formatted_sentence), len(formatted_pos_tag)
 	return formatted_sentence, formatted_pos_tag
 
 def data_selector_formater(dataset):
@@ -121,7 +126,7 @@ def data_selector_formater(dataset):
 			selector_flag.append(token[2])
 			# replace I-tag with B-tag, using only BO tags
 			tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
-			sentence.append((token[0].lower().decode('utf-8'), token[2]))
+			sentence.append((token[0].decode('utf-8').lower(), token[2]))
 			pos_tag.append((token[1].decode('utf-8'), token[2])) 
 		# throw away files that don't have 'B-CUE' or 'I-CUE'
 		if 'B-CUE' in selector_flag or 'I-CUE' in selector_flag:
@@ -155,6 +160,29 @@ training_sentence, training_pos_tag = data_formater(training_set)
 print '\n\n\nformatting development data set in progress...'
 development_sentence, development_pos_tag = data_formater(development_set)
 
+def bio_classification_report(y_true, y_pred):
+    """
+    Classification report for a list of BIO-encoded sequences.
+    It computes token-level metrics and discards "O" labels.
+    
+    Note that it requires scikit-learn 0.15+ (or a version from github master)
+    to calculate averages properly!
+    """
+    lb = LabelBinarizer()
+    y_true_combined = lb.fit_transform(list(chain.from_iterable(y_true)))
+    y_pred_combined = lb.transform(list(chain.from_iterable(y_pred)))
+        
+    tagset = set(lb.classes_) #- {'O'}
+    tagset = sorted(tagset, key=lambda tag: tag.split('-', 1)[::-1])
+    class_indices = {cls: idx for idx, cls in enumerate(lb.classes_)}
+    
+    return classification_report(
+        y_true_combined,
+        y_pred_combined,
+        labels = [class_indices[cls] for cls in tagset],
+        target_names = tagset,
+    )
+
 # evaluate
 def evaluation (correct_sentence_set, model):
 	sentence_to_evaluate = []
@@ -187,24 +215,41 @@ def evaluation (correct_sentence_set, model):
 
 	# development_sentence
 	# ct.tag_sents(development_sentence)
+	prediction_to_evaluate_temp = []
 	prediction_to_evaluate = []
 	for evaluate_result in prediction_word:
-		prediction_to_evaluate += evaluate_result
+		prediction_to_evaluate_temp += evaluate_result
+	# for value in prediction_to_evaluate_temp:
+	# 	prediction_to_evaluate.append(value[1])
+
+	correct_set_temp = []
 	correct_set = []
 	for evaluate_result in correct_sentence_set:
-		correct_set += evaluate_result
+		for i in range(len(evaluate_result)):
+			evaluate_result[i] = evaluate_result[i][1]
+		# correct_set_temp += evaluate_result
 
-	print model, 'f_measure', f_measure(set(prediction_to_evaluate), set(correct_set), alpha=0.5)
+	for evaluate_result in prediction_word:
+		for i in range(len(evaluate_result)):
+			evaluate_result[i] = evaluate_result[i][1]
+
+	# for a in range(len(correct_set_temp)):
+	# 	correct_set.append(correct_set_temp[a][1])
+	# 	prediction_to_evaluate.append(prediction_to_evaluate_temp[a][1])
+	# print len(correct_set), len(prediction_to_evaluate)
+	# print model, 'f_measure', f_measure(set(prediction_to_evaluate), set(correct_set), alpha=0.5)
+	print model, 'f_measure'
+	print bio_classification_report(correct_sentence_set, prediction_word)
 	return
 
-# # train and evaluate nltk tagging crf module
-# print '\n\n\ntraining crf model in progress...'
-# ct = nltk.tag.CRFTagger()
-# ct_pos = nltk.tag.CRFTagger()
-# ct.train(training_sentence,'model.crf.tagger')
-# ct_pos.train(training_pos_tag, 'model.crf_pos.tagger')
-# ct.set_model_file('model.crf.tagger')
-# print "\n\n\nevaluation of crf model: %.3f%%" % (100 * ct.evaluate(development_sentence))
+# train and evaluate nltk tagging crf module
+print '\n\n\ntraining crf model in progress...'
+ct = nltk.tag.CRFTagger()
+ct_pos = nltk.tag.CRFTagger()
+ct.train(training_sentence,'model.crf.tagger')
+ct_pos.train(training_pos_tag, 'model.crf_pos.tagger')
+ct.set_model_file('model.crf.tagger')
+print "\n\n\nevaluation of crf model: %.3f%%" % (100 * ct.evaluate(development_sentence))
 
 # train and evaluate nltk tagging hmm module
 print '\n\n\ntraining hmm model in progress...'
@@ -213,15 +258,17 @@ tagger = ht.train_supervised(training_sentence)
 tagger_pos = ht.train_supervised(training_pos_tag)
 print "\n\n\nevaluation of hmm model: %.3f%%" % (100 * tagger.evaluate(development_sentence))
 
-# # train and evaluate nltk tagging perceptron module
-# print '\n\n\ntraining perceptron model in progress...'
-# pt = nltk.tag.perceptron.PerceptronTagger(load=False)
-# pt_pos = nltk.tag.perceptron.PerceptronTagger(load=False)
-# pt.train(training_sentence, 'model.perceptron.tagger', nr_iter=8)
-# pt_pos.train(training_pos_tag, 'model.perceptron_pos.tagger', nr_iter=8)
-# print "\n\n\nevaluation of perceptron model: %.3f%%" % (100 * pt.evaluate(development_sentence))
+# train and evaluate nltk tagging perceptron module
+print '\n\n\ntraining perceptron model in progress...'
+pt = nltk.tag.perceptron.PerceptronTagger(load=False)
+pt_pos = nltk.tag.perceptron.PerceptronTagger(load=False)
+pt.train(training_sentence, 'model.perceptron.tagger', nr_iter=8)
+pt_pos.train(training_pos_tag, 'model.perceptron_pos.tagger', nr_iter=8)
+print "\n\n\nevaluation of perceptron model: %.3f%%" % (100 * pt.evaluate(development_sentence))
 
+evaluation(development_sentence, 'crf')
 evaluation(development_sentence, 'hmm')
+evaluation(development_sentence, 'perceptron')
 
 test_public_path = './nlp_project2_uncertainty/test-public/*.txt'
 test_private_path = './nlp_project2_uncertainty/test-private/*.txt'
@@ -281,8 +328,8 @@ def test_model(path, model):
 					continue
 				else:
 					prev_line_blank = False
-					test_sentence.append(words[0].lower().decode('utf-8'))
-					test_pos.append(words[1].lower().decode('utf-8'))
+					test_sentence.append(words[0].decode('utf-8').lower())
+					test_pos.append(words[1].decode('utf-8').lower())
 
 	if model == 'crf':
 		# make prediction using crf model
