@@ -304,8 +304,11 @@ def write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_re
 	def syntax_sentence(result):
 		l = []
 		s = ''
+		l_temp = []
 		for r in result:
-			s += str(r) + ' '
+			if r not in l_temp:
+				s += str(r) + ' '
+				l_temp.append(r)
 		l.append(s)
 		return l
 	w_pu = syntax_word(word_result_pu)

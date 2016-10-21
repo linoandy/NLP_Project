@@ -64,7 +64,7 @@ def data_formater(dataset):
             # for some reason, we MUST use text in unicode
             # sentence.append((token[0].lower().decode('utf-8'), token[2]))
             # replace I-tag with B-tag, using only BO tags
-            # tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
+            tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
             # word_token = token[0].lower().decode('utf-8') if token[0] not in single_occurance_word else '<UNK>'.decode('utf-8')
             sentence.append((token[0].decode('utf-8'), token[1].decode('utf-8'), token[2]))
             pos_tag.append((token[1].decode('utf-8'), token[2]))
@@ -85,9 +85,9 @@ def data_selector_formater(dataset):
             # sentence.append((token[0].lower().decode('utf-8'), token[2]))
             selector_flag.append(token[2])
             # replace I-tag with B-tag, using only BO tags
-            tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
-            sentence.append((token[0].lower().decode('utf-8'), tag))
-            pos_tag.append((token[1].decode('utf-8'), tag)) 
+            # tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
+            sentence.append((token[0].decode('utf-8'), token[1].decode('utf-8'), token[2]))
+            pos_tag.append((token[1].decode('utf-8'), token[2])) 
         # throw away files that don't have 'B-CUE' or 'I-CUE'
         if 'B-CUE' in selector_flag or 'I-CUE' in selector_flag:
             formatted_sentence.append(sentence)
@@ -98,9 +98,89 @@ def data_selector_formater(dataset):
     # print len(formatted_sentence), len(formatted_pos_tag)
     return formatted_sentence, formatted_pos_tag
 
+def data_selector_formater_1(dataset):
+    formatted_sentence = []
+    formatted_pos_tag = []
+    test_sentence_set = []
+    test_pos_set = []
+    for filename in dataset:
+        with open(filename, 'r') as f:
+            test_sentence = []
+            test_pos = []
+            prev_line_blank = False
+            for line in f:
+                words = line.split()
+
+                if len(words) == 0 or words[0].decode('utf-8') == '.'.decode('utf-8'):
+                    if(prev_line_blank == True):
+                        continue
+                    prev_line_blank = True
+                    test_sentence_set.append(test_sentence)
+                    test_pos_set.append(test_pos)
+                    test_sentence = []
+                    test_pos = []
+                    continue
+                else:
+                    prev_line_blank = False
+                    test_sentence.append([words[0].decode('utf-8'), words[1].decode('utf-8'), words[2]])
+                    test_pos.append(words[1].lower().decode('utf-8'))
+
+    def BIO(token_lists): # this function processes the document passed in, and replace CUE tags with BIO tags
+        # replace '_\n' with tag 'O'
+        for token_list in token_lists:
+            if token_list[2] == '_':
+                token_list[2] = 'O'
+
+        previous_tagger = ''
+        for i in range(len(token_lists)):
+            previous_tagger_temp = token_lists[i][2]
+            if token_lists[i][2].find('CUE') != -1:
+                # replace 'CUE-n' that don't equal to the tag of 'CUE-(n-1)' with 'B-CUE' 
+                if i == 0 or token_lists[i][2] != previous_tagger:
+                    token_lists[i][2] = 'B-CUE'
+                # replace other 'CUE-n' with 'I-CUE'
+                else:
+                    token_lists[i][2] = 'I-CUE'
+            previous_tagger = previous_tagger_temp
+        return token_lists
+
+    for sentence in test_sentence_set:
+        sentence = BIO(sentence)
+
+    for sentences in test_sentence_set:
+        BI_exist = False
+        for sentence in sentences:
+            if sentence[2] == 'B-CUE' or sentence[2] == 'I-CUE':
+                BI_exist = True
+        if BI_exist == False:
+            test_sentence_set.remove(sentences)
+        print 'len(test_sentence_set)', len(test_sentence_set)
+        # sentence = []
+        # pos_tag = []
+        # selector_flag = []
+        # list_of_tokens = BIO_tagger(filename)
+        # for token in list_of_tokens:
+        #     # for some reason, we MUST use text in unicode
+        #     # sentence.append((token[0].lower().decode('utf-8'), token[2]))
+        #     selector_flag.append(token[2])
+        #     # replace I-tag with B-tag, using only BO tags
+        #     # tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
+        #     sentence.append((token[0].decode('utf-8'), token[1].decode('utf-8'), token[2]))
+        #     pos_tag.append((token[1].decode('utf-8'), token[2])) 
+        # # throw away files that don't have 'B-CUE' or 'I-CUE'
+        # if 'B-CUE' in selector_flag or 'I-CUE' in selector_flag:
+        #     formatted_sentence.append(sentence)
+        #     formatted_pos_tag.append(pos_tag)
+        # if 'B-CUE' not in selector_flag and 'I-CUE' not in selector_flag and random.random() >= 1.1:
+        #     formatted_sentence.append(sentence)
+        #     formatted_pos_tag.append(pos_tag)
+    # print len(formatted_sentence), len(formatted_pos_tag)
+    # print 'len(test_sentence_set)', len(test_sentence_set)
+    return test_sentence_set, formatted_pos_tag
+
 # process training set by BIO tagging and concatenate tokens into sentence
 print '\n\n\nformatting training data set in progress...'
-training_sentence, training_pos_tag = data_formater(training_set)
+training_sentence, training_pos_tag = data_selector_formater(training_set)
 
 # process development set by BIO tagging and concatenate tokens into sentence
 print '\n\n\nformatting development data set in progress...'
@@ -108,7 +188,7 @@ development_sentence, development_pos_tag = data_formater(development_set)
 
 print(sklearn.__version__)
 
-
+# print 'data_selector_formater_1(training_set)', data_selector_formater_1(training_set)
 # # Let's use CoNLL 2002 data to build a NER system
 # 
 # CoNLL2002 corpus is available in NLTK. We use Spanish data.
@@ -120,7 +200,7 @@ print(sklearn.__version__)
 
 # In[3]:
 
-train_sents = training_sentence
+train_sents = training_sentence + development_sentence
 test_sents = development_sentence
 
 
@@ -146,49 +226,106 @@ test_sents = development_sentence
 def word2features(sent, i):
     word = sent[i][0]
     postag = sent[i][1]
-    features = [
-        'bias',
-        'word.lower=' + word.lower(),
-        # 'word[-3:]=' + word[-3:],
-        # 'word[-2:]=' + word[-2:],
-        'word.isupper=%s' % word.isupper(),
-        'word.istitle=%s' % word.istitle(),
-        'word.isdigit=%s' % word.isdigit(),
-        'postag=' + postag,
-        # 'word.maymight=%s' % str(not word.lower() in ['may', 'might', 'should', 'suggest']),
-        # 'postag[:2]=' + postag[:2],
-    ]
-    # print features
+    features = []
+
+
+    if i > 2:
+        word1 = sent[i-3][0]
+        postag1 = sent[i-3][1]
+        features.extend([
+            '-3:word.lower=' + word1.lower(),
+            '-3:word.istitle=%s' % word1.istitle(),
+            # '-3:word.isupper=%s' % word1.isupper(),
+            '-3:postag=' + postag1,
+            # '-1:postag[:2]=' + postag1[:2],
+        ])
+    # else:
+    #     features.append('BOS')
+
+    if i > 1:
+        word1 = sent[i-2][0]
+        postag1 = sent[i-2][1]
+        features.extend([
+            '-2:word.lower=' + word1.lower(),
+            '-2:word.istitle=%s' % word1.istitle(),
+            # '-2:word.isupper=%s' % word1.isupper(),
+            '-2:postag=' + postag1,
+            # '-1:postag[:2]=' + postag1[:2],
+        ])
+    # else:
+    #     features.append('BOS')
+
     if i > 0:
         word1 = sent[i-1][0]
         postag1 = sent[i-1][1]
         features.extend([
             '-1:word.lower=' + word1.lower(),
             '-1:word.istitle=%s' % word1.istitle(),
-            '-1:word.isupper=%s' % word1.isupper(),
+            # '-1:word.isupper=%s' % word1.isupper(),
             '-1:postag=' + postag1,
             # '-1:postag[:2]=' + postag1[:2],
         ])
-    else:
-        features.append('BOS')
-        
+    # else:
+    #     features.append('BOS')
+
+    features.extend([
+        # 'bias',
+        'word.lower=' + word.lower(),
+        # 'word[-3:]=' + word[-3:],
+        # 'word[-2:]=' + word[-2:],
+        # 'word.isupper=%s' % word.isupper(),
+        'word.istitle=%s' % word.istitle(),
+        # 'word.isdigit=%s' % word.isdigit(),
+        'postag=' + postag,
+        # 'word.maymight=%s' % str(not word.lower() in ['may', 'might', 'should', 'suggest']),
+        # 'postag[:2]=' + postag[:2],
+    ])
+
     if i < len(sent)-1:
         word1 = sent[i+1][0]
         postag1 = sent[i+1][1]
         features.extend([
             '+1:word.lower=' + word1.lower(),
             '+1:word.istitle=%s' % word1.istitle(),
-            '+1:word.isupper=%s' % word1.isupper(),
+            # '+1:word.isupper=%s' % word1.isupper(),
             '+1:postag=' + postag1,
             # '+1:postag[:2]=' + postag1[:2],
         ])
-    else:
-        features.append('EOS')
-                
+    # else:
+    #     features.append('EOS')
+
+    if i < len(sent)-2:
+        word1 = sent[i+2][0]
+        postag1 = sent[i+2][1]
+        features.extend([
+            '+2:word.lower=' + word1.lower(),
+            '+2:word.istitle=%s' % word1.istitle(),
+            # '+2:word.isupper=%s' % word1.isupper(),
+            '+2:postag=' + postag1,
+            # '+1:postag[:2]=' + postag1[:2],
+        ])
+    # else:
+    #     features.append('EOS')
+
+    if i < len(sent)-3:
+        word1 = sent[i+3][0]
+        postag1 = sent[i+3][1]
+        features.extend([
+            '+3:word.lower=' + word1.lower(),
+            '+3:word.istitle=%s' % word1.istitle(),
+            # '+3:word.isupper=%s' % word1.isupper(),
+            '+3:postag=' + postag1,
+            # '+1:postag[:2]=' + postag1[:2],
+        ])
+    # else:
+    #     features.append('EOS')
+
+    # print 'features', features            
     return features
 
 
 def sent2features(sent):
+    # print 'sent', sent
     return [word2features(sent, i) for i in range(len(sent))]
 
 def sent2labels(sent):
@@ -214,7 +351,6 @@ y_train = [sent2labels(s) for s in train_sents]
 X_test = [sent2features(s) for s in test_sents]
 y_test = [sent2labels(s) for s in test_sents]
 
-
 # ## Train the model
 # 
 # To train the model, we create pycrfsuite.Trainer, load the training data and call 'train' method. 
@@ -235,9 +371,10 @@ trainer.set_params({
     'c1': 1.0,   # coefficient for L1 penalty
     'c2': 1e-3,  # coefficient for L2 penalty
     'max_iterations': 50,  # stop earlier
+    'feature.minfreq': 1,
 
     # include transitions that are possible, but not observed
-    'feature.possible_transitions': True
+    # 'feature.possible_transitions': True
 })
 
 
@@ -289,18 +426,19 @@ tagger.open('conll2002-esp.crfsuite')
 # Let's tag a sentence to see how it works:
 
 # In[14]:
-# for sents in test_sents:
-#     print tagger.tag(sent2features(sents))
-
+total_error_count = 0
+totol_O_count = 0
 for i in range(len(test_sents)):
     example_sent = test_sents[i]
     for j in range(len(example_sent)):
         if tagger.tag(sent2features(example_sent))[j] != sent2labels(example_sent)[j]:
+            total_error_count += 1
+            if tagger.tag(sent2features(example_sent))[j] == 'O':
+                totol_O_count += 1
             print '(', example_sent[j][0], ', ', tagger.tag(sent2features(example_sent))[j], ', ', sent2labels(example_sent)[j],')'
-    # print(' '.join(sent2tokens(example_sent)))
 
-    # print("Predicted:", ' '.join(tagger.tag(sent2features(example_sent))))
-    # print("Correct:  ", ' '.join(sent2labels(example_sent)))
+print 'total_error_count', total_error_count
+print 'O percentage', totol_O_count/float(total_error_count)
 
 test_public_path = './nlp_project2_uncertainty/test-public/*.txt'
 test_private_path = './nlp_project2_uncertainty/test-private/*.txt'
@@ -372,7 +510,7 @@ def test_model(path, model):
     
     for single_sentence in prediction_result:
         for single_token in single_sentence:
-            print single_token
+            # print single_token
             if single_token[1] == 'B-CUE' or single_token[1] == 'I-CUE':
                 word_result.append(word_num)
                 sentence_result.append(sentence_num)
@@ -449,7 +587,7 @@ def bio_classification_report(y_true, y_pred):
     y_true_combined = lb.fit_transform(list(chain.from_iterable(y_true)))
     y_pred_combined = lb.transform(list(chain.from_iterable(y_pred)))
         
-    tagset = set(lb.classes_) - {'O'}
+    tagset = set(lb.classes_) #- {'O'}
     tagset = sorted(tagset, key=lambda tag: tag.split('-', 1)[::-1])
     class_indices = {cls: idx for idx, cls in enumerate(lb.classes_)}
     
