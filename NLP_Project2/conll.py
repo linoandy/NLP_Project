@@ -239,8 +239,8 @@ def word2features(sent, i):
             '-3:postag=' + postag1,
             # '-1:postag[:2]=' + postag1[:2],
         ])
-    # else:
-    #     features.append('BOS')
+    else:
+        features.append('BOS')
 
     if i > 1:
         word1 = sent[i-2][0]
@@ -252,8 +252,8 @@ def word2features(sent, i):
             '-2:postag=' + postag1,
             # '-1:postag[:2]=' + postag1[:2],
         ])
-    # else:
-    #     features.append('BOS')
+    else:
+        features.append('BOS')
 
     if i > 0:
         word1 = sent[i-1][0]
@@ -265,8 +265,8 @@ def word2features(sent, i):
             '-1:postag=' + postag1,
             # '-1:postag[:2]=' + postag1[:2],
         ])
-    # else:
-    #     features.append('BOS')
+    else:
+        features.append('BOS')
 
     features.extend([
         # 'bias',
@@ -291,8 +291,8 @@ def word2features(sent, i):
             '+1:postag=' + postag1,
             # '+1:postag[:2]=' + postag1[:2],
         ])
-    # else:
-    #     features.append('EOS')
+    else:
+        features.append('EOS')
 
     if i < len(sent)-2:
         word1 = sent[i+2][0]
@@ -304,8 +304,8 @@ def word2features(sent, i):
             '+2:postag=' + postag1,
             # '+1:postag[:2]=' + postag1[:2],
         ])
-    # else:
-    #     features.append('EOS')
+    else:
+        features.append('EOS')
 
     if i < len(sent)-3:
         word1 = sent[i+3][0]
@@ -317,8 +317,8 @@ def word2features(sent, i):
             '+3:postag=' + postag1,
             # '+1:postag[:2]=' + postag1[:2],
         ])
-    # else:
-    #     features.append('EOS')
+    else:
+        features.append('EOS')
 
     # print 'features', features            
     return features
@@ -469,7 +469,7 @@ def test_model(path, model):
                     continue
                 else:
                     prev_line_blank = False
-                    test_sentence.append((words[0].lower().decode('utf-8'), words[0].lower().decode('utf-8')))
+                    test_sentence.append((words[0].decode('utf-8'), words[1].decode('utf-8')))
                     # test_pos.append(words[1].lower().decode('utf-8'))
 
     prediction_result = []

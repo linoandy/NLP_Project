@@ -11,6 +11,7 @@ import re
 import nltk
 import csv
 import random
+from nltk.metrics.scores import f_measure
 
 def BIO_tagger(file): # this function processes the document passed in, and replace CUE tags with BIO tags
 	token_lists = []
@@ -99,8 +100,8 @@ def data_formater(dataset):
 			# replace I-tag with B-tag, using only BO tags
 			tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
 			# word_token = token[0].lower().decode('utf-8') if token[0] not in single_occurance_word else '<UNK>'.decode('utf-8')
-			sentence.append((token[0].lower().decode('utf-8'), tag))
-			pos_tag.append((token[1].decode('utf-8'), tag))
+			sentence.append((token[0].lower().decode('utf-8'), token[2]))
+			pos_tag.append((token[1].decode('utf-8'), token[2]))
 		formatted_sentence.append(sentence)
 		formatted_pos_tag.append(pos_tag)
 	return formatted_sentence, formatted_pos_tag
@@ -119,8 +120,8 @@ def data_selector_formater(dataset):
 			selector_flag.append(token[2])
 			# replace I-tag with B-tag, using only BO tags
 			tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
-			sentence.append((token[0].lower().decode('utf-8'), tag))
-			pos_tag.append((token[1].decode('utf-8'), tag)) 
+			sentence.append((token[0].lower().decode('utf-8'), token[2]))
+			pos_tag.append((token[1].decode('utf-8'), token[2])) 
 		# throw away files that don't have 'B-CUE' or 'I-CUE'
 		if 'B-CUE' in selector_flag or 'I-CUE' in selector_flag:
 			formatted_sentence.append(sentence)
@@ -162,12 +163,54 @@ ct_pos.train(training_pos_tag, 'model.crf_pos.tagger')
 ct.set_model_file('model.crf.tagger')
 print "\n\n\nevaluation of crf model: %.3f%%" % (100 * ct.evaluate(development_sentence))
 
-# # train and evaluate nltk tagging hmm module
-# print '\n\n\ntraining hmm model in progress...'
-# ht = nltk.tag.hmm.HiddenMarkovModelTrainer()
-# tagger = ht.train_supervised(training_sentence)
-# tagger_pos = ht.train_supervised(training_pos_tag)
-# print "\n\n\nevaluation of hmm model: %.3f%%" % (100 * tagger.evaluate(development_sentence))
+# evaluate
+def evaluation (correct_sentence_set, model):
+	sentence_to_evaluate = []
+	for correct_sentence in correct_sentence_set:
+		sentence_temp = []
+		for correct_token in correct_sentence:
+			sentence_temp.append(correct_token[0])
+		sentence_to_evaluate.append(sentence_temp)
+
+	if model == 'crf':
+		# make prediction using crf model
+		prediction_word = ct.tag_sents(sentence_to_evaluate)
+		# prediction_pos = ct_pos.tag_sents(test_pos_set)
+	elif model == 'hmm':
+		# make prediction using hmm model
+		prediction_word = []
+		prediction_pos = []
+		for test_sentence in sentence_to_evaluate:
+			prediction_word.append(tagger.tag(test_sentence))
+		# for test_pos in test_pos_set:
+		# 	prediction_pos.append(tagger.tag(test_pos))
+	elif model == 'perceptron':
+		# make prediction using perceptron model
+		prediction_word = []
+		prediction_pos = []
+		for test_sentence in sentence_to_evaluate:
+			prediction_word.append(pt.tag(test_sentence))
+		# for test_pos in test_pos_set:
+		# 	prediction_pos.append(tagger.tag(test_pos))
+
+	# development_sentence
+	# ct.tag_sents(development_sentence)
+	prediction_to_evaluate = []
+	for evaluate_result in prediction_word:
+		prediction_to_evaluate += evaluate_result
+	correct_set = []
+	for evaluate_result in correct_sentence_set:
+		correct_set += evaluate_result
+
+	print 'f_measure', f_measure(set(prediction_to_evaluate), set(correct_set), alpha=0.5)
+	return
+
+# train and evaluate nltk tagging hmm module
+print '\n\n\ntraining hmm model in progress...'
+ht = nltk.tag.hmm.HiddenMarkovModelTrainer()
+tagger = ht.train_supervised(training_sentence)
+tagger_pos = ht.train_supervised(training_pos_tag)
+print "\n\n\nevaluation of hmm model: %.3f%%" % (100 * tagger.evaluate(development_sentence))
 
 # # train and evaluate nltk tagging perceptron module
 # print '\n\n\ntraining perceptron model in progress...'
@@ -176,6 +219,8 @@ print "\n\n\nevaluation of crf model: %.3f%%" % (100 * ct.evaluate(development_s
 # pt.train(training_sentence, 'model.perceptron.tagger', nr_iter=8)
 # pt_pos.train(training_pos_tag, 'model.perceptron_pos.tagger', nr_iter=8)
 # print "\n\n\nevaluation of perceptron model: %.3f%%" % (100 * pt.evaluate(development_sentence))
+
+evaluation(development_sentence, 'hmm')
 
 test_public_path = './nlp_project2_uncertainty/test-public/*.txt'
 test_private_path = './nlp_project2_uncertainty/test-private/*.txt'
@@ -269,7 +314,7 @@ def test_model(path, model):
 	
 	for single_sentence in prediction_word:
 		for single_token in single_sentence:
-			print single_token
+			# print single_token
 			if single_token[1] == 'B-CUE' or single_token[1] == 'I-CUE':
 				word_result.append(word_num)
 				sentence_result.append(sentence_num)
