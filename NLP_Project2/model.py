@@ -99,8 +99,9 @@ def data_formater(dataset):
 			# sentence.append((token[0].lower().decode('utf-8'), token[2]))
 			# replace I-tag with B-tag, using only BO tags
 			tag = 'B-CUE' if token[2] == 'I-CUE' else token[2]
-			# word_token = token[0].lower().decode('utf-8') if token[0] not in single_occurance_word else '<UNK>'.decode('utf-8')
-			sentence.append((token[0].lower().decode('utf-8'), token[2]))
+			word_token = token[0].lower().decode('utf-8') if token[0] not in single_occurance_word else '<UNK>'.decode('utf-8')
+			# sentence.append((token[0].lower().decode('utf-8'), token[2]))
+			sentence.append((word_token, token[2]))
 			pos_tag.append((token[1].decode('utf-8'), token[2]))
 		formatted_sentence.append(sentence)
 		formatted_pos_tag.append(pos_tag)
@@ -144,7 +145,7 @@ def counter(dataset):
 			corpus.append(word_count)
 	return corpus
 
-# single_occurance_word = counter(training_set)
+single_occurance_word = counter(training_set)
 
 # process training set by BIO tagging and concatenate tokens into sentence
 print '\n\n\nformatting training data set in progress...'
@@ -153,15 +154,6 @@ training_sentence, training_pos_tag = data_formater(training_set)
 # process development set by BIO tagging and concatenate tokens into sentence
 print '\n\n\nformatting development data set in progress...'
 development_sentence, development_pos_tag = data_formater(development_set)
-
-# train and evaluate nltk tagging crf module
-print '\n\n\ntraining crf model in progress...'
-ct = nltk.tag.CRFTagger()
-ct_pos = nltk.tag.CRFTagger()
-ct.train(training_sentence,'model.crf.tagger')
-ct_pos.train(training_pos_tag, 'model.crf_pos.tagger')
-ct.set_model_file('model.crf.tagger')
-print "\n\n\nevaluation of crf model: %.3f%%" % (100 * ct.evaluate(development_sentence))
 
 # evaluate
 def evaluation (correct_sentence_set, model):
@@ -202,8 +194,17 @@ def evaluation (correct_sentence_set, model):
 	for evaluate_result in correct_sentence_set:
 		correct_set += evaluate_result
 
-	print 'f_measure', f_measure(set(prediction_to_evaluate), set(correct_set), alpha=0.5)
+	print model, 'f_measure', f_measure(set(prediction_to_evaluate), set(correct_set), alpha=0.5)
 	return
+
+# # train and evaluate nltk tagging crf module
+# print '\n\n\ntraining crf model in progress...'
+# ct = nltk.tag.CRFTagger()
+# ct_pos = nltk.tag.CRFTagger()
+# ct.train(training_sentence,'model.crf.tagger')
+# ct_pos.train(training_pos_tag, 'model.crf_pos.tagger')
+# ct.set_model_file('model.crf.tagger')
+# print "\n\n\nevaluation of crf model: %.3f%%" % (100 * ct.evaluate(development_sentence))
 
 # train and evaluate nltk tagging hmm module
 print '\n\n\ntraining hmm model in progress...'
