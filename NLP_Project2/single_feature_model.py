@@ -159,8 +159,7 @@ training_sentence, training_pos_tag = data_formater(training_set)
 # process development set by BIO tagging and concatenate tokens into sentence
 print '\n\n\nformatting development data set in progress...'
 development_sentence, development_pos_tag = data_formater(development_set)
-# evaluation_set_2 = development_sentence
-# evaluation_set_3 = development_sentence
+# evaluation_set = development_sentence
 
 def bio_classification_report(y_true, y_pred):
     """
