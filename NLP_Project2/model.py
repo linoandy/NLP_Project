@@ -159,6 +159,8 @@ training_sentence, training_pos_tag = data_formater(training_set)
 # process development set by BIO tagging and concatenate tokens into sentence
 print '\n\n\nformatting development data set in progress...'
 development_sentence, development_pos_tag = data_formater(development_set)
+# evaluation_set_2 = development_sentence
+# evaluation_set_3 = development_sentence
 
 def bio_classification_report(y_true, y_pred):
     """
@@ -267,8 +269,8 @@ pt_pos.train(training_pos_tag, 'model.perceptron_pos.tagger', nr_iter=8)
 print "\n\n\nevaluation of perceptron model: %.3f%%" % (100 * pt.evaluate(development_sentence))
 
 evaluation(development_sentence, 'crf')
-evaluation(development_sentence, 'hmm')
-evaluation(development_sentence, 'perceptron')
+# evaluation(development_sentence, 'hmm')
+# evaluation(development_sentence, 'perceptron')
 
 test_public_path = './nlp_project2_uncertainty/test-public/*.txt'
 test_private_path = './nlp_project2_uncertainty/test-private/*.txt'
@@ -408,12 +410,12 @@ def write_to_csv(word_result_pu, word_result_pr, sentence_result_pu, sentence_re
 	w_pr = syntax_word(word_result_pr)
 	s_pu = syntax_sentence(sentence_result_pu)
 	s_pr = syntax_sentence(sentence_result_pr)
-	with open('word_result_crf.csv', 'wb') as f:
+	with open('word_result.csv', 'wb') as f:
 		a = csv.writer(f)
 		a.writerow(['Type', 'Spans'])
 		a.writerow(['CUE-public'] + w_pu)
 		a.writerow(['CUE-private'] + w_pr)
-	with open('sentence_result_crf.csv', 'wb') as f:
+	with open('sentence_result.csv', 'wb') as f:
 		a = csv.writer(f)
 		a.writerow(['Type', 'Indices'])
 		a.writerow(['SENTENCE-public'] + s_pu)

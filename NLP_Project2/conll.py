@@ -519,7 +519,6 @@ def bio_classification_report(y_true, y_pred):
 
 y_pred = [tagger.tag(xseq) for xseq in X_test]
 
-print 'y_pred', y_pred
 # ..and check the result. 
 
 # In[17]:
