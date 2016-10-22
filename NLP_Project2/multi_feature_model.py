@@ -228,7 +228,7 @@ def word2features(sent, i):
         'word.istitle=%s' % word.istitle(),
         # 'word.isdigit=%s' % word.isdigit(),
         'postag=' + postag,
-        # 'word.maymight=%s' % str(not word.lower() in ['may', 'might', 'should', 'suggest']),
+        # 'word.maymight=%s' % str(word.lower() in ['may', 'might', 'should', 'suggest', 'predict', 'likely', 'claim', 'consistently']),
         # 'postag[:2]=' + postag[:2],
     ])
 

@@ -2,8 +2,8 @@
 
 ###############
 # please unzip the data file, and put the folder nlp_project2_uncertainty 
-# in the same location as this script, training.py
-# then run training.py and you should get the baseline output on screen and in csv
+# in the same location as this script, single_feature_model.py
+# then run single_feature_model.py and you should get the output on screen and in csv
 ###############
 
 import glob
@@ -159,7 +159,7 @@ training_sentence, training_pos_tag = data_formater(training_set)
 # process development set by BIO tagging and concatenate tokens into sentence
 print '\n\n\nformatting development data set in progress...'
 development_sentence, development_pos_tag = data_formater(development_set)
-# evaluation_set = development_sentence
+evaluation_set = development_sentence
 
 def bio_classification_report(y_true, y_pred):
     """
@@ -185,7 +185,8 @@ def bio_classification_report(y_true, y_pred):
     )
 
 # evaluate
-def evaluation (correct_sentence_set, model):
+def evaluation (correct_sent_set, model):
+	correct_sentence_set = list(correct_sent_set)
 	sentence_to_evaluate = []
 	for correct_sentence in correct_sentence_set:
 		sentence_temp = []
@@ -214,33 +215,29 @@ def evaluation (correct_sentence_set, model):
 		# for test_pos in test_pos_set:
 		# 	prediction_pos.append(tagger.tag(test_pos))
 
-	# development_sentence
-	# ct.tag_sents(development_sentence)
-	prediction_to_evaluate_temp = []
-	prediction_to_evaluate = []
-	for evaluate_result in prediction_word:
-		prediction_to_evaluate_temp += evaluate_result
-	# for value in prediction_to_evaluate_temp:
-	# 	prediction_to_evaluate.append(value[1])
-
-	correct_set_temp = []
 	correct_set = []
+	# print correct_sentence_set
 	for evaluate_result in correct_sentence_set:
+		correct_set_temp = []
 		for i in range(len(evaluate_result)):
-			evaluate_result[i] = evaluate_result[i][1]
+			correct_set_temp.append(evaluate_result[i][1])
+		correct_set.append(correct_set_temp)
 		# correct_set_temp += evaluate_result
 
+	prediction_to_evaluate = []
 	for evaluate_result in prediction_word:
+		prediction_to_evaluate_temp = []
 		for i in range(len(evaluate_result)):
-			evaluate_result[i] = evaluate_result[i][1]
+			prediction_to_evaluate_temp.append(evaluate_result[i][1])
+		prediction_to_evaluate.append(prediction_to_evaluate_temp)
 
 	# for a in range(len(correct_set_temp)):
 	# 	correct_set.append(correct_set_temp[a][1])
 	# 	prediction_to_evaluate.append(prediction_to_evaluate_temp[a][1])
 	# print len(correct_set), len(prediction_to_evaluate)
 	# print model, 'f_measure', f_measure(set(prediction_to_evaluate), set(correct_set), alpha=0.5)
-	print model, 'f_measure'
-	print bio_classification_report(correct_sentence_set, prediction_word)
+	print model.upper(), 'f_measure'
+	print bio_classification_report(correct_set, prediction_to_evaluate)
 	return
 
 # train and evaluate nltk tagging crf module
@@ -268,8 +265,8 @@ pt_pos.train(training_pos_tag, 'model.perceptron_pos.tagger', nr_iter=8)
 print "\n\n\nevaluation of perceptron model: %.3f%%" % (100 * pt.evaluate(development_sentence))
 
 evaluation(development_sentence, 'crf')
-# evaluation(development_sentence, 'hmm')
-# evaluation(development_sentence, 'perceptron')
+evaluation(development_sentence, 'hmm')
+evaluation(development_sentence, 'perceptron')
 
 test_public_path = './nlp_project2_uncertainty/test-public/*.txt'
 test_private_path = './nlp_project2_uncertainty/test-private/*.txt'
