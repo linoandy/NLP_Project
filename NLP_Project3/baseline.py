@@ -131,7 +131,7 @@ NER_TAG = [['PERSON'],['LOCATION', 'FACILITY', 'GPE'],['TIME','DATE']]
 
 # Exclude any sentence that does not have the correct NER type of the answer type
 # Returns : list of sentences that DO have correct NER type of the answer type
-def process_doc(single_doc, q_type):
+def process_doc(single_doc, q_type, doc_num):
 	# in order of type constants (0 : who, 1: where, 2: when)
 
 	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
@@ -153,7 +153,7 @@ def process_doc(single_doc, q_type):
 		for subtree in ner_tree.subtrees(filter = filter):
 			contains_tag = True
 		if (contains_tag):
-			surviving_sentences.append(sentence)
+			surviving_sentences.append((doc_num,sentence))
 	#print surviving_sentences
 	return surviving_sentences
 
@@ -162,9 +162,8 @@ def passage_retrieval(q_num, q_type):
 	# get the path for the docs for current question
 	current_path = d_path + '/' + str(q_num) + '/*'
 	#current_path = d_path + '/' + str(q_num) + '/*'
-	# list of sentences surviving after processing
+	# list of (doc_num, sentence) surviving after processing
 	retrieved_sentences = []
-
 	# To call glob in human sorting order
 	# From : http://stackoverflow.com/a/16090640
 	def natural_sort_key(s, _nsre=re.compile('([0-9]+)')):
@@ -184,9 +183,14 @@ def passage_retrieval(q_num, q_type):
 					single_doc += line + ' '
 				if(line == '<TEXT>'):
 					text_bool = True
+
+			temp = name.split('/')
+			doc_num = temp[len(temp)-1]
+			
 			# list of sentences
-			retrieved_sentences += process_doc(single_doc, q_type)
+			retrieved_sentences += process_doc(single_doc, q_type, doc_num)
 	#print retrieved_sentences
+	#print doc_retrived_from
 	return retrieved_sentences
 
 
@@ -213,7 +217,8 @@ def answer_processing(sentences, q_type):
 	# in string
 	answers = []
 	for i in range(0, 5):
-		sentence = sentences[i]
+		doc_num = sentences[i][0]
+		sentence = sentences[i][1]
 		words = nltk.word_tokenize(sentence)
 		pos_tag = nltk.pos_tag(words)
 		ner_tree = nltk.ne_chunk(pos_tag)
@@ -230,7 +235,7 @@ def answer_processing(sentences, q_type):
 			answer += t[0][0] + ' '
 		# remove any possible trailing whitespaces
 		answer = answer.rstrip()
-		answers.append(answer)
+		answers.append((doc_num,answer))
 	print answers
 	return answers
 
