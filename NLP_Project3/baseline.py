@@ -35,6 +35,11 @@ starting_num = 89
 ending_num = 320
 current_num = starting_num
 
+# constants for question types; need to be more robust for part 2
+# baseline : WHO/WHERE/WHEN
+WHO_TYPE = 0
+WHERE_TYPE = 1
+WHEN_TYPE = 2
 
 q_path = "./question.txt"
 a_path = "./answer.txt"
@@ -43,6 +48,8 @@ d_path = "./doc_dev"
 ###############################################################################
 ###############################################################################
 # QUESTION PROCESSING
+# Baseline implementation : method 1 + removing stop words with nltk stopwords + removing punct
+
 
 # IN  : Question Description
 # OUT : List of keywords,
@@ -57,11 +64,29 @@ stopwords = set(nltk.corpus.stopwords.words('english'))
 # we don't want punctuation either
 stopwords.update(['.', ',', '"', "'", '?', '!', ':', ';', '(', ')', '[', ']', '{', '}']) 
 
-def get_q_keywords(desc):
-	l = nltk.word_tokenize(desc)
-	l_stopped = [w for w in l if w.lower() not in stopwords]
+def get_q_keywords(desc_token):
+	l_stopped = [w for w in desc_token if w.lower() not in stopwords]
 	return l_stopped
 
+###############################################################################
+###############################################################################
+# QUESTION CLASSIFICATION
+# Baseline implementation : WHO/WHERE/WHEN
+# Need to be more robust for part 2
+
+# IN  : Question Description
+# OUT : Question type
+
+def get_q_type(desc_token):
+	first_word = desc_token[0]
+	print first_word
+	if(first_word == 'Who'):
+		return WHO_TYPE
+	if(first_word == 'Where'):
+		return WHERE_TYPE
+	if(first_word == 'When'):
+		return WHEN_TYPE
+	return -1
 
 ###############################################################################
 ###############################################################################
@@ -93,7 +118,10 @@ def get_questions():
 def process_question(num, desc):
 	print num
 	print desc
-	l = get_q_keywords(desc)
+	desc_token = nltk.word_tokenize(desc)
+	l = get_q_keywords(desc_token)
+	q_type = get_q_type(desc_token)
+
 
 
 
