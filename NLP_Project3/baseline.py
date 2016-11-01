@@ -1,5 +1,6 @@
 import glob
 import nltk
+import re
 '''
 	PART 1. Question processing (list of keywords to IR)
 		method 1: leave out the question word <- Method chosen for baseline
@@ -155,7 +156,14 @@ def passage_retrieval(q_num, q_type):
 	current_path = d_path + '/' + str(q_num) + '/*'
 	#current_path = d_path + '/' + str(q_num) + '/*'
 	retrieved_sentences = []
-	for name in glob.glob(current_path):
+
+	# To call glob in human sorting order
+	# From : http://stackoverflow.com/a/16090640
+	def natural_sort_key(s, _nsre=re.compile('([0-9]+)')):
+		return [int(text) if text.isdigit() else text.lower()
+			for text in re.split(_nsre, s)]
+
+	for name in sorted(glob.glob(current_path), key=natural_sort_key):
 		with open(name) as f:
 			# bool for being inside text
 			text_bool = False
@@ -169,10 +177,9 @@ def passage_retrieval(q_num, q_type):
 				if(line == '<TEXT>'):
 					text_bool = True
 			# list of sentences
-			processed_sentences += process_doc(single_doc, q_type)
+			retrieved_sentences += process_doc(single_doc, q_type)
 	#print retrieved_sentences
-	return
-
+	return retrieved_sentences
 
 
 ###############################################################################
