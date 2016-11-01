@@ -6,10 +6,16 @@ import re
 		method 1: leave out the question word <- Method chosen for baseline
 		method 2: get the noun phrases
 		Baseline implementation : method 1 + removing stop words with nltk stopwords + removing punct
+		Implemented this, but DIDN't it for baseline.
 		Possible addition : stemming?
 	PART 2. Question Classification
 		Easy for our project, just use the first word in question
 		Who, where, when. Can be expanded to more categories in Part 2
+			Especially:
+				Who was .. is asking for a description
+				Who did .. //Who (other verbs) is asking for a person; currently only searching person
+		When NER doesn't work now. nltk ner doesn't recognize time/date.
+		Might need stanford ner...
 	TODO 3. Query Reformulation
 		I was going to do this, but questionable if this is necessary..
 		This is pretty minor. Might just leave it out.
@@ -26,11 +32,13 @@ import re
 			Rank of doc, etc.
 		Baseline implementation : part 4.1. Order of passages just in order they were found
 		(So basically from highest ranking to lowest ranking doc..)
-	TODO 5. Answer Processing
+	PART 5. Answer Processing
 		From the retrieved passage, retrieve answer
 		Method 1 : Just return whatever matching entity
 		Method 2 : Handwritten regex patterns? <- for part 2 maybe
 			Pattern learning????
+		Baseline implementation : method 1. Used those early in the list first, so in the order
+		of documents
 '''
 
 starting_num = 89
@@ -134,6 +142,11 @@ NER_TAG = [['PERSON'],['LOCATION', 'FACILITY', 'GPE'],['TIME','DATE']]
 def process_doc(single_doc, q_type, doc_num):
 	# in order of type constants (0 : who, 1: where, 2: when)
 
+	# BASELINE ONLY!
+	# when NER doesn't work in nltk NER. might as well just skip it.
+	if q_type == WHEN_TYPE:
+		return []
+
 	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
 	def filter(x):
 		for tag in NER_TAG[q_type]:
@@ -172,10 +185,13 @@ def passage_retrieval(q_num, q_type):
 
 	for name in sorted(glob.glob(current_path), key=natural_sort_key):
 		with open(name) as f:
+			print name
 			# bool for being inside text
 			text_bool = False
 			single_doc = ''
 			for line in f:
+				# non-ascii in 277/8 messing things up.
+				line=line.strip().decode("ascii","ignore").encode("ascii")
 				line = line.rstrip()
 				if(line == '</TEXT>'):
 					text_bool = False
@@ -187,13 +203,14 @@ def passage_retrieval(q_num, q_type):
 			temp = name.split('/')
 			doc_num = temp[len(temp)-1]
 			
-			# list of sentences
+			# list of (doc_num, sentences)
 			retrieved_sentences += process_doc(single_doc, q_type, doc_num)
-	#print retrieved_sentences
-	#print doc_retrived_from
+			# IN ORDER TO SAVE TIME FOR BASELINE
+			# NEED TO REMOVE THIS FOR MORE COMPLICATED SHIT
+			# possible because baseline only takes the retrieved sentecnes in order
+			if len(retrieved_sentences) >= 5:
+				break
 	return retrieved_sentences
-
-
 
 
 ###############################################################################
@@ -203,26 +220,32 @@ def passage_retrieval(q_num, q_type):
 BASELINE IMPLEMENTATION
 	Method 1: Just return whatever matching entity
 		If there are multiple matching entities, it returns the first one.
-IN :  retrieved sentences
-OUT : list of answers in string
+IN :  retrieved sentences tuple (doc_num, sentence)
+OUT : list of (doc_num, answer), both in string
 '''
 
 # Might have been better to return ner from previous part, and not
 # do ner again, but left it in case some manipulation is needed for part 2
-def answer_processing(sentences, q_type):
+def answer_processing(s_tuple, q_type):
+	sentences = s_tuple
 	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
 	def filter(x):
 		for tag in NER_TAG[q_type]:
 			return x.label() == tag
 	# in string
 	answers = []
+	# NEED TO ACCOUNT FOR CASES IN WHICH THERE ARE LESS THAN 5 ANSWERS
+	num_answers_needed = 5 - len(sentences)
+	if(num_answers_needed > 0):
+		for i in range(0,num_answers_needed):
+			sentences.append(('100','nil'))
 	for i in range(0, 5):
 		doc_num = sentences[i][0]
 		sentence = sentences[i][1]
 		words = nltk.word_tokenize(sentence)
 		pos_tag = nltk.pos_tag(words)
 		ner_tree = nltk.ne_chunk(pos_tag)
-		print ner_tree
+		#print ner_tree
 		# the list of tuples((word, pos),ner) to be considered for this sentence
 		matching_tuples = []
 		for subtree in ner_tree.subtrees(filter = filter):
@@ -231,14 +254,13 @@ def answer_processing(sentences, q_type):
 		# t : ((word, pos), ner)
 		answer = ''
 		for t in matching_tuples:
-			print t
+			#print t
 			answer += t[0][0] + ' '
 		# remove any possible trailing whitespaces
 		answer = answer.rstrip()
 		answers.append((doc_num,answer))
 	print answers
 	return answers
-
 
 ###############################################################################
 ###############################################################################
@@ -276,23 +298,38 @@ def process_question(num, desc):
 	q_type = get_q_type(desc_token)
 	retrieved_sentences = passage_retrieval(num, q_type)
 	answers = answer_processing(retrieved_sentences, q_type)
+	# answers : (doc_num, answers) tuple; both string
+	return answers
+
+def answer_output(answer_tuple):
+	with open(a_path, 'w') as f:
+		for single_question in answer_tuple:
+			q_num = single_question[0]
+			#print q_num
+			#print type(q_num)
+
+			# now iterating (doc_num, answer)
+			for answers in single_question[1]:
+				doc_num = answers[0]
+				answer = answers[1]
+				#print doc_num
+				#print answer
+				f.write(q_num + ' ' + doc_num + ' ' + answer + '\n')
+	return
 
 def process_questions(q_dict):
-	for i in range(89, 90):
+	# [(q_num_0,[(doc_num_0, answer_0),.. (doc_num_4, answer_4)],(q_num_1,... ]
+	q_num_answer_tuple = []
+	for i in range(89, 321):
 		desc = q_dict[i]
-		process_question(i, desc)
-
-'''def generate_answer(num_desc):
-	q_num, desc = num_desc
-	path = d_path + '/' + str(q_num)
-	for name in glob.glob('path/*'):
-		with open(name) as f:
-			for line in f:
-				line = line.rstrip()
-	#print desc
-'''
+		answers = process_question(i, desc)
+		q_num_answer_tuple.append((str(i), answers))
+	print q_num_answer_tuple
+	answer_output(q_num_answer_tuple)
 
 
 q_dict = get_questions()
 process_questions(q_dict)
+
+
 
