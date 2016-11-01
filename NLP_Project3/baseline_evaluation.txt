@@ -1,0 +1,2 @@
+Mean reciprocal rank over 232 questions is 0.084
+204 questions had no answers found in top 5 responses.
