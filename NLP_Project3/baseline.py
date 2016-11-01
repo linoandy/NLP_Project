@@ -6,7 +6,7 @@ import nltk
 		method 2: get the noun phrases
 		Baseline implementation : method 1 + removing stop words with nltk stopwords + removing punct
 		Possible addition : stemming?
-	TODO 2. Question Classification
+	PART 2. Question Classification
 		Easy for our project, just use the first word in question
 		Who, where, when. Can be expanded to more categories in Part 2
 	TODO 3. Query Reformulation
@@ -14,7 +14,7 @@ import nltk
 		This is pretty minor. Might just leave it out.
 			EX) When was laser invented
 				=> Laser was invented in..
-	TODO 4. Passage Retrieval
+	PART 4. Passage Retrieval
 		Since document retrieval was done already, just need to retrieve passages
 		Extract sections, paragraphs, sentences from doc from retrived doc
 		TODO 4.1 DO NER on the retrived, and exclude any passages that don't include the answer type
@@ -90,6 +90,93 @@ def get_q_type(desc_token):
 
 ###############################################################################
 ###############################################################################
+# PASSAGE RETRIEVAL
+# 1. DO NER on the retrived, and exclude any passages that don't include the answer type
+#	Currently using nltk's default NER; Using Stanford NER might work better, but have
+# 	to download jar and shit. Might consider for part 2
+# TODO 4.2 RANK the passages
+#	Didn't do for baseline
+
+# IN  : Question number, Docs for the question
+# OUT : List of passages
+
+
+'''
+From https://pythonprogramming.net/named-entity-recognition-nltk-tutorial/:
+ORGANIZATION - Georgia-Pacific Corp., WHO
+PERSON - Eddy Bonte, President Obama
+LOCATION - Murray River, Mount Everest
+DATE - June, 2008-06-29
+TIME - two fifty a m, 1:30 p.m.
+MONEY - 175 million Canadian Dollars, GBP 10.40
+PERCENT - twenty pct, 18.75 %
+FACILITY - Washington Monument, Stonehenge
+GPE - South East Asia, Midlothian
+'''
+# GH - I can't find the complete list of NER tags, but this should be enough for now
+
+# WHO : PERSON
+# WHERE : LOCATION, FACILITY, GPE
+# WHEN : TIME, DATE
+NER_TAG = [['PERSON'],['LOCATION', 'FACILITY', 'GPE'],['TIME','DATE']]
+
+
+# Exclude any sentence that does not have the correct NER type of the answer type
+# Returns : list of sentences that DO have correct NER type of the answer type
+def process_doc(single_doc, q_type):
+	# in order of type constants (0 : who, 1: where, 2: when)
+
+	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
+	def filter(x):
+		for tag in NER_TAG[q_type]:
+			return x.label() == tag
+
+	sentences = nltk.tokenize.sent_tokenize(single_doc)
+	surviving_sentences = []
+	for sentence in sentences:
+		words = nltk.word_tokenize(sentence)
+		pos_tag = nltk.pos_tag(words)
+		# this is in nltk tree
+		# reference : http://www.nltk.org/howto/tree.html
+		# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
+		ner_tree = nltk.ne_chunk(pos_tag)
+		# bool for whether this sentence has
+		contains_tag = False
+		for subtree in ner_tree.subtrees(filter = filter):
+			contains_tag = True
+		if (contains_tag):
+			surviving_sentences.append(sentence)
+	#print surviving_sentences
+	return surviving_sentences
+
+
+def passage_retrieval(q_num, q_type):
+	# get the path for the docs for current question
+	current_path = d_path + '/' + str(q_num) + '/*'
+	#current_path = d_path + '/' + str(q_num) + '/*'
+	retrieved_sentences = []
+	for name in glob.glob(current_path):
+		with open(name) as f:
+			# bool for being inside text
+			text_bool = False
+			single_doc = ''
+			for line in f:
+				line = line.rstrip()
+				if(line == '</TEXT>'):
+					text_bool = False
+				if(text_bool):
+					single_doc += line + ' '
+				if(line == '<TEXT>'):
+					text_bool = True
+			# list of sentences
+			processed_sentences += process_doc(single_doc, q_type)
+	#print retrieved_sentences
+	return
+
+
+
+###############################################################################
+###############################################################################
 # IO
 
 # Types : WHO / WHERE / WHEN
@@ -119,9 +206,12 @@ def process_question(num, desc):
 	print num
 	print desc
 	desc_token = nltk.word_tokenize(desc)
+	#desc_pos = nltk.pos_tag(desc_token)
 	l = get_q_keywords(desc_token)
 	q_type = get_q_type(desc_token)
-
+	passages = passage_retrieval(num, q_type)
+	#sent = nltk.corpus.treebank.tagged_sents()
+	#print(nltk.ne_chunk(desc_pos))
 
 
 
