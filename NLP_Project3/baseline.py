@@ -1,9 +1,11 @@
 import glob
-
+import nltk
 '''
-	TODO 1. Question processing (list of keywords to IR)
-		method 1: leave out the question word
+	PART 1. Question processing (list of keywords to IR)
+		method 1: leave out the question word <- Method chosen for baseline
 		method 2: get the noun phrases
+		Baseline implementation : method 1 + removing stop words with nltk stopwords + removing punct
+		Possible addition : stemming?
 	TODO 2. Question Classification
 		Easy for our project, just use the first word in question
 		Who, where, when. Can be expanded to more categories in Part 2
@@ -46,16 +48,19 @@ d_path = "./doc_dev"
 # OUT : List of keywords,
 #       just leaving out the question word and stop word list(METHOD 1)
 
-# using a small stop word list; can use a bigger one later if wanted
-stop_word = ['a'
-	]
+# using a small stop word list; can use a bigger one later if wanted (experiment?)
+# look here for the nltk stopwords used here, and some stopword code involved
+# http://www.nltk.org/book/ch02.html
+
+# reference : http://stackoverflow.com/a/32469562
+stopwords = set(nltk.corpus.stopwords.words('english'))
+# we don't want punctuation either
+stopwords.update(['.', ',', '"', "'", '?', '!', ':', ';', '(', ')', '[', ']', '{', '}']) 
 
 def get_q_keywords(desc):
-	return
-
-
-
-
+	l = nltk.word_tokenize(desc)
+	l_stopped = [w for w in l if w.lower() not in stopwords]
+	return l_stopped
 
 
 ###############################################################################
@@ -88,6 +93,7 @@ def get_questions():
 def process_question(num, desc):
 	print num
 	print desc
+	l = get_q_keywords(desc)
 
 
 
