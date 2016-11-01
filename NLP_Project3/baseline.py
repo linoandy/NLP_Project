@@ -18,13 +18,14 @@ import re
 	PART 4. Passage Retrieval
 		Since document retrieval was done already, just need to retrieve passages
 		Extract sections, paragraphs, sentences from doc from retrived doc
-		TODO 4.1 DO NER on the retrived, and exclude any passages that don't include the answer type
-		TODO 4.2 RANK the passages
-			Leave it for Part 2?
+		PART 4.1 DO NER on the retrived, and exclude any passages that don't include the answer type
+		TODO 4.2 RANK the passages : LEFT it for part 2; not in baseline
 			Num of named entities of right type 
 			Question keywords <- Maybe only this?
 			Longest exact sequence of question keywords..
 			Rank of doc, etc.
+		Baseline implementation : part 4.1. Order of passages just in order they were found
+		(So basically from highest ranking to lowest ranking doc..)
 	TODO 5. Answer Processing
 		From the retrieved passage, retrieve answer
 		Method 1 : Just return whatever matching entity
@@ -51,7 +52,6 @@ d_path = "./doc_dev"
 # QUESTION PROCESSING
 # Baseline implementation : method 1 + removing stop words with nltk stopwords + removing punct
 
-
 # IN  : Question Description
 # OUT : List of keywords,
 #       just leaving out the question word and stop word list(METHOD 1)
@@ -72,11 +72,14 @@ def get_q_keywords(desc_token):
 ###############################################################################
 ###############################################################################
 # QUESTION CLASSIFICATION
-# Baseline implementation : WHO/WHERE/WHEN
-# Need to be more robust for part 2
+'''
+BASELINE IMPLEMENTATION
+	Baseline implementation : WHO/WHERE/WHEN
+	Need to be more robust for part 2
 
-# IN  : Question Description
-# OUT : Question type
+IN  : Question Description
+OUT : Question type
+'''
 
 def get_q_type(desc_token):
 	first_word = desc_token[0]
@@ -92,12 +95,16 @@ def get_q_type(desc_token):
 ###############################################################################
 ###############################################################################
 # PASSAGE RETRIEVAL
-# 1. DO NER on the retrived, and exclude any passages that don't include the answer type
-#	Currently using nltk's default NER; Using Stanford NER might work better, but have
-# 	to download jar and shit. Might consider for part 2
-# TODO 4.2 RANK the passages
-#	Didn't do for baseline
-
+''' 
+BASELINE IMPLEMENTATION
+	DO NER on the retrived, and exclude any passages that don't include the answer type
+	Currently using nltk's default NER; Using Stanford NER might work better, but have
+	to download jar and shit. Might consider for part 2
+	ORDER of the Passages retrieved : just the order they were found from docs 1..100
+	Thus from the highest ranking doc to lowest ranking
+TODO 4.2 RANK the passages
+	Didn't do for baseline
+'''
 # IN  : Question number, Docs for the question
 # OUT : List of passages
 
@@ -155,6 +162,7 @@ def passage_retrieval(q_num, q_type):
 	# get the path for the docs for current question
 	current_path = d_path + '/' + str(q_num) + '/*'
 	#current_path = d_path + '/' + str(q_num) + '/*'
+	# list of sentences surviving after processing
 	retrieved_sentences = []
 
 	# To call glob in human sorting order
@@ -180,6 +188,51 @@ def passage_retrieval(q_num, q_type):
 			retrieved_sentences += process_doc(single_doc, q_type)
 	#print retrieved_sentences
 	return retrieved_sentences
+
+
+
+
+###############################################################################
+###############################################################################
+# ANSWER PROCESSING
+'''
+BASELINE IMPLEMENTATION
+	Method 1: Just return whatever matching entity
+		If there are multiple matching entities, it returns the first one.
+IN :  retrieved sentences
+OUT : list of answers in string
+'''
+
+# Might have been better to return ner from previous part, and not
+# do ner again, but left it in case some manipulation is needed for part 2
+def answer_processing(sentences, q_type):
+	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
+	def filter(x):
+		for tag in NER_TAG[q_type]:
+			return x.label() == tag
+	# in string
+	answers = []
+	for i in range(0, 5):
+		sentence = sentences[i]
+		words = nltk.word_tokenize(sentence)
+		pos_tag = nltk.pos_tag(words)
+		ner_tree = nltk.ne_chunk(pos_tag)
+		print ner_tree
+		# the list of tuples((word, pos),ner) to be considered for this sentence
+		matching_tuples = []
+		for subtree in ner_tree.subtrees(filter = filter):
+			 matching_tuples = subtree.pos()
+			 break
+		# t : ((word, pos), ner)
+		answer = ''
+		for t in matching_tuples:
+			print t
+			answer += t[0][0] + ' '
+		# remove any possible trailing whitespaces
+		answer = answer.rstrip()
+		answers.append(answer)
+	print answers
+	return answers
 
 
 ###############################################################################
@@ -216,18 +269,13 @@ def process_question(num, desc):
 	#desc_pos = nltk.pos_tag(desc_token)
 	l = get_q_keywords(desc_token)
 	q_type = get_q_type(desc_token)
-	passages = passage_retrieval(num, q_type)
-	#sent = nltk.corpus.treebank.tagged_sents()
-	#print(nltk.ne_chunk(desc_pos))
-
-
+	retrieved_sentences = passage_retrieval(num, q_type)
+	answers = answer_processing(retrieved_sentences, q_type)
 
 def process_questions(q_dict):
 	for i in range(89, 90):
 		desc = q_dict[i]
 		process_question(i, desc)
-
-
 
 '''def generate_answer(num_desc):
 	q_num, desc = num_desc
