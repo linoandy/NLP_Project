@@ -188,6 +188,9 @@ def passage_retrieval(q_num, q_type, q_keywords):
 		with open(name) as f:
 			doc = f.read()
 		single_doc=''
+		# Fetch TEXT only. a bit hack tho - need a better way to process text
+		# Did this because I wanted to fetch text by 'sentence' not 'line'
+		# - Rommie, 161104
 		textonly = doc.split("<TEXT>")[len(doc.split("<TEXT>"))-1].split("</TEXT>")[0]
 		global sentlist
 		tmpsentlist = textonly.replace("\r\n"," ").replace("</p>","").replace("<p>","").replace(". ", ". (e) ").strip().split(" (e)")
@@ -200,6 +203,7 @@ def passage_retrieval(q_num, q_type, q_keywords):
 			tmpline = line.lower()
 			tmpline=line.strip().decode("ascii","ignore").encode("ascii")
 			tmpline = line.rstrip()
+			#is keyword in a sentence?
 			iskwin = map(lambda x : x in tmpline, q_keywords)
 			if any(iskwin):
 				single_doc += line + ' '
