@@ -1,6 +1,7 @@
 import glob
 import nltk
 import re
+from nltk.stem import WordNetLemmatizer
 '''
 	PART 1. Question processing (list of keywords to IR)
 		method 1: leave out the question word <- Method chosen for baseline
@@ -44,6 +45,7 @@ import re
 starting_num = 89
 ending_num = 320
 current_num = starting_num
+window_keyword = 2
 
 # constants for question types; need to be more robust for part 2
 # baseline : WHO/WHERE/WHEN
@@ -172,7 +174,7 @@ def process_doc(single_doc, q_type, doc_num):
 def passage_retrieval(q_num, q_type, q_keywords):
 	# get the path for the docs for current question
 	current_path = d_path + '/' + str(q_num) + '/*'
-	
+	wnl = WordNetLemmatizer()
 	#current_path = d_path + '/' + str(q_num) + '/*'
 	# list of (doc_num, sentence) surviving after processing
 	retrieved_sentences = []
@@ -182,27 +184,29 @@ def passage_retrieval(q_num, q_type, q_keywords):
 		return [int(text) if text.isdigit() else text.lower()
 			for text in re.split(_nsre, s)]
 
-	q_keywords = map(lambda x : x.lower(),q_keywords)		
+	# print q_keywords, "KEYWORD FIRST"
+	q_keywords = map(lambda x : wnl.lemmatize(x.lower()),q_keywords)		
 	for name in sorted(glob.glob(current_path), key=natural_sort_key):
-		global doc
+		# global doc
 		with open(name) as f:
 			doc = f.read()
 		single_doc=''
 		# Fetch TEXT only. a bit hack tho - need a better way to process text
 		# Did this because I wanted to fetch text by 'sentence' not 'line'
 		# - Rommie, 161104
-		textonly = doc.split("<TEXT>")[len(doc.split("<TEXT>"))-1].split("</TEXT>")[0]
-		global sentlist
-		tmpsentlist = textonly.replace("\r\n"," ").replace("</p>","").replace("<p>","").replace(". ", ". (e) ").strip().split(" (e)")
-		sentlist = filter(lambda x : x!='', map(lambda x : x.strip(),tmpsentlist))
+		doc = doc.replace('\r\n',' ')
+		
+		sentlist = nltk.tokenize.sent_tokenize(doc);
 			# print name
 			# bool for being inside text
 			# text_bool = False
 			# single_doc = ''
 		for line in sentlist:
-			tmpline = line.lower()
-			tmpline=line.strip().decode("ascii","ignore").encode("ascii")
-			tmpline = line.rstrip()
+			tmpline = line.lower().strip().decode("ascii","ignore").encode("ascii").rstrip()
+			tmpline = nltk.tokenize.word_tokenize(tmpline)
+			tmpline = map(lambda x : wnl.lemmatize(x), tmpline)
+			# print tmpline, "TMPLINE"
+			# print q_keywords, "KEYWORD"
 			#is keyword in a sentence?
 			iskwin = map(lambda x : x in tmpline, q_keywords)
 			if any(iskwin):
