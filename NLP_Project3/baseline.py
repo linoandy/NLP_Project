@@ -148,9 +148,6 @@ def process_doc(single_doc, q_type, doc_num):
 		return []
 
 	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
-	def filter(x):
-		for tag in NER_TAG[q_type]:
-			return x.label() == tag
 
 	sentences = nltk.tokenize.sent_tokenize(single_doc)
 	surviving_sentences = []
@@ -163,17 +160,19 @@ def process_doc(single_doc, q_type, doc_num):
 		ner_tree = nltk.ne_chunk(pos_tag)
 		# bool for whether this sentence has
 		contains_tag = False
-		for subtree in ner_tree.subtrees(filter = filter):
-			contains_tag = True
+		for subtree in ner_tree.subtrees():
+			if subtree.label() in NER_TAG[q_type]:
+				contains_tag=True
 		if (contains_tag):
 			surviving_sentences.append((doc_num,sentence))
 	#print surviving_sentences
 	return surviving_sentences
 
 
-def passage_retrieval(q_num, q_type):
+def passage_retrieval(q_num, q_type, q_keywords):
 	# get the path for the docs for current question
 	current_path = d_path + '/' + str(q_num) + '/*'
+	
 	#current_path = d_path + '/' + str(q_num) + '/*'
 	# list of (doc_num, sentence) surviving after processing
 	retrieved_sentences = []
@@ -183,33 +182,41 @@ def passage_retrieval(q_num, q_type):
 		return [int(text) if text.isdigit() else text.lower()
 			for text in re.split(_nsre, s)]
 
+	q_keywords = map(lambda x : x.lower(),q_keywords)		
 	for name in sorted(glob.glob(current_path), key=natural_sort_key):
+		global doc
 		with open(name) as f:
-			print name
+			doc = f.read()
+		single_doc=''
+		# Fetch TEXT only. a bit hack tho - need a better way to process text
+		# Did this because I wanted to fetch text by 'sentence' not 'line'
+		# - Rommie, 161104
+		textonly = doc.split("<TEXT>")[len(doc.split("<TEXT>"))-1].split("</TEXT>")[0]
+		global sentlist
+		tmpsentlist = textonly.replace("\r\n"," ").replace("</p>","").replace("<p>","").replace(". ", ". (e) ").strip().split(" (e)")
+		sentlist = filter(lambda x : x!='', map(lambda x : x.strip(),tmpsentlist))
+			# print name
 			# bool for being inside text
-			text_bool = False
-			single_doc = ''
-			for line in f:
-				# non-ascii in 277/8 messing things up.
-				line=line.strip().decode("ascii","ignore").encode("ascii")
-				line = line.rstrip()
-				if(line == '</TEXT>'):
-					text_bool = False
-				if(text_bool):
-					single_doc += line + ' '
-				if(line == '<TEXT>'):
-					text_bool = True
-
-			temp = name.split('/')
-			doc_num = temp[len(temp)-1]
-			
-			# list of (doc_num, sentences)
-			retrieved_sentences += process_doc(single_doc, q_type, doc_num)
-			# IN ORDER TO SAVE TIME FOR BASELINE
-			# NEED TO REMOVE THIS FOR MORE COMPLICATED SHIT
-			# possible because baseline only takes the retrieved sentecnes in order
-			if len(retrieved_sentences) >= 5:
-				break
+			# text_bool = False
+			# single_doc = ''
+		for line in sentlist:
+			tmpline = line.lower()
+			tmpline=line.strip().decode("ascii","ignore").encode("ascii")
+			tmpline = line.rstrip()
+			#is keyword in a sentence?
+			iskwin = map(lambda x : x in tmpline, q_keywords)
+			if any(iskwin):
+				single_doc += line + ' '
+		temp = name.split('/')
+		doc_num = temp[len(temp)-1]
+		#print single_doc
+		# list of (doc_num, sentences)
+		retrieved_sentences += process_doc(single_doc, q_type, doc_num)
+		# IN ORDER TO SAVE TIME FOR BASELINE
+		# NEED TO REMOVE THIS FOR MORE COMPLICATED SHIT
+		# possible because baseline only takes the retrieved sentecnes in order
+		if len(retrieved_sentences) >= 10:
+			break
 	return retrieved_sentences
 
 
@@ -226,12 +233,9 @@ OUT : list of (doc_num, answer), both in string
 
 # Might have been better to return ner from previous part, and not
 # do ner again, but left it in case some manipulation is needed for part 2
-def answer_processing(s_tuple, q_type):
+def answer_processing(s_tuple, q_type, q_keywords):
 	sentences = s_tuple
 	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
-	def filter(x):
-		for tag in NER_TAG[q_type]:
-			return x.label() == tag
 	# in string
 	answers = []
 	# NEED TO ACCOUNT FOR CASES IN WHICH THERE ARE LESS THAN 5 ANSWERS
@@ -248,14 +252,18 @@ def answer_processing(s_tuple, q_type):
 		#print ner_tree
 		# the list of tuples((word, pos),ner) to be considered for this sentence
 		matching_tuples = []
-		for subtree in ner_tree.subtrees(filter = filter):
-			 matching_tuples = subtree.pos()
-			 break
+		for subtree in ner_tree.subtrees():
+			if subtree.label() in NER_TAG[q_type] and subtree.pos()[0][0][1]=='NNP':
+				print subtree
+				iskwin = map(lambda x : x in subtree.pos()[0][0][0], q_keywords)
+				if not any(iskwin):
+					matching_tuples = subtree.pos()
 		# t : ((word, pos), ner)
 		answer = ''
 		for t in matching_tuples:
 			#print t
-			answer += t[0][0] + ' '
+			if t[0][0] not in q_keywords:
+				answer += t[0][0] + ' '
 		# remove any possible trailing whitespaces
 		answer = answer.rstrip()
 		answers.append((doc_num,answer))
@@ -290,14 +298,14 @@ def get_questions():
 		return q_dict
 
 def process_question(num, desc):
-	print num
+	# print num
 	print desc
 	desc_token = nltk.word_tokenize(desc)
 	#desc_pos = nltk.pos_tag(desc_token)
 	l = get_q_keywords(desc_token)
 	q_type = get_q_type(desc_token)
-	retrieved_sentences = passage_retrieval(num, q_type)
-	answers = answer_processing(retrieved_sentences, q_type)
+	retrieved_sentences = passage_retrieval(num, q_type,l)
+	answers = answer_processing(retrieved_sentences, q_type, l)
 	# answers : (doc_num, answers) tuple; both string
 	return answers
 
@@ -324,7 +332,7 @@ def process_questions(q_dict):
 		desc = q_dict[i]
 		answers = process_question(i, desc)
 		q_num_answer_tuple.append((str(i), answers))
-	print q_num_answer_tuple
+	# print q_num_answer_tuple
 	answer_output(q_num_answer_tuple)
 
 
