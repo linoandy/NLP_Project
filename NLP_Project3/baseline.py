@@ -103,14 +103,26 @@ def get_q_type(desc_token):
 		return WHEN_TYPE
 	return -1
 
-def rank_sentences(keyword_sentences):
-	# [[keyword_1, sentence_1],[keyword_2, sentence_2]...]
-	for key_sent in keyword_sentences:
-		q_keyword = key_sent[0].lower()
-		a_sentence = key_sent[1].lower()
-		similarity_score = fuzz.partial_ratio(q_keyword, a_sentence)
-		key_sent.append(similarity_score)
-	sorted_sentence_list = sorted(keyword_sentences, key=lambda x: x[2], reverse=True)
+def rank_sentences(question_keywords, answer_sentences):
+	# question_keywords ['xxxx', 'xxxxxx']
+	# answer_sentences [(doc_num, sentence), (doc_num, sentence)]
+	keyword_sentences = []
+	for answer_sentence in answer_sentences:
+		a_doc_num = answer_sentence[0]
+		a_sentence = answer_sentence[1]
+		total_score = 0.0
+		# calculate similarity scores between different keywords and sentences respectively, sum up the scores as the final ranking 
+		for question_keyword in question_keywords:	
+			similarity_score = fuzz.partial_ratio(question_keyword.lower(), a_sentence.lower())
+			total_score += similarity_score
+		keyword_sentences.append([a_doc_num, a_sentence, total_score])
+	# sort the result sentence in descending order by sum scores 
+	sorted_sentence_list_temp = sorted(keyword_sentences, key=lambda x: x[2], reverse=True)
+	# build the result into its old format, same as answer_sentences
+	sorted_sentence_list = []
+	for sorted_sentence_temp in sorted_sentence_list_temp:
+		sorted_sentence = (sorted_sentence_temp[0], sorted_sentence_temp[1])
+		sorted_sentence_list.append(sorted_sentence)
 	return sorted_sentence_list
 
 ###############################################################################
@@ -295,7 +307,7 @@ def answer_processing(s_tuple, q_type, q_keywords):
 			# remove any possible trailing whitespaces
 			answer = answer.rstrip()
 			answers.append((doc_num,answer))
-	print 'answers', answers
+	print answers
 	return answers
 
 ###############################################################################
@@ -333,6 +345,8 @@ def process_question(num, desc):
 	l = get_q_keywords(desc_token)
 	q_type = get_q_type(desc_token)
 	retrieved_sentences = passage_retrieval(num, q_type,l)
+	# add sentence ranking below
+	retrieved_sentences = rank_sentences(l, retrieved_sentences)
 	answers = answer_processing(retrieved_sentences, q_type, l)
 	# answers : (doc_num, answers) tuple; both string
 	return answers

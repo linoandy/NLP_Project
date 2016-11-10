@@ -3,25 +3,25 @@
 89 19 Peten
 89 79 Peten
 89 100 
-90 1 Thomas Alva Edison
-90 1 James J. Ritty
-90 1 Whitcombe L
 90 2 Per Langaker
+90 6 Dickson
+90 7 Gesell
 90 2 Langanker
+90 1 James J. Ritty
 91 25 
 91 50 Stand
 91 51 
 91 100 
 91 100 
 92 1 
-92 1 Fender
-92 1 Peter Schuelzky
 92 1 Mr. Fender
-92 1 Dick Dale
-93 1 Narasimha
+92 2 Henry Ford
+92 2 Tom Wheeler
+92 1 Peter Schuelzky
+93 4 Dalai Lama
+93 6 Dalai Lama
 93 1 Narasimha
 93 1 Karuppaswamy
-93 2 Narasimha
 93 2 Narasimha
 94 100 
 94 100 
@@ -29,30 +29,30 @@
 94 100 
 94 100 
 95 2 Vietnam
-95 3 Khamtai Siphandon
 95 3 Paul Keating
-95 3 Khamtai Siphandon
-95 3 Vang Lattanavong
+95 4 Laos
+95 7 Vietnam
+95 8 Somsavat Lengsavat
 96 2 
-96 5 Boulevard
-96 6 Dexter
-96 8 Kerry
-96 9 Andrew Young
+96 11 Hosea Williams
+96 16 Coretta Scott
+96 16 Coretta
+96 15 Bush
 97 100 
 97 100 
 97 100 
 97 100 
 97 100 
-98 2 Great Britain
 98 3 Srpska
-98 3 
 98 4 Yugoslavia
 98 6 Italy
+98 7 
+98 12 
+99 4 Mount Olympus
+99 4 Apollo
+99 5 Neptune
+99 3 Howard
 99 1 Diamantis Diamantides
-99 1 Martinos
-99 2 Diamantis Diamantides
-99 2 Martinos
-99 3 Agamemnon
 100 100 
 100 100 
 100 100 
@@ -60,39 +60,39 @@
 100 100 
 101 1 Ohio
 101 1 
-101 3 South County
-101 4 Pennsylvania
 101 15 Canadian
-102 1 Quick
+101 15 Canada
+101 3 South County
+102 1 Summer Sanders
 102 1 Melvin Stewart
-102 1 Rowdy Gaines
-102 1 Quick
 102 1 Gaines
-103 1 1977
-103 2 1709
+102 1 Nall
+102 1 Pablo Morales
 103 4 1944
+103 2 1709
+103 11 yesterday
 103 7 1000
-103 7 1985
-104 2 Marshal Petain
+103 7 1902
+104 8 Edouard Balladur
+104 8 Le Figaro
 104 4 
 104 4 Chirac
 104 6 Yves Jouffa
-104 8 Rene Monory
 105 1 Elma Farnsworth
-105 1 James Avanti
-105 1 Farnsworth
 105 2 Fair
 105 2 Idaho
-106 1 Tim McClure
+105 2 David Sarnoff
+105 2 Phil
 106 1 Southwest
-106 1 Charlotte Goddard
+106 1 Tim McClure
 106 1 Shamu One
-106 1 Shamu One
+106 1 McClure
+106 3 Porter
 107 1 Ferguson
-107 1 Sherman Mullin
-107 2 Gordeuk
-107 2 Whitehead
-107 2 Whitehead
+107 4 Wilbur Wright
+107 3 Mullaney
+107 4 Huffman Prairie
+107 4 Paul Lawrence Dunbar
 108 100 
 108 100 
 108 100 
@@ -103,58 +103,58 @@
 109 100 
 109 100 
 109 100 
-110 3 
 110 4 Akaka
-110 4 Hawaii
 110 6 
 110 9 Hawaiian
-111 1 Cartwright
+110 10 Hawaii
+110 11 Mitch
 111 1 Abner
 111 2 Abner
-111 2 Base Ball Club
+111 4 Costescu
+111 1 Cartwright
 111 2 Baseball
-112 3 
-112 4 Science
-112 8 Carolina
-112 8 North Carolina
 112 8 Hampstead
-113 1 Napoleonic Tactics
+112 4 Science
+112 9 
+112 20 California
+112 8 Carolina
 113 1 John McQueen
+113 3 John McQueen
+113 4 Gouvier
+113 1 Napoleonic Tactics
 113 1 King
-113 1 King
-113 2 Union
+114 16 California
 114 1 Beauty
-114 1 Season
-114 1 Egypt
-114 1 
 114 2 Beauty
+114 12 Beijing
+114 1 
 115 1 Manhattan
-115 1 Vasquez
-115 2 Manhattan
-115 2 Brooklyn
+115 4 Mexico
+115 4 
 115 4 Guatemala
-116 1 1973
-116 2 this month
+115 4 Indios
+116 3 last year
 116 3 five  years ago
 116 3 Thirty years ago
-116 3 last year
+116 1 1973
+116 2 this month
 117 100 
 117 100 
 117 100 
 117 100 
 117 100 
 118 2 Cerritos
-118 3 Libby Edelman
-118 3 Miriam Sirota
+118 3 Edelman
+118 3 Lillian Navarro
 118 3 Sirota
-118 3 Sirota
+118 3 Silverstein
+119 2 Great Pyramid
 119 1 Zahi Hawass
-119 1 Tutankhamun
-119 1 Pharaoh Cheops
-119 1 Pharaoh Zozer
-119 1 Siwa Oasis
-120 1 Northeast
+119 2 
+119 1 East Cemetery
+119 2 Cayce
 120 1 Pennsylvania
+120 1 Northeast
 120 1 Portland
 120 1 Maine
 120 1 Rhode Island
@@ -164,18 +164,18 @@
 121 100 Five days later
 121 100 1972
 122 1 
-122 1 
 122 2 Muskie
+122 1 
 122 2 
 122 2 Judson Hale
 123 13 Lynn
-123 13 Christ
-123 14 Newton
 123 36 American
+123 60 Chicago
+123 84 
 123 48 American
+124 92 
 124 66 Trump
 124 66 Jonathan Benanav
-124 92 
 124 100 
 124 100 
 125 100 
@@ -193,166 +193,166 @@
 127 4 Australian
 127 4 Australia
 127 4 Australia
-128 1 Larry Messelt
-128 1 Yoshiyuki Arai
 128 1 Yoshi Fujii
-128 1 Fujii
-128 1 Mazza
-129 1 Monopoly
-129 1 Snakes
-129 1 Alfred Butts
+128 1 Suzuki
+128 2 Suzuki
+128 1 Larry Messelt
+128 3 Larry Messelt
 129 2 Hasbro
+129 1 Monopoly
+129 1 Alfred Butts
+129 3 Mattel
 129 3 Hasbro
 130 100 
 130 100 
 130 100 
 130 100 
 130 100 
-131 1 1984
+131 5 seven years ago
+131 6 seven years ago
 131 2 1984
 131 4 1984
-131 5 1984
-131 5 today
+131 6 1992
+132 3 Australia
+132 5 Australia
 132 1 Australia
 132 2 Australia
-132 3 Darwin
-132 3 Australia
-132 3 
-133 1 last February
-133 1 1869
-133 1 Two years later
+132 5 Azaria
+133 6 last July
 133 3 1986
+133 6 1983
 133 3 last May
+133 6 last week
 134 100 
 134 100 
 134 100 
 134 100 
 134 100 
-135 1 this year
-135 1 this year
-135 1 this year
 135 2 today
-135 2 today
+135 2 1989
+135 3 this week
+135 4 today
+135 1 this year
+136 66 1920
 136 8 1519
-136 30 1536
+136 56 1920
+136 62 1985
 136 34 1200
-136 36 20 years later
-136 48 1001
-137 4 
 137 9 
+137 28 Porter Ranch
 137 9 Teutsch
-137 9 Pap
 137 11 Teutsch
-138 1 Forbes
-138 1 Tsutsumi
+137 14 Cushman
 138 1 Eitaro Itoyama
+138 2 Eitaro Itoyama
 138 1 Forbes
-138 1 Pablo Escobar Gaviria
-139 1 Carson
-139 1 Jim Shofner
-139 1 Modell
+138 2 Forbes
+138 1 Tsutsumi
 139 2 Carson
-139 3 Miami
-140 1 Jesus
+139 1 Jim Shofner
+139 5 Jay Schroeder
+139 5 Bill Walsh
+139 3 Stephen Braggs
+140 3 Arab
 140 1 Allah
-140 1 Maqbool
-140 1 
-140 1 
+140 2 Salman Rushdie
+140 3 Salman Rushdie
+140 2 Arab
+141 2 Illinois
 141 1 Chicago
 141 2 Joliet
-141 2 Tecumseh
 141 2 Pennsylvania
-141 2 Illinois
+141 4 Chicago
+142 16 Saudi Arabia
 142 1 South African
-142 1 White Bear Lake
-142 4 Gus
+142 11 Gasp
+142 15 Victoria Falls
 142 5 California
-142 8 Twilight
 143 100 
 143 100 
 143 100 
 143 100 
 143 100 
 144 1 Cody
-144 1 Cody
-144 2 
-144 2 William F. Cody
 144 3 William F.
-145 3 Allied
-145 6 
+144 3 Cody
+144 5 
+144 10 Annie Oakley
 145 6 Bridge
 145 6 Thai
+145 3 Allied
 145 6 London
+145 6 England
+146 2 Lawrence Halprin
 146 2 
-146 2 Foster
+146 2 Horton Plaza
+146 2 Ron Buckley
 146 2 Center City Assn
-146 2 Oliver
-146 2 Foster
+147 68 Scott
+147 68 Paper Association
+147 68 Bowater
+147 80 Homer Taylor
 147 45 Paper Association
-147 51 Abitibi
-147 55 Times Mirror
-147 62 Repap
-147 68 Doug Young
 148 100 
 148 100 
 148 100 
 148 100 
 148 100 
-149 1 Wilds
 149 1 Sweetlake
 149 2 Sweetlake
-149 2 Jones
 149 3 Sweetlake
-150 1 Dutch
-150 2 Germany
-150 2 
+149 5 Natchitoches
+149 1 Wilds
 150 3 Hungarian
+150 68 Houston
+150 1 Dutch
 150 4 
-151 4 last year
+150 58 Law
 151 4 1989
+151 6 1982
 151 4 last year
-151 4 last year
-151 5 1989
+151 5 last year
+151 8 1988
+152 3 Carter
+152 4 Ann Franklin
 152 1 Alexander Graham Bell
-152 1 
 152 2 Alexander Graham Bell
 152 3 Alexander Graham Bell
-152 3 Carter
+153 4 Queen Elizabeth II
 153 2 Queen Elizabeth II
+153 5 Queen Elizabeth II
+153 4 Michael
 153 2 Doris Fisher
-153 2 Hills
-153 2 Mars Inc
-153 3 Buckingham Palace
-154 8 today
 154 15 1989
-154 16 1014
-154 21 1906
-154 27 last December
+154 33 today
+154 8 today
+154 30 today
+154 39 today
 155 10 1960
-155 17 30 years ago
-155 21 1986
 155 22 today
-155 49 8809
+155 88 1991
+155 21 1986
+155 52 this week
 156 13 next year
-156 15 Today
 156 16 2000
+156 15 Today
 156 100 
 156 100 
-157 2 San Jose State
-157 2 Naismith
-157 2 Morrison
 157 3 Bob Cousy
-157 4 Mikan
+157 5 Taylor
+157 8 Francis
+157 8 Brooslin
+157 2 Morrison
 158 72 Bernard Venables
 158 98 Mike Brown
 158 100 
 158 100 
 158 100 
-159 1 San Bernardino
-159 1 Chapel Hill
-159 1 Older
-159 1 Uhlenberg
+159 1 Hoffman
 159 1 Kathleen Welch
+159 1 San Bernardino
+159 1 Older
+159 1 Hoffman
 160 100 
 160 100 
 160 100 
@@ -360,26 +360,26 @@
 160 100 
 161 1 Philippe Maystadt
 161 1 Salomon Brothers International
-161 1 Maystadt
 161 1 Taylor
 161 2 Philippe Maystadt
+161 2 Salomon Brothers International
+162 1 Abdullah
+162 1 Great Pyramid
 162 1 Mycerinus
 162 1 Giza Plateau
 162 1 Hawass
-162 1 Hawass
-162 1 Santa Barbara
 163 100 
 163 100 
 163 100 
 163 100 
 163 100 
-164 1 Rose Bowl
 164 1 Bo Schembechler
-164 1 Bob Griese
 164 1 Nebraska
 164 1 Florida State
+164 1 Gary Bender
+164 1 Stacy Danley
+165 4 
 165 1 Chocolate
-165 1 Incidentally
 165 1 Gianduia
 165 3 Chocolate
 165 4 Houston
@@ -388,121 +388,121 @@
 166 100 
 166 100 
 166 100 
-167 5 Charlotte
-167 5 Charlotte
-167 8 Fast Talker
-167 8 Ally
+167 12 Antiques
+167 12 Super Bowl
 167 10 Daniel Pollack
+167 5 Charlotte
+167 49 Gallery
 168 100 
 168 100 
 168 100 
 168 100 
 168 100 
-169 2 Nunavut
-169 3 Copenhagen
 169 3 Canada
 169 5 Canada
-169 7 Soviet Arctic
-170 1 79 years earlier
+169 20 Yellowknife
+169 22 Australia
+169 34 Greeks
 170 1 1911
 170 1 today
+170 3 79 years after
+170 3 1977
 170 2 1988
-170 2 next week
-171 1 Namibia
-171 3 Windhoek
-171 4 Southern Africa
+171 5 Botswana
+171 15 Botswana
+171 16 Botswana
 171 5 South Africa
-171 5 South Africa
-172 1 Reagan
-172 2 Reagan
-172 6 Ronald Reagan
+171 16 Iraqi
+172 11 Guillermo
 172 6 Ronald Reagan
 172 6 Reagan
-173 1 Akihito
+172 6 Ronald Reagan
+172 6 Ronald Reagan
 173 3 Peng
-173 3 Li
 173 4 Bill Clinton
-173 4 Michiko
-174 4 Mr. Purvis
-174 4 Ronald
+173 5 Ku
+173 5 Ku
+173 6 Emperor Akihito
 174 5 Regula
 174 5 Democrat William Jennings Bryan
-174 6 Leo D.
+174 7 William
+174 7 Jefferson
+174 7 Jackson
 175 2 three days ago
 175 43 1414
 175 86 yesterday
 175 100 
 175 100 
-176 1 Bardeen
-176 1 Bardeen
-176 1 Sony
 176 2 Schaefer
+176 5 Yamaha
+176 1 Bardeen
 176 4 Edwin Armstrong
+176 5 Mathews
 177 1 Lake Erie
-177 7 New York City
 177 7 Lake
-177 13 
-177 14 North America
+177 17 Indiana
+177 20 Soviet Union
+177 18 Europe
 178 3 James A
-178 3 Belva Ann Bennett Lockwood
+178 6 James A
 178 3 Jimmy Carter
-178 3 John Vorster
+178 6 Jimmy Carter
 178 4 Dukakis
-179 2 Aptos
-179 2 San
 179 3 Violin Concerto
 179 6 Corigliano
-179 12 California
-180 12 Gervex
-180 16 Brucelyn
+179 16 Californians
+179 2 Aptos
+179 16 West Coast
+180 43 Ingres
 180 18 Frida Kahlo
 180 23 Winslow Homer
-180 24 Cows
+180 31 Miguel Hidalgo
+180 32 Nerio
 181 100 
 181 100 
 181 100 
 181 100 
 181 100 
-182 3 McCleskey
-182 5 Biden
+182 7 Brain
+182 11 U.S. Kennedy
 182 5 Lane
 182 5 Harris
 182 5 
-183 1 Silly Putty
+183 2 Silly Putty
+183 20 Citizen Kane
 183 1 Malloy
 183 2 Silly Putty
-183 2 Silly Putty
 183 2 Peter Hodgson
-184 1 1961
 184 3 1961
+184 7 200 years ago
+184 1 1961
 184 4 1961
-184 4 1953
-184 4 1788
+184 7 1961
 185 1 Today
 185 1 Today
 185 1 Today
 185 1 Today
 185 1 Today
-186 24 Dec
 186 95 Dec
+186 24 Dec
 186 100 
 186 100 
 186 100 
-187 1 Felix
-187 1 Wankel
 187 1 Mazda
+187 1 Felix
 187 1 Mazda
 187 2 Felix
+187 4 Mazda Motor Corporation
 188 1 
+188 2 
+188 4 
 188 1 
 188 2 Cincinnati
-188 2 District
-188 2 
-189 1 next month
-189 1 Today
 189 3 two weeks ago
-189 4 last year
-189 5 today
+189 1 next month
+189 7 last year
+189 11 today
+189 11 last month
 190 1 Gannett
 190 3 Gannett
 190 6 Gannett
@@ -513,491 +513,491 @@
 191 100 
 191 100 
 191 100 
-192 3 1941
-192 3 1936
-192 6 1973
-192 6 this year
-192 6 1986
+192 6 1981
+192 17 1840
+192 6 1992
+192 15 yesterday
+192 15 tomorrow
+193 92 Stapleton
+193 75 Los
 193 34 Miami
 193 72 American
-193 75 Los
-193 92 Stapleton
 193 100 
+194 7 
 194 3 Madrid
 194 3 France
 194 3 Madrid
 194 3 
-194 3 
 195 1 Lucas
 195 1 Klein
-195 1 Van Johnson
-195 1 Toughest Judge
-195 1 
-196 1 West Point
-196 1 Movie
-196 2 
+195 2 Mario Van Peebles
+195 2 Pulitzer
+195 2 Blair
 196 3 Baltimore
+196 5 Boston
+196 8 Va
+196 1 West Point
 196 4 Usher
-197 1 New Year
+197 4 Washington
 197 2 Cal
-197 2 Alabama
-197 3 Play
-197 3 Maryland
-198 1 last week
-198 1 last week
+197 6 Southwest
+197 5 Florida
+197 6 Florida
 198 1 1982
-198 2 last week
-198 2 last week
+198 2 1982
+198 4 1982
+198 3 1980
+198 1 last week
+199 4 Cicero
+199 4 Cicero
 199 3 Los
-199 4 Cicero
-199 4 Cicero
 199 5 Halecrest
 199 7 Upper East Side
+200 13 Portland
+200 13 Sbarro
+200 13 
 200 1 
-200 4 America
 200 4 
-200 13 Alexandria
-200 13 Los Angeles
-201 1 Henson
-201 1 Eisner
-201 1 Henson
-201 1 Fraggle Rock
 201 1 Sesame Street
+201 1 Fraggle Rock
+201 2 Disney
+201 2 Eisner
+201 2 Michael Eisner
 202 1 1789
 202 2 today
-202 2 today
-202 4 1980
+202 6 Today
 202 5 today
+202 6 today
 203 5 South Africa
 203 9 Namibia
 203 10 Namibia
-203 11 Namibian
 203 13 Namibia
+203 25 Witwatersrand
 204 4 1839
 204 6 this month
 204 8 This year
-204 14 Today
-204 14 1920
-205 1 Western Europe
-205 1 
-205 1 Clifford
-205 1 Stoll
+204 45 1971
+204 33 1936
 205 1 Alexander Prechtel
-206 13 Abbott
-206 14 Cornelius
+205 1 Stoll
+205 1 Prechtel
+205 1 
+205 1 Wau Holland
+206 35 London
 206 20 
+206 47 Moody
+206 13 Abbott
 206 21 Elanco
-206 23 Ceclor
+207 18 
+207 19 
+207 18 
+207 19 
 207 3 Bill
-207 5 National
-207 8 Arkansas
-207 9 South
-207 10 Pennsylvania Avenue
 208 100 
 208 100 
 208 100 
 208 100 
 208 100 
-209 1 Johnson
+209 1 David Garrick
 209 1 Johnson
 209 1 Johnson
 209 1 Johnson
 209 1 Johnson
 210 1 William Gibson
-210 1 Gibson
 210 2 William Gibson
-210 3 Cyberspace
-210 4 Freedom
-211 1 Sanchez
-211 1 Lozada
+210 8 Robert H Zakon
+210 1 Gibson
+210 4 Bill
 211 2 Eduardo Frei
 211 3 Article Type
 211 3 
-212 1 1975
-212 2 This week
+211 3 Losada
+211 4 Patricio Aylwin
+212 8 1954
+212 7 1978
 212 3 Today
 212 4 1975
-212 5 1967
+212 2 This week
 213 1 Ebenezer
 213 2 Nicholas Nickleby
+213 3 Jack Benny
+213 4 Christmas Past
 213 3 Ebenezer
-213 3 Charles Dickens
-213 3 Marley
-214 1 Aerospace Walk
-214 1 Air Force
-214 1 Tom Wolfe
+214 2 Glennis
 214 1 Scott
-214 1 Air Force
+214 2 Space Administration
+214 2 Adams
+214 4 Sierra Highway
+215 3 San Francisco
 215 1 
-215 1 Murphy
+215 2 
+215 3 Hollister
 215 1 Highway Patrol
-215 1 Criner
-215 1 Riverside
-216 1 Lincoln Sheriff Pat Garrett
-216 2 Lincoln County Sheriff Pat Garrett
 216 3 Brady
-216 3 Garrett
 216 4 Sheriff Pat Garrett
-217 1 John Habgood
+216 11 Bonney
+216 12 Bonney
+216 14 Bonney
+217 3 Palace
 217 1 Frost
-217 1 Ashdown
 217 2 Frost
-217 2 Asdown
+217 3 Sky
+217 3 Jonathan Aitken
 218 100 
 218 100 
 218 100 
 218 100 
 218 100 
+219 6 Utah
 219 1 Yersinia
 219 2 Baker
-219 2 Yersinia
-219 3 
-219 3 Israel
-220 1 Bethel
+219 3 Peru
+219 7 
 220 1 Bethel
 220 2 Bethel
-220 2 Bethel
-220 3 
-221 1 Jeff Hilary
-221 1 Hilary
-221 1 Hilary
-221 1 Hilary
+220 10 
+220 11 Bethel
+220 18 
 221 1 
-222 4 this year
-222 8 1960
+221 2 Choppelas
+221 3 Scrooge
+221 1 Hilary
+221 5 Boris Karloff
 222 8 1956
-222 8 1963
+222 8 1960
 222 10 1932
+222 8 1963
+222 4 this year
 223 2 Morrison
-223 2 Morrison
+223 2 Emmett
 223 2 Morrison
 223 2 Morrison
 223 2 Morrison
 224 1 Benny Stulwicz
-224 1 Hill Street Blues
 224 1 Father Robert Hargis
+224 1 Hill Street Blues
 224 2 Dick Van Dyke
-224 2 Dick Van
-225 1 Benny Stulwicz
+224 2 Van Dyke
 225 1 Hill Street Blues
 225 1 Father Robert Hargis
+225 1 Benny Stulwicz
 225 2 Dick Van Dyke
-225 2 Dick Van
+225 2 Reiner
 226 100 
 226 100 
 226 100 
 226 100 
 226 100 
 227 1 Sam Walton
-227 1 Helen
-227 1 Ark
-227 1 Carter
 227 1 Hypermart
+227 4 
+227 4 Cheryl Starks
+227 4 Sam
+228 1 Charles Gibson
 228 1 Joan Lunden
-228 1 Pauley
-228 1 John Palmer
-228 1 Daniels
+228 1 Lunden
+228 1 Hartman
 228 1 Kathleen Sullivan
-229 2 1987
 229 2 1985
-229 2 1988
-229 2 1989
+229 3 last year
+229 2 1987
 229 3 1985
-230 1 Palmdale
-230 1 Victorville
+229 5 1989
+230 13 Anaheim
+230 18 County
 230 2 
-230 3 Palmdale
-230 3 Victorville
-231 6 1922
-231 13 1979
+230 4 Victorville
+230 1 Victorville
 231 33 1770
-231 48 1978
 231 62 1953
+231 13 1979
+231 82 1990
+231 6 1922
 232 2 Calif
-232 5 Calif
 232 9 Technology
+232 5 Calif
 232 16 Health
-232 31 Farmington
-233 3 1973
+232 52 Technology
+233 9 last year
+233 4 last year
+233 6 this week
 233 4 today
 233 4 last year
-233 4 last year
-233 6 today
 234 9 Darlington Hall
-234 9 Stevens
 234 31 Ivor Spencer
-234 31 Spencer
-234 50 Donnell
-235 4 1991
-235 6 1959
-235 6 Last Year
-235 7 tonight
+234 50 Donald C
+234 54 Spencer
+234 54 Spencer
 235 14 1964
-236 1 Satan
-236 2 Christians
-236 2 New Year
-236 2 New York Times
+235 6 1959
+235 17 tomorrow
+235 6 Last Year
+235 14 1980
 236 2 
-237 1 South Africa
-237 1 Zimbabwe
-237 2 Argyle
+236 2 New Year
+236 4 Satan
+236 12 Air Force
+236 13 
 237 3 Angola
+237 1 South Africa
 237 3 Venetia
-238 15 yesterday
+237 5 Yellowknife
+237 5 Australia
+238 81 1990
 238 29 1987
 238 44 1978
 238 46 1978
-238 81 1990
+238 87 1986
 239 100 
 239 100 
 239 100 
 239 100 
 239 100 
-240 1 Rudulf Straeuli
-240 1 Jack Rowell
+240 3 Wales
+240 3 Welsh
 240 1 Tony Underwood
-240 2 Rudulf Straeuli
-240 2 Jack Rowell
-241 3 Britain
+240 2 Tony Underwood
+240 1 Jack Rowell
 241 4 London
-241 4 Louvain
+241 3 Britain
 241 4 
 241 4 Victoria
-242 1 Nitty Gritty Dirt Band
-242 1 Tennessee Flat Top Box
-242 1 Kathy Mattea
+241 6 Wyatville
+242 3 Harlan Howard
+242 2 Tennessee Flat Top Box
+242 3 Tennessee Flat Top Box
 242 1 Ricky Van Shelton
-242 2 Kathy Mattea
-243 2 1995
+242 2 Ricky Van Shelton
+243 19 last year
 243 4 today
 243 4 next month
 243 4 1948
-243 4 1993
+243 28 1951
+244 1 Walt Disney
+244 1 Lena Horne
 244 1 Sammy Fain
-244 1 Fain
-244 1 Tender
-244 1 Morton Gould
-244 1 Sammy
-245 2 Christina Wiktah
+244 1 Parish
+244 1 Oscars
+245 2 Hicks
+245 2 Hollywood
 245 2 Bob Hicks
 245 2 Roddam
-245 2 John Daly
-245 2 Roddam
-246 1 1928
+245 2 Wirth
+246 7 1986
+246 8 this year
 246 1 1896
 246 1 1981
-246 1 1987
-246 7 next month
+246 8 1982
+247 3 1558
+247 2 1594
+247 4 this week
 247 2 1994
 247 2 1635
-247 2 This year
-247 2 1593
-247 2 1594
-248 1 Line
-248 1 Roger Moore
+248 3 Davi
+248 4 Davi
 248 2 Roger Moore
+248 5 Dalton
 248 3 License Revoked
-248 3 Robert Davi
-249 2 Los Angeles
-249 6 N.J.
 249 61 
-249 61 Patton
-249 64 
+249 82 Khanchalian
+249 91 Khanchalian
+249 6 N.J.
+249 86 Pennsylvania
+250 2 Buddha
 250 1 New
-250 1 Eastern
 250 1 Christian
-250 1 Eastern
+250 2 India
 250 2 India
 251 3 1939
-251 3 Tomorrow
-251 3 1945
-251 4 1939
 251 5 today
+251 3 1945
+251 5 1945
+251 7 1970
+252 12 Cox
 252 7 Eugene Carlson
 252 7 Pittsburgh
-252 12 Cox
 252 24 Barry Helton
-252 25 Hawkins
-253 1 San Francisco
-253 1 Northspur
-253 1 Ft
-253 2 Los Angeles
+252 28 Kansas City
 253 2 Costa Mesa
+253 2 Los Angeles
+253 3 
+253 1 Northspur
+253 2 Baldwin
+254 1 1976
+254 2 1976
+254 3 1980
 254 1 1973
 254 1 1989
-254 1 1975
-254 1 1976
-254 2 1973
 255 100 
 255 100 
 255 100 
 255 100 
 255 100 
-256 1 Wonder
 256 1 Lee Garrett
 256 1 Wonder
-256 1 Garret
+256 2 Wonder
+256 2 San Fernando Valley
 256 1 Wonder
-257 1 today
+257 2 000 years ago
 257 1 000 years ago
 257 1 000 years ago
 257 1 last year
-257 2 000 years ago
-258 7 Windows PCs
-258 8 Macintosh
+257 4 today
 258 10 Logitech
-258 12 Classic
+258 7 Windows PCs
 258 12 Disk Manager Mac
+258 17 
+258 12 Classic
 259 1 Lisa Malone
-259 1 Malone
-259 1 Atlas Centaur
-259 2 Discovery
-259 2 
+259 5 Cosmonaut Valentina Tereshkova
+259 5 Sally Ride
+259 5 Cosmonaut Yuri Gagarin
+259 5 Cosmonaut Aleksei Leonov
 260 25 1911
 260 35 1980
 260 42 1861
 260 54 Today
 260 54 1993
-261 1 1990
-261 2 1893
-261 3 1977
-261 3 1977
 261 3 1987
+261 3 1987
+261 3 1977
+261 3 2000
+261 3 1995
 262 1 Reuben Award
-262 1 Grimm
-262 1 Cathy Guisewite
-262 1 Jeff Millar
-262 1 Tank McNamara
-263 1 Europe
-263 2 Europe
-263 2 Europe
+262 1 Lee
+262 1 Johnny Carson
+262 1 Lasswell
+262 1 Rube Goldberg
+263 15 Port
 263 3 
-263 11 Trust
-264 1 Sotheby
-264 1 
-264 1 Jim
-264 1 Samuel Langhorne Clemens
-264 1 Sotheby
-265 3 Ashley Wilkes
-265 3 Charles Hamilton
-265 3 Brooks
+263 13 
+263 21 
+263 1 Europe
+264 2 Tom Sawyer
+264 2 Perry
+264 2 
+264 2 Huck
+264 2 Joanne
+265 3 Younger Sister
 265 3 Judy Garland
-265 3 Mildred Pierce
-266 1 1980
-266 1 1980
+265 3 Brooks
+265 3 Charles Hamilton
+265 3 Clark
 266 1 1986
-266 1 1966
-266 1 1973
-267 1 Camilo Jose Cela
+266 2 1986
+266 2 today
+266 2 last December
+266 1 1980
+267 2 Gabriel Garcia Marquez
 267 1 Cela
-267 1 Allen
-267 1 Trygve Haavelmo
+267 1 Camilo Jose Cela
 267 1 Alfred Nobel
-268 1 
-268 1 Cottle
-268 2 
-268 2 Cottle
-268 3 Roberts
-269 50 Friel
-269 52 Fits
-269 57 Raymond
+267 2 Jose Cela
+268 5 George Bush
+268 5 Texas Republican
+268 5 Silverglade
+268 5 Reagan
+268 5 Bush
+269 65 Jose Luis Mastretta
 269 57 Oliver
-269 63 Madeleine Kamman
+269 52 Fits
+269 68 Taruschio
+269 67 Alfonso Martinez
+270 35 1889
 270 5 this year
-270 7 1987
-270 8 1987
-270 8 1986
+270 35 1962
 270 15 1986
+270 18 1987
 271 1 
-271 1 Hound Dog
+271 1 Page
+271 1 Tortelvis
 271 1 Jimmy Page
-271 1 Jah
-271 1 Heartbreak Hotel
-272 2 Wilde
-272 2 
-272 2 Shaw
-272 3 Krestyanka
+271 1 Tortelvis
+272 5 Charlotte Fedders
 272 3 Ellen R.
+272 5 Charlotte Fedders
+272 5 Charlotte Fedders
+272 3 Krestyanka
+273 4 2000
+273 4 2000
+273 3 2000
 273 1 1982
-273 2 2000
-273 2 1928
-273 3 last December
 273 3 2000
 274 2 Bruno Richard Hauptmann
-274 2 Amwell Township
+274 4 Ries
+274 4 
+274 4 Ries
 274 3 Wilentz
-274 3 Anna
-274 3 Wilentz
-275 4 Further
-275 9 Andrey Kozyrev
-275 19 Frost
-275 24 Soto
+275 33 Giesbert
 275 30 Butrus
-276 1 Ron Kovic
-276 1 Honey
-276 1 Michael Moore
-276 1 Stone
+275 9 Andrey Kozyrev
+275 4 Further
+275 41 Akashi
+276 2 Harry Met Sally
+276 2 Maurice Jarre
 276 1 Robin Williams
-277 23 
+276 1 Michelle Pfeiffer
+276 2 Christy Brown
+277 96 West
 277 79 Goldblum
 277 93 
-277 96 West
+277 23 
 277 100 
-278 1 
-278 1 Fallon McElligott
-278 1 David Novak
+278 1 Domino
 278 1 Salt Lake City
-278 1 George Rice
+278 1 Godfather
+278 1 Garden City
+278 1 David Novak
+279 27 North America
 279 18 South Rim
 279 23 Utah
-279 27 North America
-279 28 Los Angeles County
-279 30 Utah
-280 2 Beahrs
-280 3 Reidsburg
+279 31 Utah
+279 67 Grand
+280 16 Graham
+280 33 Moorhead
 280 4 Bel-Air
 280 7 Reagan
-280 12 Sundt
-281 1 Los Angeles
-281 1 Tyrone
-281 2 Lamont
-281 2 Broadway
+280 24 
+281 5 Love
+281 3 West Covina
+281 9 Los Angeles
+281 7 California
 281 2 Broadway
 282 1 
 282 1 
-282 2 James Galway
 282 3 Waters
+282 8 Roger Waters
 282 3 Jon Anderson
-283 1 this month
-283 1 1920
-283 1 1929
 283 2 1975
+283 3 Today
 283 2 1979
+283 1 1929
+283 1 1920
 284 1 this year
 284 20 1989
-284 31 1993
-284 33 next month
 284 34 1990
-285 2 New York
-285 4 Washington
-285 6 Washington
-285 6 San Blas
+284 39 1970
+284 41 1989
+285 89 
 285 22 Panama City
+285 84 
+285 6 Washington
+285 41 Chicago
 286 33 Boots Contract Manufacturing
 286 100 
 286 100 
 286 100 
 286 100 
 287 1 Bush
-287 1 Bush
-287 1 Bush
-287 4 Alvin Guthrie
 287 7 Chun
+287 7 Chun
+287 10 Thomas
+287 4 Alvin Guthrie
+288 8 Short Sizes
 288 1 Chris Hager
-288 1 Doris Chickering
-288 1 Ariz
-288 2 Snow White
 288 2 Kae Sumner
+288 1 Doris Chickering
+288 3 Lin Damon
 289 100 
 289 100 
 289 100 
@@ -1008,153 +1008,153 @@
 290 100 
 290 100 
 290 100 
-291 1 
-291 1 
-291 2 Cincinnati
-291 2 District
 291 2 
+291 4 
+291 1 
+291 1 
+291 3 Huggies
+292 3 
+292 4 
 292 1 
-292 1 
-292 2 Huggies
-292 2 
-292 2 Wichita
-293 1 Space Station Freedom
-293 1 Charles Price
+292 3 Cincinnati
+292 4 Cincinnati
+293 2 William Fisher
 293 1 Price
-293 1 Fisher
-293 1 Richard
+293 1 Charles Price
+293 1 Space Station Freedom
+293 1 Johnson Space Center
+294 4 Tass
+294 4 Tass
 294 1 Balandin
-294 2 Solovyev
-294 2 Mir
 294 2 Balandin
 294 3 Gennady Strekalov
 295 1 this year
+295 53 1980
 295 7 next month
-295 12 this year
 295 22 1980
-295 24 last week
+295 29 Today
 296 1 Today
 296 1 1980
+296 5 Today
+296 13 Today
 296 2 1980
-296 3 Today
-296 3 1980
 297 8 Ed Turner
-297 8 Visnews
 297 9 Ed Turner
+297 91 Turner
+297 8 Visnews
 297 9 Visnews
-297 15 Turner Broadcasting System
-298 76 Le Vine
 298 76 Le Vine
 298 76 Webster
+298 76 Le Vine
 298 76 Daniel
 298 76 Christmas
-299 1 New England
 299 2 U.S.
-299 2 U.S.
+299 6 
+299 6 Massport
+299 6 Newark
 299 3 Boston
-299 3 New York
 300 17 Five months ago
 300 86 1889
-300 93 Today
 300 93 1874
+300 93 Today
 300 100 
 301 1 1960
+301 5 today
 301 2 1956
-301 2 1987
-301 4 next month
-301 4 1952
+301 5 today
+301 5 1987
 302 1 West Point
-302 2 
 302 2 Usher
-302 3 Independence
+302 4 Virginia
 302 4 Westminster Hall
+302 4 Usher
 303 1 Rao
-303 1 John
-303 1 Kennedy
 303 2 John
-303 4 Davis
+303 4 Great Charter
+303 1 Kennedy
+303 4 Norman Leeds
 304 1 Rao
-304 1 John
 304 1 Kennedy
-304 3 Davis
-304 3 Davis
-305 1 Neurology
-305 1 Argentina
-305 2 Neurology
-305 2 Argentina
+304 3 John
+304 3 Norman Leeds
+304 3 Great Charter
+305 5 McCleskey
+305 7 Biden
 305 3 Corpus
+305 7 
+305 7 California
+306 2 Silly Putty
+306 20 Citizen Kane
 306 1 Malloy
-306 2 Silly Putty
-306 2 Silly Putty
 306 2 Peter Hodgson
-306 2 Mr.
+306 7 John Molski
 307 2 1961
-307 3 Today
-307 3 1945
 307 5 1953
+307 5 last day
+307 3 1945
 307 5 1961
+308 22 Portland
+308 20 Midway
 308 1 
-308 4 America
-308 4 
-308 6 
-308 18 Norton
-309 1 Henson
-309 1 Eisner
-309 1 Henson
+308 20 New Jersey
+308 22 Irving
+309 3 Disney
 309 1 Fraggle Rock
+309 1 Henson
 309 1 Sesame Street
-310 1 Jim Henson
-310 1 Henson
-310 1 Eisner
-310 1 Henson
+309 3 Eisner
+310 2 Michael Eisner
 310 1 Fraggle Rock
+310 2 Disney
+310 1 Sesame Street
+310 2 Eisner
 311 100 
 311 100 
 311 100 
 311 100 
 311 100 
-312 1 New Year
 312 2 Washington
 312 3 Cal
-312 3 Alabama
-312 4 Play
-313 1 last week
-313 1 last week
+312 6 Southwest
+312 1 New Year
+312 6 
+313 3 1980
+313 3 1980
 313 1 1982
-313 2 last week
-313 2 last week
-314 1 last week
-314 1 last week
+313 2 1982
+313 4 1982
 314 1 1982
+314 2 1982
+314 3 1980
+314 1 last week
 314 2 last week
-314 2 last week
+315 4 1982
+315 3 1980
 315 1 last week
-315 1 last week
+315 2 last week
 315 1 1982
-315 2 last week
-315 2 last week
-316 3 Los Angeles
-316 4 San Diego State
-316 6 Lest
+316 10 San
 316 7 San Diego
+316 7 San
 316 7 Capistrano Ciclistas
-317 1 
-317 1 
-317 2 Horsham
+316 6 Lest
 317 2 United States
-317 6 Tail
+317 8 Cicero
+317 1 
+317 1 
+317 8 Cicero
+318 4 Ligaroti
 318 1 Belmont
-318 1 Wand
-318 2 Cardoba
-318 3 Derby
 318 3 Ferdinand
+318 4 Gulfstream
+318 3 Derby
 319 1 Calder
 319 1 Caliente
-319 1 Calder
-319 1 Meyocks
-319 1 Calder
+319 1 Turfway
+319 1 Youth
+319 1 Derby
+320 1 Mazda
+320 1 Mazda
+320 1 Wankel
 320 1 Felix
 320 1 Wankel
-320 1 Mazda
-320 1 Wankel
-320 1 Mazda
