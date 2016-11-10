@@ -348,11 +348,11 @@ def ground(tagged_text, base_date):
 
 ####
 
-def demo():
-    import nltk
-    # text = nltk.corpus.abc.raw('rural.txt')[:10000]
-    text = 'fahof uhaofh anwo december 1, 1923 fawaojogwhoajof'
-    print tag(text)
+# def demo():
+#     import nltk
+#     text = nltk.corpus.abc.raw('rural.txt')[:10000]
+#     # text = 'before May'
+#     print tag(text)
 
-if __name__ == '__main__':
-    demo()
+# if __name__ == '__main__':
+#     demo()

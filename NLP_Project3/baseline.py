@@ -1,6 +1,9 @@
 import glob
 import nltk
 import re
+from fuzzywuzzy import fuzz
+# import the following customized script to tag DATE NER
+import timex
 '''
 	PART 1. Question processing (list of keywords to IR)
 		method 1: leave out the question word <- Method chosen for baseline
@@ -100,6 +103,16 @@ def get_q_type(desc_token):
 		return WHEN_TYPE
 	return -1
 
+def rank_sentences(keyword_sentences):
+	# [[keyword_1, sentence_1],[keyword_2, sentence_2]...]
+	for key_sent in keyword_sentences:
+		q_keyword = key_sent[0].lower()
+		a_sentence = key_sent[1].lower()
+		similarity_score = fuzz.partial_ratio(q_keyword, a_sentence)
+		key_sent.append(similarity_score)
+	sorted_sentence_list = sorted(keyword_sentences, key=lambda x: x[2], reverse=True)
+	return sorted_sentence_list
+
 ###############################################################################
 ###############################################################################
 # PASSAGE RETRIEVAL
@@ -143,30 +156,37 @@ def process_doc(single_doc, q_type, doc_num):
 	# in order of type constants (0 : who, 1: where, 2: when)
 
 	# BASELINE ONLY!
-	# when NER doesn't work in nltk NER. might as well just skip it.
+	# when NER doesn't work in nltk NER. we use timex.py to tag
+	# https://github.com/nltk/nltk_contrib/blob/master/nltk_contrib/timex.py
 	if q_type == WHEN_TYPE:
-		return []
+		sentences = nltk.tokenize.sent_tokenize(single_doc)
+		surviving_sentences = []
+		for sentence in sentences:
+			sentence_after_tagging = timex.tag(sentence)
+			if sentence_after_tagging.find('<TIMEX2>') != -1:
+				surviving_sentences.append((doc_num,sentence))
+		return surviving_sentences
 
 	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
-
-	sentences = nltk.tokenize.sent_tokenize(single_doc)
-	surviving_sentences = []
-	for sentence in sentences:
-		words = nltk.word_tokenize(sentence)
-		pos_tag = nltk.pos_tag(words)
-		# this is in nltk tree
-		# reference : http://www.nltk.org/howto/tree.html
-		# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
-		ner_tree = nltk.ne_chunk(pos_tag)
-		# bool for whether this sentence has
-		contains_tag = False
-		for subtree in ner_tree.subtrees():
-			if subtree.label() in NER_TAG[q_type]:
-				contains_tag=True
-		if (contains_tag):
-			surviving_sentences.append((doc_num,sentence))
-	#print surviving_sentences
-	return surviving_sentences
+	else:
+		sentences = nltk.tokenize.sent_tokenize(single_doc)
+		surviving_sentences = []
+		for sentence in sentences:
+			words = nltk.word_tokenize(sentence)
+			pos_tag = nltk.pos_tag(words)
+			# this is in nltk tree
+			# reference : http://www.nltk.org/howto/tree.html
+			# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
+			ner_tree = nltk.ne_chunk(pos_tag)
+			# bool for whether this sentence has
+			contains_tag = False
+			for subtree in ner_tree.subtrees():
+				if subtree.label() in NER_TAG[q_type]:
+					contains_tag=True
+			if (contains_tag):
+				surviving_sentences.append((doc_num,sentence))
+		#print surviving_sentences
+		return surviving_sentences
 
 
 def passage_retrieval(q_num, q_type, q_keywords):
@@ -246,28 +266,36 @@ def answer_processing(s_tuple, q_type, q_keywords):
 	for i in range(0, 5):
 		doc_num = sentences[i][0]
 		sentence = sentences[i][1]
-		words = nltk.word_tokenize(sentence)
-		pos_tag = nltk.pos_tag(words)
-		ner_tree = nltk.ne_chunk(pos_tag)
-		#print ner_tree
-		# the list of tuples((word, pos),ner) to be considered for this sentence
-		matching_tuples = []
-		for subtree in ner_tree.subtrees():
-			if subtree.label() in NER_TAG[q_type] and subtree.pos()[0][0][1]=='NNP':
-				print subtree
-				iskwin = map(lambda x : x in subtree.pos()[0][0][0], q_keywords)
-				if not any(iskwin):
-					matching_tuples = subtree.pos()
-		# t : ((word, pos), ner)
-		answer = ''
-		for t in matching_tuples:
-			#print t
-			if t[0][0] not in q_keywords:
-				answer += t[0][0] + ' '
-		# remove any possible trailing whitespaces
-		answer = answer.rstrip()
-		answers.append((doc_num,answer))
-	print answers
+		# nltk NER doesn't work with when_type, let's use timex.py
+		if q_type == WHEN_TYPE:
+			sentence_after_tagging = timex.tag(sentence)
+			when_answers = re.findall('<TIMEX2>(.*?)</TIMEX2>', sentence_after_tagging)
+			# in case answer comes out as empty, output an empty string
+			when_answer = when_answers[0] if len(when_answers) != 0 else ''
+			answers.append((doc_num, when_answer))
+		else:
+			words = nltk.word_tokenize(sentence)
+			pos_tag = nltk.pos_tag(words)
+			ner_tree = nltk.ne_chunk(pos_tag)
+			#print ner_tree
+			# the list of tuples((word, pos),ner) to be considered for this sentence
+			matching_tuples = []
+			for subtree in ner_tree.subtrees():
+				if subtree.label() in NER_TAG[q_type] and subtree.pos()[0][0][1]=='NNP':
+					print subtree
+					iskwin = map(lambda x : x in subtree.pos()[0][0][0], q_keywords)
+					if not any(iskwin):
+						matching_tuples = subtree.pos()
+			# t : ((word, pos), ner)
+			answer = ''
+			for t in matching_tuples:
+				#print t
+				if t[0][0] not in q_keywords:
+					answer += t[0][0] + ' '
+			# remove any possible trailing whitespaces
+			answer = answer.rstrip()
+			answers.append((doc_num,answer))
+	print 'answers', answers
 	return answers
 
 ###############################################################################

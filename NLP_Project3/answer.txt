@@ -1,1160 +1,1160 @@
-89 1 Caribbean Sea
-89 3 Caribbean
-89 13 Caribbean
-89 13 Caribbean Economic
-89 13 Caribbean Community
-90 2 Johan Vaaler
+89 3 Guatemala
+89 5 
+89 19 Peten
+89 79 Peten
+89 100 
+90 1 Thomas Alva Edison
+90 1 James J. Ritty
+90 1 Whitcombe L
+90 2 Per Langaker
 90 2 Langanker
-90 3 Public Library
-90 3 Elisha G. Otis
-90 3 William LeBaron Jenny
-91 3 Gaza
-91 3 Gaza Strip
-91 4 Gaza
-91 4 Gaza Strip
-91 5 Ballet
-92 4 Eric Johnson
-92 4 Fender Stratocaster
-92 4 Johnson
-92 4 Johnson
-92 4 Johnson
-93 1 Article Type
-93 1 Bonn
-93 1 Begin Sudarshnam
-93 1 Chancellor Helmut Kohl
-93 1 Mr.
-94 2 Public Library
-94 2 Elisha G. Otis
-94 2 William LeBaron Jenny
-94 2 Public Library
-94 2 Thomas Alva Edison
-95 1 Paul Keating
-95 1 Vo Van Kiet
-95 1 Paul Keating
-95 1 Vietnam
-95 1 Vo Van Kiet
-96 1 Martin Luther
-96 1 Freedom Comes
-96 1 Martin Luther
-96 1 Kingdom
-96 1 Martin Luther
-97 3 Harrison
-97 3 Opera
-97 3 Yevgeny Onegin
-97 3 Kong
-97 3 Hoban
-98 13 Montenegro
-98 26 Western European
-98 29 West
-98 53 West
-98 58 Western
-99 1 Stavros Niarchos
+91 25 
+91 50 Stand
+91 51 
+91 100 
+91 100 
+92 1 
+92 1 Fender
+92 1 Peter Schuelzky
+92 1 Mr. Fender
+92 1 Dick Dale
+93 1 Narasimha
+93 1 Narasimha
+93 1 Karuppaswamy
+93 2 Narasimha
+93 2 Narasimha
+94 100 
+94 100 
+94 100 
+94 100 
+94 100 
+95 2 Vietnam
+95 3 Khamtai Siphandon
+95 3 Paul Keating
+95 3 Khamtai Siphandon
+95 3 Vang Lattanavong
+96 2 
+96 5 Boulevard
+96 6 Dexter
+96 8 Kerry
+96 9 Andrew Young
+97 100 
+97 100 
+97 100 
+97 100 
+97 100 
+98 2 Great Britain
+98 3 Srpska
+98 3 
+98 4 Yugoslavia
+98 6 Italy
 99 1 Diamantis Diamantides
-99 1 Onassis
-99 1 Emmanuel
-99 1 Naftiliaki
-100 28 West
-100 35 West
-100 35 West
-100 42 Chernobyl
-100 42 Western
-101 6 Far East
-101 6 Far East
-101 16 North Hampton
-101 21 Southern Section
-101 21 Southern Section
-102 2 David Wharton
-102 2 Long Course National Championships
-102 2 Wharton
-102 2 Eric Namesnik
-102 2 Namesnik
-103 100 
-103 100 
-103 100 
-103 100 
-103 100 
-104 1 Robert Badinter
-104 1 Vichy
-104 1 Paris
-104 1 Jews
-104 1 Serge Klarsfeld
-105 1 Philo T. Farnsworth
+99 1 Martinos
+99 2 Diamantis Diamantides
+99 2 Martinos
+99 3 Agamemnon
+100 100 
+100 100 
+100 100 
+100 100 
+100 100 
+101 1 Ohio
+101 1 
+101 3 South County
+101 4 Pennsylvania
+101 15 Canadian
+102 1 Quick
+102 1 Melvin Stewart
+102 1 Rowdy Gaines
+102 1 Quick
+102 1 Gaines
+103 1 1977
+103 2 1709
+103 4 1944
+103 7 1000
+103 7 1985
+104 2 Marshal Petain
+104 4 
+104 4 Chirac
+104 6 Yves Jouffa
+104 8 Rene Monory
 105 1 Elma Farnsworth
-105 1 Bruce Barnson
+105 1 James Avanti
 105 1 Farnsworth
-105 1 Ridgecrest
+105 2 Fair
+105 2 Idaho
 106 1 Tim McClure
 106 1 Southwest
 106 1 Charlotte Goddard
-106 1 Herb Kelleher
-106 1 Herb
-107 1 Pilot
+106 1 Shamu One
+106 1 Shamu One
 107 1 Ferguson
-107 1 Lockheed
-107 1 Lockheed
-107 1 Mullin
-108 1 Teresa Ibarra
-108 1 Holtville
-108 1 Holtville
-108 1 Coronado
-108 1 Holtville Coach
-109 1 Barbara Jordan
-109 1 James Little
-109 1 Jordan
-109 1 Kari Larsen
-109 1 William J. Deaton
-110 20 West
-110 25 Southern California
-110 27 Southern California
-110 27 Southern Mountain Appalachian
-110 30 Southern California
-111 1 Alexander Cartwright
-111 1 Times
-111 1 Edward L. Widmer
-111 1 Widmer
+107 1 Sherman Mullin
+107 2 Gordeuk
+107 2 Whitehead
+107 2 Whitehead
+108 100 
+108 100 
+108 100 
+108 100 
+108 100 
+109 100 
+109 100 
+109 100 
+109 100 
+109 100 
+110 3 
+110 4 Akaka
+110 4 Hawaii
+110 6 
+110 9 Hawaiian
+111 1 Cartwright
 111 1 Abner
-112 1 Southern
-112 2 Southern
-112 3 Earth
-112 4 Earth
-112 6 Earth
-113 1 Brother
-113 1 Griff
-113 1 King
+111 2 Abner
+111 2 Base Ball Club
+111 2 Baseball
+112 3 
+112 4 Science
+112 8 Carolina
+112 8 North Carolina
+112 8 Hampstead
 113 1 Napoleonic Tactics
 113 1 John McQueen
-114 1 West Bank
-114 1 West Bank
-114 2 West Bank
-114 2 West Bank
-114 3 Western Valley
-115 5 Caribbean
-115 8 Caribbean Taino
-115 10 Guatemala
-115 10 Southern
-115 20 Far East
-116 100 
-116 100 
-116 100 
-116 100 
-116 100 
-117 1 William Wordsworth
-117 1 Tintern Abbey
-117 1 Robespierre
-117 1 Dorothy
-117 1 Shelley
+113 1 King
+113 1 King
+113 2 Union
+114 1 Beauty
+114 1 Season
+114 1 Egypt
+114 1 
+114 2 Beauty
+115 1 Manhattan
+115 1 Vasquez
+115 2 Manhattan
+115 2 Brooklyn
+115 4 Guatemala
+116 1 1973
+116 2 this month
+116 3 five  years ago
+116 3 Thirty years ago
+116 3 last year
+117 100 
+117 100 
+117 100 
+117 100 
+117 100 
 118 2 Cerritos
-118 2 Diamond Bar
-118 2 Perma Focus
-118 2 Jason Empire
-118 2 Perma
+118 3 Libby Edelman
+118 3 Miriam Sirota
+118 3 Sirota
+118 3 Sirota
 119 1 Zahi Hawass
-119 1 Pharaoh Tutankhamun
-119 1 Egypt
 119 1 Tutankhamun
 119 1 Pharaoh Cheops
+119 1 Pharaoh Zozer
+119 1 Siwa Oasis
 120 1 Northeast
-120 6 West
-120 6 West Virginia
-120 10 Caribbean
-120 22 Southern California
-121 100 
-121 100 
-121 100 
-121 100 
-121 100 
-122 1 Almanac
-122 1 Hale
-122 1 Hale
-122 1 Almanac Has Influenced My Life
+120 1 Pennsylvania
+120 1 Portland
+120 1 Maine
+120 1 Rhode Island
+121 5 1926
+121 8 today
+121 84 1947
+121 100 Five days later
+121 100 1972
+122 1 
+122 1 
 122 2 Muskie
-123 5 Western
-123 17 Southern California
-123 17 Caribbean
-123 17 West Indies
-123 17 South
-124 1 Caesars
-124 1 Caesars
-124 1 Caesars
-124 1 Caesars
-124 1 Caesars New Jersey
-125 1 Gogh
-125 1 Gogh
-125 1 Les Noches
-125 1 Pablo Picasso
-125 1 Lapin Agile
-126 4 South
-126 8 Caribbean
-126 11 Persian Gulf
-126 11 Western Hemisphere
-126 12 Western Hemisphere
-127 1 Northern Territory
-127 2 South Australian
-127 3 Western Australia
-127 4 Northern
-127 4 Northern Territory Land Council
-128 1 Suzuki
-128 1 Doug Mazza
+122 2 
+122 2 Judson Hale
+123 13 Lynn
+123 13 Christ
+123 14 Newton
+123 36 American
+123 48 American
+124 66 Trump
+124 66 Jonathan Benanav
+124 92 
+124 100 
+124 100 
+125 100 
+125 100 
+125 100 
+125 100 
+125 100 
+126 100 
+126 100 
+126 100 
+126 100 
+126 100 
+127 1 Muirhead
+127 2 Muirhead
+127 4 Australian
+127 4 Australia
+127 4 Australia
+128 1 Larry Messelt
 128 1 Yoshiyuki Arai
-128 1 Kenji Shimizu
-128 1 Mr.
+128 1 Yoshi Fujii
+128 1 Fujii
+128 1 Mazza
 129 1 Monopoly
-129 1 Hasbro
-129 1 Francis Spear
-129 1 Paul Lipscomb
-129 1 Atmosfear
-130 1 Royex
-130 1 Royex
-130 1 Royex
-130 1 Galveston
-130 1 Royex
-131 100 
-131 100 
-131 100 
-131 100 
-131 100 
-132 3 Northern Territory
-132 3 Northern Territory
-132 5 Western
-132 10 West Coast
-132 18 West Side
-133 100 
-133 100 
-133 100 
-133 100 
-133 100 
-134 1 Archbishop
-134 1 Tutu
-134 1 Klerk
-134 1 Tutu
-134 1 Klerk
-135 100 
-135 100 
-135 100 
-135 100 
-135 100 
-136 100 
-136 100 
-136 100 
-136 100 
-136 100 
-137 1 Guard
-137 1 Guard Cutter Point Harris
-137 1 Hawaii Island
-137 1 Bennett
-137 1 Maui
-138 1 Yoshiaki Tsutsumi
-138 1 Seibu Railway Group
-138 1 Tsutsumi
+129 1 Snakes
+129 1 Alfred Butts
+129 2 Hasbro
+129 3 Hasbro
+130 100 
+130 100 
+130 100 
+130 100 
+130 100 
+131 1 1984
+131 2 1984
+131 4 1984
+131 5 1984
+131 5 today
+132 1 Australia
+132 2 Australia
+132 3 Darwin
+132 3 Australia
+132 3 
+133 1 last February
+133 1 1869
+133 1 Two years later
+133 3 1986
+133 3 last May
+134 100 
+134 100 
+134 100 
+134 100 
+134 100 
+135 1 this year
+135 1 this year
+135 1 this year
+135 2 today
+135 2 today
+136 8 1519
+136 30 1536
+136 34 1200
+136 36 20 years later
+136 48 1001
+137 4 
+137 9 
+137 9 Teutsch
+137 9 Pap
+137 11 Teutsch
 138 1 Forbes
 138 1 Tsutsumi
-139 1 Coach Bud Carson
-139 1 Owner Art Modell
-139 1 Modell
+138 1 Eitaro Itoyama
+138 1 Forbes
+138 1 Pablo Escobar Gaviria
 139 1 Carson
+139 1 Jim Shofner
 139 1 Modell
-140 1 Salman Rushdie
-140 1 Ayatollah Ruhollah Khomeini
-140 1 Prince Reza Pahlavi
-140 1 Brick Lane
-140 1 Naim Sheikh
-141 9 West Texas
-141 10 Illinois
-141 14 Northwest
-141 23 Louisiana
-141 23 Alabama
-142 1 Western
-142 2 South Africa
-142 3 South Africa
-142 6 Caribbean
-142 10 Southern Hemisphere
-143 2 Gerard Depardieu
-143 2 Carolinian
-143 2 Peter Weir
-143 2 Card
-143 2 Weir
-144 1 William F.
+139 2 Carson
+139 3 Miami
+140 1 Jesus
+140 1 Allah
+140 1 Maqbool
+140 1 
+140 1 
+141 1 Chicago
+141 2 Joliet
+141 2 Tecumseh
+141 2 Pennsylvania
+141 2 Illinois
+142 1 South African
+142 1 White Bear Lake
+142 4 Gus
+142 5 California
+142 8 Twilight
+143 100 
+143 100 
+143 100 
+143 100 
+143 100 
 144 1 Cody
 144 1 Cody
-144 1 Buffalo Bill
-144 1 Wilson
-145 4 Lean
-145 14 Western Front
-145 14 West Side
-145 14 North
-145 15 West
-146 1 William H. Whyte
-146 1 Christopher
-146 2 Park
-146 2 Ed Foster
+144 2 
+144 2 William F. Cody
+144 3 William F.
+145 3 Allied
+145 6 
+145 6 Bridge
+145 6 Thai
+145 6 London
+146 2 
 146 2 Foster
-147 2 Paper Association
-147 3 Paper Association
-147 3 Easter
-147 3 Total
-147 4 Paper Association
-148 1 Northern Marianas
-148 1 Northern Marianas
-148 2 Northern Mariana
-148 2 Northern Mariana
-148 2 Northern Mariana Islands
-149 5 Louisiana
-149 50 North
-149 69 Earth
-149 69 Southern Baptist
-149 96 South Florida
-150 5 South
-150 11 Western Europe
-150 14 East
-150 19 North
-150 20 North
-151 100 
-151 100 
-151 100 
-151 100 
-151 100 
+146 2 Center City Assn
+146 2 Oliver
+146 2 Foster
+147 45 Paper Association
+147 51 Abitibi
+147 55 Times Mirror
+147 62 Repap
+147 68 Doug Young
+148 100 
+148 100 
+148 100 
+148 100 
+148 100 
+149 1 Wilds
+149 1 Sweetlake
+149 2 Sweetlake
+149 2 Jones
+149 3 Sweetlake
+150 1 Dutch
+150 2 Germany
+150 2 
+150 3 Hungarian
+150 4 
+151 4 last year
+151 4 1989
+151 4 last year
+151 4 last year
+151 5 1989
 152 1 Alexander Graham Bell
-152 1 Mr. Watson
-152 1 Christopher Columbus
-152 1 Thomas Jefferson
-152 1 Guadalupe Hidalgo
-153 1 Actor
-153 1 Duvall
-153 1 Tender Mercies
-153 1 Duvall
-153 1 Elizabeth II
-154 100 
-154 100 
-154 100 
-154 100 
-154 100 
-155 100 
-155 100 
-155 100 
-155 100 
-155 100 
+152 1 
+152 2 Alexander Graham Bell
+152 3 Alexander Graham Bell
+152 3 Carter
+153 2 Queen Elizabeth II
+153 2 Doris Fisher
+153 2 Hills
+153 2 Mars Inc
+153 3 Buckingham Palace
+154 8 today
+154 15 1989
+154 16 1014
+154 21 1906
+154 27 last December
+155 10 1960
+155 17 30 years ago
+155 21 1986
+155 22 today
+155 49 8809
+156 13 next year
+156 15 Today
+156 16 2000
 156 100 
 156 100 
-156 100 
-156 100 
-156 100 
-157 1 Naismith
-157 1 Naismith
-157 1 Bennie
-157 1 Gross Medical School
-157 1 Naismith
-158 1 Brazil
-158 1 Dom Pedro
-158 1 Zebulon Pike
-158 1 Roosevelt
-158 1 William Lyon Mackenzie King
-159 3 Stephen P. Herman
-159 3 Standard
-159 3 Standard
-159 3 Herman
-159 3 Roman
-160 1 Mark Langston
-160 1 Langston
-160 1 Langston
-160 1 Langston
-160 1 Tony DeMarco
+157 2 San Jose State
+157 2 Naismith
+157 2 Morrison
+157 3 Bob Cousy
+157 4 Mikan
+158 72 Bernard Venables
+158 98 Mike Brown
+158 100 
+158 100 
+158 100 
+159 1 San Bernardino
+159 1 Chapel Hill
+159 1 Older
+159 1 Uhlenberg
+159 1 Kathleen Welch
+160 100 
+160 100 
+160 100 
+160 100 
+160 100 
 161 1 Philippe Maystadt
 161 1 Salomon Brothers International
-161 1 Emu
 161 1 Maystadt
 161 1 Taylor
+161 2 Philippe Maystadt
+162 1 Mycerinus
 162 1 Giza Plateau
-162 1 Zahi
 162 1 Hawass
 162 1 Hawass
-162 1 Hawass
-163 1 Christopher Lee Marshall
-163 1 Mommy
-163 1 Gail Marshall
-163 1 Charles Lindbeargh
-163 1 Charles Lindbergh
+162 1 Santa Barbara
+163 100 
+163 100 
+163 100 
+163 100 
+163 100 
 164 1 Rose Bowl
 164 1 Bo Schembechler
-164 1 Tennessee
-164 1 Keith Jackson
-164 1 Jackson
-165 6 West Coast
-165 23 West Coast
-165 66 Persian Gulf
-165 69 East Coast
-165 78 West Coast
-166 4 Earth
-166 13 Northern Territory
-166 14 Northern Star
-166 18 Western Australia
-166 23 Southern Hemisphere
-167 1 Levy
-167 1 Levy
-167 1 Jim Kelly
-167 1 Thomas
-167 1 Kelly
-168 1 Caribbean
-168 2 Caribbean
-168 2 West
-168 2 Caribbean Community
-168 2 Caribbean
-169 6 North Carolina Arts
-169 11 North Pole
-169 11 North Pole
-169 11 North Pole
-169 11 North Pole
-170 100 
-170 100 
-170 100 
-170 100 
-170 100 
-171 1 South West
-171 3 Western
-171 3 South
-171 4 Far East
-171 4 West
-172 1 Mount Vesuvius
-172 1 Rome
-172 1 Treaty
-172 1 Hiram L. Fong
-172 1 Robert Fassnacht
-173 1 Bill Clinton
-173 1 Clinton
-173 1 Clinton
-173 1 Clinton
-173 1 Emperor
-174 1 Mr. Sondheim
-174 1 Larson
-174 1 John Wilkes Booth
-174 1 Lee Harvey Oswald
-174 1 Mr.
+164 1 Bob Griese
+164 1 Nebraska
+164 1 Florida State
+165 1 Chocolate
+165 1 Incidentally
+165 1 Gianduia
+165 3 Chocolate
+165 4 Houston
+166 100 
+166 100 
+166 100 
+166 100 
+166 100 
+167 5 Charlotte
+167 5 Charlotte
+167 8 Fast Talker
+167 8 Ally
+167 10 Daniel Pollack
+168 100 
+168 100 
+168 100 
+168 100 
+168 100 
+169 2 Nunavut
+169 3 Copenhagen
+169 3 Canada
+169 5 Canada
+169 7 Soviet Arctic
+170 1 79 years earlier
+170 1 1911
+170 1 today
+170 2 1988
+170 2 next week
+171 1 Namibia
+171 3 Windhoek
+171 4 Southern Africa
+171 5 South Africa
+171 5 South Africa
+172 1 Reagan
+172 2 Reagan
+172 6 Ronald Reagan
+172 6 Ronald Reagan
+172 6 Reagan
+173 1 Akihito
+173 3 Peng
+173 3 Li
+173 4 Bill Clinton
+173 4 Michiko
+174 4 Mr. Purvis
+174 4 Ronald
+174 5 Regula
+174 5 Democrat William Jennings Bryan
+174 6 Leo D.
+175 2 three days ago
+175 43 1414
+175 86 yesterday
 175 100 
 175 100 
-175 100 
-175 100 
-175 100 
-176 2 Harold
+176 1 Bardeen
+176 1 Bardeen
+176 1 Sony
 176 2 Schaefer
-176 2 Schaefer
-176 2 Mary
-176 4 Thomas P. Hughes
-177 14 North
-177 20 Black Sea
-177 23 South
-177 23 West Coast
-177 25 Clean Air
-178 1 Carter
-178 1 Mariel
-178 1 Eight
-178 1 Mount St. Helens
-178 1 Mohammad Reza Pahlavi
-179 14 West Coast
-179 18 Brighton Festival Chorus
-179 20 West Coast
-179 21 Flavor
-179 22 East River
-180 1 Clorox Co.
-180 1 Lucite HomeCare Products
-180 1 Clorox
-180 1 Clorox
-180 1 James Wilbur
-181 2 Leonardo
-181 2 Zapotec
-181 3 Buscando
-181 3 Quetzalcoatl
-181 3 Eddie Rivera
-182 7 Western Institute
-182 15 Southern Christian
-182 15 South
-182 19 Southern Christian
-182 30 West Bengal
+176 4 Edwin Armstrong
+177 1 Lake Erie
+177 7 New York City
+177 7 Lake
+177 13 
+177 14 North America
+178 3 James A
+178 3 Belva Ann Bennett Lockwood
+178 3 Jimmy Carter
+178 3 John Vorster
+178 4 Dukakis
+179 2 Aptos
+179 2 San
+179 3 Violin Concerto
+179 6 Corigliano
+179 12 California
+180 12 Gervex
+180 16 Brucelyn
+180 18 Frida Kahlo
+180 23 Winslow Homer
+180 24 Cows
+181 100 
+181 100 
+181 100 
+181 100 
+181 100 
+182 3 McCleskey
+182 5 Biden
+182 5 Lane
+182 5 Harris
+182 5 
 183 1 Silly Putty
-183 1 Smith Inc.
-183 1 Silly Putty
-183 1 Peter C. Hodgson
-183 1 Dennis Malloy
-184 100 
-184 100 
-184 100 
-184 100 
-184 100 
-185 100 
-185 100 
-185 100 
-185 100 
-185 100 
-186 100 
-186 100 
+183 1 Malloy
+183 2 Silly Putty
+183 2 Silly Putty
+183 2 Peter Hodgson
+184 1 1961
+184 3 1961
+184 4 1961
+184 4 1953
+184 4 1788
+185 1 Today
+185 1 Today
+185 1 Today
+185 1 Today
+185 1 Today
+186 24 Dec
+186 95 Dec
 186 100 
 186 100 
 186 100 
 187 1 Felix
 187 1 Wankel
-187 1 Wankel
-187 1 Wankel
-187 1 Wankel
-188 6 Southwest
-188 28 Western U.S.
-188 30 Cheboygan River
-188 44 Southern California
-188 44 Northern California
-189 100 
-189 100 
-189 100 
-189 100 
-189 100 
-190 1 William Hoeveler
-190 1 Terry Bienstock
-190 1 Steve Haworth
-190 1 Sanford
-190 1 Hoeveler
-191 1 Jane Goodall
-191 1 Gombe Stream National Park
-191 1 Dian Fossey
-191 1 Goodall
-191 1 Michael Jackson
-192 100 
-192 100 
-192 100 
-192 100 
-192 100 
-193 6 West
-193 27 West German
-193 32 West Lafayette
-193 33 Northwest
-193 37 South Street
-194 15 Spain
-194 24 Spain
-194 58 Spain
-194 60 Spain
-194 62 Atlantic
-195 2 James Earl Jones
-195 2 Oak
-195 2 Pulitzer
-195 2 Jones
-195 2 Mario Van Peebles
+187 1 Mazda
+187 1 Mazda
+187 2 Felix
+188 1 
+188 1 
+188 2 Cincinnati
+188 2 District
+188 2 
+189 1 next month
+189 1 Today
+189 3 two weeks ago
+189 4 last year
+189 5 today
+190 1 Gannett
+190 3 Gannett
+190 6 Gannett
+190 8 Worldwide Television News
+190 9 Worldwide Television News
+191 100 
+191 100 
+191 100 
+191 100 
+191 100 
+192 3 1941
+192 3 1936
+192 6 1973
+192 6 this year
+192 6 1986
+193 34 Miami
+193 72 American
+193 75 Los
+193 92 Stapleton
+193 100 
+194 3 Madrid
+194 3 France
+194 3 Madrid
+194 3 
+194 3 
+195 1 Lucas
+195 1 Klein
+195 1 Van Johnson
+195 1 Toughest Judge
+195 1 
 196 1 West Point
-196 5 Lake
-196 6 East Coast
-196 7 West Point
-196 7 West Point
-197 1 Southeastern Conference
-197 1 Southwest Conference
-197 1 West Virginia
-197 1 Western Athletic
-197 3 Southeastern Conference
-198 100 
-198 100 
-198 100 
-198 100 
-198 100 
+196 1 Movie
+196 2 
+196 3 Baltimore
+196 4 Usher
+197 1 New Year
+197 2 Cal
+197 2 Alabama
+197 3 Play
+197 3 Maryland
+198 1 last week
+198 1 last week
+198 1 1982
+198 2 last week
+198 2 last week
+199 3 Los
+199 4 Cicero
+199 4 Cicero
+199 5 Halecrest
 199 7 Upper East Side
-199 8 Southern California
-199 11 East Coast
-199 12 Southern California
-199 13 Southern
-200 7 West Bank
-200 13 Southwest
-200 14 West Bank
-200 16 Southern California
-200 18 West Virginia
-201 1 Miss Piggy
+200 1 
+200 4 America
+200 4 
+200 13 Alexandria
+200 13 Los Angeles
 201 1 Henson
+201 1 Eisner
 201 1 Henson
-201 1 Henson
-201 1 Henson
-202 100 
-202 100 
-202 100 
-202 100 
-202 100 
-203 3 South Africa
-203 4 South African
-203 5 Southern African
-203 7 Western
-203 7 West Park
-204 100 
-204 100 
-204 100 
-204 100 
-204 100 
+201 1 Fraggle Rock
+201 1 Sesame Street
+202 1 1789
+202 2 today
+202 2 today
+202 4 1980
+202 5 today
+203 5 South Africa
+203 9 Namibia
+203 10 Namibia
+203 11 Namibian
+203 13 Namibia
+204 4 1839
+204 6 this month
+204 8 This year
+204 14 Today
+204 14 1920
 205 1 Western Europe
-205 1 Star Wars
+205 1 
 205 1 Clifford
-205 1 Star Wars
+205 1 Stoll
 205 1 Alexander Prechtel
-206 55 South San Francisco
-206 57 Northeast Women
-206 57 Northeast Women
-206 57 Caribbean Oil
-206 100 
-207 4 Earth
-207 4 Earth
+206 13 Abbott
+206 14 Cornelius
+206 20 
+206 21 Elanco
+206 23 Ceclor
+207 3 Bill
+207 5 National
+207 8 Arkansas
 207 9 South
-207 12 Southern
-207 29 North
-208 4 Western Europe
-208 5 North
-208 6 Kentigern
-208 7 Kentigern
-208 10 South Bronx
-209 1 Bruce Redford Oxford
+207 10 Pennsylvania Avenue
+208 100 
+208 100 
+208 100 
+208 100 
+208 100 
 209 1 Johnson
 209 1 Johnson
-209 1 John Wain
-209 1 Wain
-210 1 Michael Benedikt
-210 1 Leibniz
+209 1 Johnson
+209 1 Johnson
+209 1 Johnson
 210 1 William Gibson
 210 1 Gibson
-210 1 Cyberspace
-211 1 Article Type
+210 2 William Gibson
+210 3 Cyberspace
+210 4 Freedom
+211 1 Sanchez
 211 1 Lozada
-211 1 Sanchez
-211 1 Sanchez
-211 1 Sanchez
-212 100 
-212 100 
-212 100 
-212 100 
-212 100 
-213 1 Marley
-213 1 Christmas Carol
-213 1 Tim Glasby
-213 1 John Fink
-213 1 Cratchit
-214 1 Lancaster
-214 1 Chuck Yeager
-214 1 George Root
-214 1 Lancaster Boulevard
-214 1 Nancy Walker
-215 1 Orange County
-215 1 Todd Murphy
+211 2 Eduardo Frei
+211 3 Article Type
+211 3 
+212 1 1975
+212 2 This week
+212 3 Today
+212 4 1975
+212 5 1967
+213 1 Ebenezer
+213 2 Nicholas Nickleby
+213 3 Ebenezer
+213 3 Charles Dickens
+213 3 Marley
+214 1 Aerospace Walk
+214 1 Air Force
+214 1 Tom Wolfe
+214 1 Scott
+214 1 Air Force
+215 1 
 215 1 Murphy
-215 1 Santa Ana
-215 1 Orange County
-216 1 Brushy Bill
-216 1 Ollie L.
-216 1 Bonney
-216 1 Hico
-216 1 Lincoln County War
+215 1 Highway Patrol
+215 1 Criner
+215 1 Riverside
+216 1 Lincoln Sheriff Pat Garrett
+216 2 Lincoln County Sheriff Pat Garrett
+216 3 Brady
+216 3 Garrett
+216 4 Sheriff Pat Garrett
 217 1 John Habgood
+217 1 Frost
 217 1 Ashdown
-217 1 Ashdown
-217 1 John Smith
-217 2 Ashdown
-218 29 East Side
-218 30 East River
-218 53 East Coast
-218 65 South Carolina
-218 67 Tennessean
-219 1 Western
-219 2 Western
-219 5 West
-219 5 Nevada
-219 6 Nevada
-220 5 Upper East Side
-220 32 Western
-220 39 North Wind
-220 40 Southern Comfort
-220 41 Western
+217 2 Frost
+217 2 Asdown
+218 100 
+218 100 
+218 100 
+218 100 
+218 100 
+219 1 Yersinia
+219 2 Baker
+219 2 Yersinia
+219 3 
+219 3 Israel
+220 1 Bethel
+220 1 Bethel
+220 2 Bethel
+220 2 Bethel
+220 3 
 221 1 Jeff Hilary
 221 1 Hilary
-221 1 Jim Jordan
 221 1 Hilary
 221 1 Hilary
-222 100 
-222 100 
-222 100 
-222 100 
-222 100 
-223 1 Toni Morrison
-223 1 Howard University
-223 1 Emmett
-223 1 Alfred
-223 1 Robert Waldman
-224 1 Fred
-224 1 Silverman
-224 1 Silverman
-224 1 Silverman
-224 1 Silverman
-225 1 Fred
-225 1 Silverman
-225 1 Silverman
-225 1 Silverman
-225 1 Silverman
-226 6 Caribbean
-226 9 Caribbean
-226 9 Caribbean Common Market
-226 9 Caribbean
-226 9 Caribbean Development Bank
-227 1 Michaels
+221 1 
+222 4 this year
+222 8 1960
+222 8 1956
+222 8 1963
+222 10 1932
+223 2 Morrison
+223 2 Morrison
+223 2 Morrison
+223 2 Morrison
+223 2 Morrison
+224 1 Benny Stulwicz
+224 1 Hill Street Blues
+224 1 Father Robert Hargis
+224 2 Dick Van Dyke
+224 2 Dick Van
+225 1 Benny Stulwicz
+225 1 Hill Street Blues
+225 1 Father Robert Hargis
+225 2 Dick Van Dyke
+225 2 Dick Van
+226 100 
+226 100 
+226 100 
+226 100 
+226 100 
 227 1 Sam Walton
 227 1 Helen
 227 1 Ark
-227 1 Paul
+227 1 Carter
+227 1 Hypermart
 228 1 Joan Lunden
-228 1 Jane Pauley
-228 1 Deborah Norville
+228 1 Pauley
 228 1 John Palmer
-228 1 Faith
-229 100 
-229 100 
-229 100 
-229 100 
-229 100 
-230 1 Southern California
-230 1 West German
-230 1 Southern California
-230 2 Southern California
-230 2 Southern California
-231 100 
-231 100 
-231 100 
-231 100 
-231 100 
-232 13 Northeast Solar
-232 34 Southeast Asian
-232 44 Western Massachusetts
-232 55 Northeast
-232 57 Northeast Solar
-233 100 
-233 100 
-233 100 
-233 100 
-233 100 
-234 1 Al Copeland
-234 1 Peter Butler
-234 1 Circuit
-234 1 Butler
-234 1 Popeyes
-235 100 
-235 100 
-235 100 
-235 100 
-235 100 
-236 2 Northern Hemisphere
-236 2 Northern Europe
-236 6 Western Europe
-236 21 Western
-236 22 Western
-237 2 Western Australia
-237 2 Northern Territory
-237 3 South African
-237 4 North West
-237 4 Northern Territory
-238 100 
-238 100 
-238 100 
-238 100 
-238 100 
-239 2 Wayne L. Hays
-239 2 Hays
-239 2 Wayne Hays
-239 2 Hays
-239 2 Fred
-240 1 Rugby
-240 1 Wales
-240 1 Neil Jenkins
-240 1 Wales
-240 1 Alan Davies
-241 6 Upper Ward
-241 7 Upper Ward
-241 9 North Terrace
-241 13 North Terrace
-241 40 West
-242 1 Alabama
-242 1 Rosanne Cash
-242 1 Tanya Tucker
+228 1 Daniels
+228 1 Kathleen Sullivan
+229 2 1987
+229 2 1985
+229 2 1988
+229 2 1989
+229 3 1985
+230 1 Palmdale
+230 1 Victorville
+230 2 
+230 3 Palmdale
+230 3 Victorville
+231 6 1922
+231 13 1979
+231 33 1770
+231 48 1978
+231 62 1953
+232 2 Calif
+232 5 Calif
+232 9 Technology
+232 16 Health
+232 31 Farmington
+233 3 1973
+233 4 today
+233 4 last year
+233 4 last year
+233 6 today
+234 9 Darlington Hall
+234 9 Stevens
+234 31 Ivor Spencer
+234 31 Spencer
+234 50 Donnell
+235 4 1991
+235 6 1959
+235 6 Last Year
+235 7 tonight
+235 14 1964
+236 1 Satan
+236 2 Christians
+236 2 New Year
+236 2 New York Times
+236 2 
+237 1 South Africa
+237 1 Zimbabwe
+237 2 Argyle
+237 3 Angola
+237 3 Venetia
+238 15 yesterday
+238 29 1987
+238 44 1978
+238 46 1978
+238 81 1990
+239 100 
+239 100 
+239 100 
+239 100 
+239 100 
+240 1 Rudulf Straeuli
+240 1 Jack Rowell
+240 1 Tony Underwood
+240 2 Rudulf Straeuli
+240 2 Jack Rowell
+241 3 Britain
+241 4 London
+241 4 Louvain
+241 4 
+241 4 Victoria
+242 1 Nitty Gritty Dirt Band
+242 1 Tennessee Flat Top Box
 242 1 Kathy Mattea
-242 1 Vern Gosdin
-243 100 
-243 100 
-243 100 
-243 100 
-243 100 
+242 1 Ricky Van Shelton
+242 2 Kathy Mattea
+243 2 1995
+243 4 today
+243 4 next month
+243 4 1948
+243 4 1993
 244 1 Sammy Fain
-244 1 Ken Sunshine
-244 1 Tin Pan Alley
+244 1 Fain
 244 1 Tender
 244 1 Morton Gould
-245 1 James Dean
-245 1 Jimmy
-245 1 Lives
-245 1 Dean
-245 1 Betrock
-246 100 
-246 100 
-246 100 
-246 100 
-246 100 
-247 100 
-247 100 
-247 100 
-247 100 
-247 100 
-248 1 James
-248 1 Bond
-248 1 Sean Connery
-248 1 James Bond
-248 1 James Bond
-249 3 West Orange
-249 3 West Orange
-249 4 Southern California
-249 6 West Orange
-249 11 Western Union
-250 2 Southern California
-250 13 Southern California
-250 19 Western
-250 20 North Carolina
-250 30 Northeastern University
-251 100 
-251 100 
-251 100 
-251 100 
-251 100 
-252 1 Louis County Board
-252 1 Robert J. Quinn
-252 1 Louis City
-252 1 Quinn
-252 2 Louis County Board
-253 1 Western Railroad
-253 1 Western Railroad
-253 1 North Coast
-253 4 West
-253 4 Western
-254 100 
-254 100 
-254 100 
-254 100 
-254 100 
-255 1 South Eastern
-255 9 Tenasserim Division
-255 10 Tenasserim Division
-255 19 Southeastern Regional
-255 20 Upper Nam
-256 1 Stevie Wonder
-256 1 Songwriter
-256 1 Steveland Morris
-256 1 Mr. Morris
+244 1 Sammy
+245 2 Christina Wiktah
+245 2 Bob Hicks
+245 2 Roddam
+245 2 John Daly
+245 2 Roddam
+246 1 1928
+246 1 1896
+246 1 1981
+246 1 1987
+246 7 next month
+247 2 1994
+247 2 1635
+247 2 This year
+247 2 1593
+247 2 1594
+248 1 Line
+248 1 Roger Moore
+248 2 Roger Moore
+248 3 License Revoked
+248 3 Robert Davi
+249 2 Los Angeles
+249 6 N.J.
+249 61 
+249 61 Patton
+249 64 
+250 1 New
+250 1 Eastern
+250 1 Christian
+250 1 Eastern
+250 2 India
+251 3 1939
+251 3 Tomorrow
+251 3 1945
+251 4 1939
+251 5 today
+252 7 Eugene Carlson
+252 7 Pittsburgh
+252 12 Cox
+252 24 Barry Helton
+252 25 Hawkins
+253 1 San Francisco
+253 1 Northspur
+253 1 Ft
+253 2 Los Angeles
+253 2 Costa Mesa
+254 1 1973
+254 1 1989
+254 1 1975
+254 1 1976
+254 2 1973
+255 100 
+255 100 
+255 100 
+255 100 
+255 100 
 256 1 Wonder
-257 100 
-257 100 
-257 100 
-257 100 
-257 100 
-258 7 Hamlet
-258 7 Virtus Walkthrough
-258 7 Virtus
-258 7 Virtus
-258 7 Virtus Walkthrough
+256 1 Lee Garrett
+256 1 Wonder
+256 1 Garret
+256 1 Wonder
+257 1 today
+257 1 000 years ago
+257 1 000 years ago
+257 1 last year
+257 2 000 years ago
+258 7 Windows PCs
+258 8 Macintosh
+258 10 Logitech
+258 12 Classic
+258 12 Disk Manager Mac
 259 1 Lisa Malone
 259 1 Malone
-259 1 Malone
-259 1 Malone
-259 1 Malone
-260 100 
-260 100 
-260 100 
-260 100 
-260 100 
-261 100 
-261 100 
-261 100 
-261 100 
-261 100 
-262 1 Cathy
-262 1 Jump Start
+259 1 Atlas Centaur
+259 2 Discovery
+259 2 
+260 25 1911
+260 35 1980
+260 42 1861
+260 54 Today
+260 54 1993
+261 1 1990
+261 2 1893
+261 3 1977
+261 3 1977
+261 3 1987
 262 1 Reuben Award
-262 1 Mell Lazarus
-262 1 Mike Peters
-263 9 Cyprus
-263 10 Northern Shipping
-263 10 Northern Shipping
-263 27 Far East
-263 27 Far East
-264 2 Mark Train
-264 2 David Perry
-264 2 Perry
-264 2 Perry
-264 2 Perry
-265 1 Scarlett
-265 1 Scarlett
-265 1 Mr.
-265 1 David O. Selznick
-265 1 Jean
-266 100 
-266 100 
-266 100 
-266 100 
-266 100 
+262 1 Grimm
+262 1 Cathy Guisewite
+262 1 Jeff Millar
+262 1 Tank McNamara
+263 1 Europe
+263 2 Europe
+263 2 Europe
+263 3 
+263 11 Trust
+264 1 Sotheby
+264 1 
+264 1 Jim
+264 1 Samuel Langhorne Clemens
+264 1 Sotheby
+265 3 Ashley Wilkes
+265 3 Charles Hamilton
+265 3 Brooks
+265 3 Judy Garland
+265 3 Mildred Pierce
+266 1 1980
+266 1 1980
+266 1 1986
+266 1 1966
+266 1 1973
 267 1 Camilo Jose Cela
 267 1 Cela
-267 1 Latin
-267 1 Cela
-267 1 Latin American
-268 3 Mornay
-268 3 Richard
-268 3 Michael Biehn
-268 3 Scott
-268 3 Lauren Hutton
-269 1 Maytag
-269 1 Maytag
-269 2 Robert B. Propst
-269 2 Maytag
-269 3 Robert B. Propst
-270 100 
-270 100 
-270 100 
-270 100 
-270 100 
-271 2 Led Zeppelin
-271 2 Black Dog
-271 2 Led Zeppelin
-271 2 Led Zeppelin
-271 2 Black Sabbath
-272 1 Oscar
-272 1 Lady Thatcher
-272 1 James
-272 1 Ideal Husband
-272 1 Ideal Husband
-273 100 
-273 100 
-273 100 
-273 100 
-273 100 
+267 1 Allen
+267 1 Trygve Haavelmo
+267 1 Alfred Nobel
+268 1 
+268 1 Cottle
+268 2 
+268 2 Cottle
+268 3 Roberts
+269 50 Friel
+269 52 Fits
+269 57 Raymond
+269 57 Oliver
+269 63 Madeleine Kamman
+270 5 this year
+270 7 1987
+270 8 1987
+270 8 1986
+270 15 1986
+271 1 
+271 1 Hound Dog
+271 1 Jimmy Page
+271 1 Jah
+271 1 Heartbreak Hotel
+272 2 Wilde
+272 2 
+272 2 Shaw
+272 3 Krestyanka
+272 3 Ellen R.
+273 1 1982
+273 2 2000
+273 2 1928
+273 3 last December
+273 3 2000
 274 2 Bruno Richard Hauptmann
-274 2 Circuit
-274 2 Robert
-274 2 Lindbergh
-274 2 Hauptmann
-275 1 Sergey Babkin
-275 1 Tuzla
-275 1 Ghali
-275 2 Yuriy Tyssovskiy
-275 3 Yuriy Tyssovskiy
-276 1 Academy Award
-276 1 Morgan Freeman
-276 1 Oliver Stone
-276 1 Kovic
-276 1 Baron Munchausen
-277 1 Western
-277 2 North Sea
-277 4 Western
-277 46 North
-277 46 North
-278 1 Pizza Hut
-278 1 Pizza Hut
-278 1 Charles Henderson
-278 1 Mr. Henderson
-278 1 Adds
-279 8 Northern Hemisphere
-279 8 West
-279 11 North Fork
-279 12 West
-279 13 Earth
-280 19 Southern California
-280 22 Persian Gulf
-280 37 Southern California
-280 60 North Central
-280 63 West Bank
-281 12 West Boulevard
-281 12 Southern California
-281 14 South Los Angeles
-281 15 Southern California
-281 15 South Side
-282 1 Pink Floyd
-282 1 Pink Floyd
-282 1 Tass
-282 1 Mir
-282 1 Pink
-283 100 
-283 100 
-283 100 
-283 100 
-283 100 
-284 100 
-284 100 
-284 100 
-284 100 
-284 100 
-285 5 Caribbean
-285 6 Caribbean
-285 8 Upper Manhattan
-285 22 Caribbean
-285 25 Upper West Side
-286 1 Bayer
-286 1 Boots
-286 1 Boots
-286 1 Boots
-286 1 Hexal Pharma
+274 2 Amwell Township
+274 3 Wilentz
+274 3 Anna
+274 3 Wilentz
+275 4 Further
+275 9 Andrey Kozyrev
+275 19 Frost
+275 24 Soto
+275 30 Butrus
+276 1 Ron Kovic
+276 1 Honey
+276 1 Michael Moore
+276 1 Stone
+276 1 Robin Williams
+277 23 
+277 79 Goldblum
+277 93 
+277 96 West
+277 100 
+278 1 
+278 1 Fallon McElligott
+278 1 David Novak
+278 1 Salt Lake City
+278 1 George Rice
+279 18 South Rim
+279 23 Utah
+279 27 North America
+279 28 Los Angeles County
+279 30 Utah
+280 2 Beahrs
+280 3 Reidsburg
+280 4 Bel-Air
+280 7 Reagan
+280 12 Sundt
+281 1 Los Angeles
+281 1 Tyrone
+281 2 Lamont
+281 2 Broadway
+281 2 Broadway
+282 1 
+282 1 
+282 2 James Galway
+282 3 Waters
+282 3 Jon Anderson
+283 1 this month
+283 1 1920
+283 1 1929
+283 2 1975
+283 2 1979
+284 1 this year
+284 20 1989
+284 31 1993
+284 33 next month
+284 34 1990
+285 2 New York
+285 4 Washington
+285 6 Washington
+285 6 San Blas
+285 22 Panama City
+286 33 Boots Contract Manufacturing
+286 100 
+286 100 
+286 100 
+286 100 
 287 1 Bush
 287 1 Bush
-287 1 Ronald Reagan
-287 1 Ronald
-287 1 Dwight
-288 1 Ralph
-288 1 Paul
-288 1 Paul
+287 1 Bush
+287 4 Alvin Guthrie
+287 7 Chun
 288 1 Chris Hager
-288 1 Hager
-289 1 Upper Huallaga
-289 1 Upper Huallaga
-289 2 Upper Huallaga
-289 2 Upper Huallaga
-289 3 Upper Huallaga
-290 4 West
-290 4 West
-290 4 Caribbean
-290 4 Caribbean
-290 4 Caribbean
-291 6 Southwest
-291 28 Western U.S.
-291 30 Cheboygan River
-291 44 Southern California
-291 44 Northern California
-292 6 Southwest
-292 21 Western U.S.
-292 34 Southern California
-292 34 Northern California
-292 49 Cheboygan River
+288 1 Doris Chickering
+288 1 Ariz
+288 2 Snow White
+288 2 Kae Sumner
+289 100 
+289 100 
+289 100 
+289 100 
+289 100 
+290 100 
+290 100 
+290 100 
+290 100 
+290 100 
+291 1 
+291 1 
+291 2 Cincinnati
+291 2 District
+291 2 
+292 1 
+292 1 
+292 2 Huggies
+292 2 
+292 2 Wichita
 293 1 Space Station Freedom
-293 1 Bill Fisher
+293 1 Charles Price
 293 1 Price
 293 1 Fisher
 293 1 Richard
-294 1 Anatoly Solovyev
-294 1 Mir
-294 1 Solovyev
 294 1 Balandin
-294 1 Tass
-295 100 
-295 100 
-295 100 
-295 100 
-295 100 
-296 100 
-296 100 
-296 100 
-296 100 
-296 100 
-297 1 William Hoeveler
-297 1 Terry Bienstock
-297 1 Steve Haworth
-297 1 Sanford
-297 1 Hoeveler
-298 1 Potlatch
-298 1 Potlatch
-298 1 Lewiston
-298 1 Potlatch
-298 2 Willamette
-299 11 West
-299 19 West Lafayette
-299 20 West German
-299 36 West
-299 36 Western
+294 2 Solovyev
+294 2 Mir
+294 2 Balandin
+294 3 Gennady Strekalov
+295 1 this year
+295 7 next month
+295 12 this year
+295 22 1980
+295 24 last week
+296 1 Today
+296 1 1980
+296 2 1980
+296 3 Today
+296 3 1980
+297 8 Ed Turner
+297 8 Visnews
+297 9 Ed Turner
+297 9 Visnews
+297 15 Turner Broadcasting System
+298 76 Le Vine
+298 76 Le Vine
+298 76 Webster
+298 76 Daniel
+298 76 Christmas
+299 1 New England
+299 2 U.S.
+299 2 U.S.
+299 3 Boston
+299 3 New York
+300 17 Five months ago
+300 86 1889
+300 93 Today
+300 93 1874
 300 100 
-300 100 
-300 100 
-300 100 
-300 100 
-301 100 
-301 100 
-301 100 
-301 100 
-301 100 
+301 1 1960
+301 2 1956
+301 2 1987
+301 4 next month
+301 4 1952
 302 1 West Point
-302 5 West Point
-302 6 East Coast
-302 7 West Point
-302 7 West Point
-303 1 Narasimha
+302 2 
+302 2 Usher
+302 3 Independence
+302 4 Westminster Hall
 303 1 Rao
 303 1 John
 303 1 Kennedy
-303 1 Rao
-304 1 Narasimha
+303 2 John
+303 4 Davis
 304 1 Rao
 304 1 John
 304 1 Kennedy
-304 1 Rao
-305 11 Southern Christian
-305 11 South
-305 16 Southern Christian
-305 26 Western Institute
-305 38 West Bengal
-306 1 Silly Putty
-306 1 Smith Inc.
-306 1 Silly Putty
-306 1 Peter C. Hodgson
-306 1 Dennis Malloy
-307 100 
-307 100 
-307 100 
-307 100 
-307 100 
-308 7 West Virginia
-308 9 Southern California
-308 15 West German
-308 21 Southern California
-308 22 Southwest
-309 1 Miss Piggy
+304 3 Davis
+304 3 Davis
+305 1 Neurology
+305 1 Argentina
+305 2 Neurology
+305 2 Argentina
+305 3 Corpus
+306 1 Malloy
+306 2 Silly Putty
+306 2 Silly Putty
+306 2 Peter Hodgson
+306 2 Mr.
+307 2 1961
+307 3 Today
+307 3 1945
+307 5 1953
+307 5 1961
+308 1 
+308 4 America
+308 4 
+308 6 
+308 18 Norton
 309 1 Henson
+309 1 Eisner
 309 1 Henson
-309 1 Henson
-309 1 Henson
-310 1 Miss Piggy
+309 1 Fraggle Rock
+309 1 Sesame Street
+310 1 Jim Henson
 310 1 Henson
+310 1 Eisner
 310 1 Henson
-310 1 Henson
-310 1 Henson
-311 1 Bush
-311 1 Powell
-311 1 Ronald Reagan
-311 1 William J. Crowe Jr.
-311 1 Powell
-312 1 Southeastern Conference
-312 1 Southwest Conference
-312 1 West Virginia
-312 1 Western Athletic
-312 4 Southeastern Conference
-313 100 
-313 100 
-313 100 
-313 100 
-313 100 
-314 100 
-314 100 
-314 100 
-314 100 
-314 100 
-315 100 
-315 100 
-315 100 
-315 100 
-315 100 
-316 10 Oregon
-316 17 Southern California
-316 19 Southern California
-316 19 Southern California
-316 22 West Coast
-317 1 West
-317 2 North Carolina
-317 9 Southern California
-317 10 Western Collegiate
-317 10 Western
-318 4 West Coast
-318 5 South Florida
-318 7 West Coast
-318 10 Western Playboy
-318 11 Western Playboy
-319 1 South Florida
-319 4 West Coast
-319 8 Western Playboy
-319 10 Western Playboy
-319 10 Western Playboy
+310 1 Fraggle Rock
+311 100 
+311 100 
+311 100 
+311 100 
+311 100 
+312 1 New Year
+312 2 Washington
+312 3 Cal
+312 3 Alabama
+312 4 Play
+313 1 last week
+313 1 last week
+313 1 1982
+313 2 last week
+313 2 last week
+314 1 last week
+314 1 last week
+314 1 1982
+314 2 last week
+314 2 last week
+315 1 last week
+315 1 last week
+315 1 1982
+315 2 last week
+315 2 last week
+316 3 Los Angeles
+316 4 San Diego State
+316 6 Lest
+316 7 San Diego
+316 7 Capistrano Ciclistas
+317 1 
+317 1 
+317 2 Horsham
+317 2 United States
+317 6 Tail
+318 1 Belmont
+318 1 Wand
+318 2 Cardoba
+318 3 Derby
+318 3 Ferdinand
+319 1 Calder
+319 1 Caliente
+319 1 Calder
+319 1 Meyocks
+319 1 Calder
 320 1 Felix
 320 1 Wankel
+320 1 Mazda
 320 1 Wankel
-320 1 Wankel
-320 1 Wankel
+320 1 Mazda
