@@ -284,7 +284,7 @@ def answer_processing(s_tuple, q_type, q_keywords):
 			sentence_after_tagging = timex.tag(sentence)
 			when_answers = re.findall('<TIMEX2>(.*?)</TIMEX2>', sentence_after_tagging)
 			# in case answer comes out as empty, output an empty string
-			when_answer = when_answers[0] if len(when_answers) != 0 else ''
+			when_answer = when_answers[0] if len(when_answers) != 0 else 'nil'
 			answers.append((doc_num, when_answer))
 
 		else:		
