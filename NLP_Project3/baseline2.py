@@ -223,14 +223,14 @@ def passage_retrieval(q_num, q_type, q_keywords):
 	for name in sorted(glob.glob(current_path), key=natural_sort_key):
 		# global doc
 		with open(name) as f:
-			doc = f.read()
+			doc = f.read().decode("ascii","ignore").encode("ascii").rstrip()
 		single_doc=''
 		# Fetch TEXT only. a bit hack tho - need a better way to process text
 		# Did this because I wanted to fetch text by 'sentence' not 'line'
 		# - Rommie, 161104
 		doc = doc.replace('\r\n',' ')
 		
-		sentlist = nltk.tokenize.sent_tokenize(doc);
+		sentlist = nltk.tokenize.sent_tokenize(doc)
 			# print name
 			# bool for being inside text
 			# text_bool = False
@@ -239,7 +239,7 @@ def passage_retrieval(q_num, q_type, q_keywords):
 		print "KEYWORDS", q_keywords
 		while i < len(sentlist):
 			line = sentlist[i]
-			tmpline = line.lower().strip().decode("ascii","ignore").encode("ascii").rstrip()
+			tmpline = line.lower().strip()
 			tmpline = nltk.tokenize.word_tokenize(tmpline)
 			tmpline = map(lambda x : wnl.lemmatize(x), tmpline)
 			iskwin = map(lambda x : x in tmpline, q_keywords)			
@@ -403,7 +403,7 @@ def process_questions(q_dict):
 
 
 q_dict = get_questions()
-# process_questions(q_dict)
+process_questions(q_dict)
 
 
 

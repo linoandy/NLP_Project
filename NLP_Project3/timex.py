@@ -350,8 +350,8 @@ def ground(tagged_text, base_date):
 
 # def demo():
 #     import nltk
-#     text = nltk.corpus.abc.raw('rural.txt')[:10000]
-#     # text = 'before May'
+#     # text = nltk.corpus.abc.raw('rural.txt')[:10000]
+#     text = 'a million years ago'
 #     print tag(text)
 
 # if __name__ == '__main__':
