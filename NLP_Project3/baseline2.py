@@ -2,6 +2,7 @@ import glob
 import nltk
 import re
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet as wn
 from fuzzywuzzy import fuzz
 # import the following customized script to tag DATE NER
 import timex
@@ -81,6 +82,16 @@ stopwords.update(['.', ',', '"', "'", '?', '!', ':', ';', '(', ')', '[', ']', '{
 def get_q_keywords(desc_token):
 	l_stopped = [w for w in desc_token if w.lower() not in stopwords]
 	return l_stopped
+
+def syn_keywords(l_stopped):
+	keywords = []
+	for l in l_stopped:
+		keywords.append(l);
+		synsets = wn.synsets(l)
+		for s in synsets:
+			lems = map(lambda x : x.name().replace('_',' '), s.lemmas())
+			keywords+=lems	
+	return list(set(keywords))
 
 ###############################################################################
 ###############################################################################
@@ -218,7 +229,7 @@ def passage_retrieval(q_num, q_type, q_keywords):
 	def natural_sort_key(s, _nsre=re.compile('([0-9]+)')):
 		return [int(text) if text.isdigit() else text.lower()
 			for text in re.split(_nsre, s)]
-
+	# print "KEYWORDS", q_keywords		
 	# print q_keywords, "KEYWORD FIRST"
 	q_keywords = map(lambda x : wnl.lemmatize(x.lower()),q_keywords)		
 	for name in sorted(glob.glob(current_path), key=natural_sort_key):
@@ -237,18 +248,18 @@ def passage_retrieval(q_num, q_type, q_keywords):
 			# text_bool = False
 			# single_doc = ''
 		i=0
-		print "KEYWORDS", q_keywords
+		
 		while i < len(sentlist):
 			line = sentlist[i]
 			tmpline = line.lower().strip()
 			tmpline = nltk.tokenize.word_tokenize(tmpline)
 			tmpline = map(lambda x : wnl.lemmatize(x), tmpline)
 			iskwin = map(lambda x : x in tmpline, q_keywords)			
-			if sum(x for x in iskwin) > len(iskwin) * 0.6:#all(iskwin):
+			if any(iskwin):
 				k=0
 				# print line
 				while (k<window_keyword) and i+k < len(sentlist):
-					print sentlist[i+k]
+					# print sentlist[i+k]
 					single_doc += sentlist[i+k] + ' '
 					k+=1
 				i=i+k-1
@@ -272,7 +283,7 @@ def passage_retrieval(q_num, q_type, q_keywords):
 		# IN ORDER TO SAVE TIME FOR BASELINE
 		# NEED TO REMOVE THIS FOR MORE COMPLICATED SHIT
 		# possible because baseline only takes the retrieved sentecnes in order
-		if len(retrieved_sentences) >= 10:
+		if len(retrieved_sentences) >= 30:
 			break
 	return retrieved_sentences
 
@@ -318,21 +329,32 @@ def answer_processing(s_tuple, q_type, q_keywords):
 			#print ner_tree
 			# the list of tuples((word, pos),ner) to be considered for this sentence
 			matching_tuples = []
+			# print q_keywords
+			global subtree
+			tmp = []
 			for subtree in ner_tree.subtrees():
-				if subtree.label() in NER_TAG[q_type] and subtree.pos()[0][0][1]=='NNP':
-					print subtree
-					iskwin = map(lambda x : x in subtree.pos()[0][0][0], q_keywords)
-					if not any(iskwin):
-						matching_tuples = subtree.pos()
+				if subtree.label() in NER_TAG[q_type] and subtree.pos()[0][0][1]=='NNP':					
+					word = ' '.join(map(lambda x : x[0][0], subtree.pos()))
+					print word
+					print q_keywords
+					iskwin = map(lambda x : x in word, q_keywords)
+					if not any(iskwin):						
+						# print "SUBTREE!", subtree
+						# matching_tuples = subtree.pos()
+						answer = ' '.join(map(lambda x : x[0][0], subtree.pos()))
+						if answer not in map(lambda x : x[1],answers):
+							tmp.append(answer)
+							answers.append((doc_num,answer))
+			print "SENTENCE : ", sentence, "ANSWER : ", tmp
 			# t : ((word, pos), ner)
-			answer = ''
-			for t in matching_tuples:
-				#print t
-				if t[0][0] not in q_keywords:
-					answer += t[0][0] + ' '
-			# remove any possible trailing whitespaces
-			answer = answer.rstrip()
-			answers.append((doc_num,answer))
+			# answer = ''
+			# for t in matching_tuples:
+			# 	#print t
+			# 	if t[0][0] not in q_keywords:
+			# 		answer += t[0][0] + ' '
+			# # remove any possible trailing whitespaces
+			# answer = answer.rstrip()
+			# answers.append((doc_num,answer))
 	print answers
 	return answers
 
@@ -372,6 +394,7 @@ def process_question(num, desc):
 	q_type = get_q_type(desc_token)
 	retrieved_sentences = passage_retrieval(num, q_type,l)
 	# add sentence ranking below
+	syn_kw = syn_keywords(l)
 	retrieved_sentences = rank_sentences(l,retrieved_sentences)
 	answers = answer_processing(retrieved_sentences, q_type, l)
 	# answers : (doc_num, answers) tuple; both string
