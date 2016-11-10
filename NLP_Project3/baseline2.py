@@ -172,7 +172,8 @@ def process_doc(single_doc, q_type, doc_num):
 	# in order of type constants (0 : who, 1: where, 2: when)
 
 	# BASELINE ONLY!
-	# when NER doesn't work in nltk NER. might as well just skip it.
+	# when NER doesn't work in nltk NER. we use timex.py to tag
+	# https://github.com/nltk/nltk_contrib/blob/master/nltk_contrib/timex.py
 	if q_type == WHEN_TYPE:
 		sentences = nltk.tokenize.sent_tokenize(single_doc)
 		surviving_sentences = []
@@ -370,6 +371,7 @@ def process_question(num, desc):
 	l = get_q_keywords(desc_token)
 	q_type = get_q_type(desc_token)
 	retrieved_sentences = passage_retrieval(num, q_type,l)
+	# add sentence ranking below
 	retrieved_sentences = rank_sentences(l,retrieved_sentences)
 	answers = answer_processing(retrieved_sentences, q_type, l)
 	# answers : (doc_num, answers) tuple; both string
