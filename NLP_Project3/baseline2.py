@@ -4,6 +4,7 @@ import re
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet as wn
 from fuzzywuzzy import fuzz
+from threading import Thread
 # import the following customized script to tag DATE NER
 import timex
 '''
@@ -425,6 +426,26 @@ def process_questions(q_dict):
 		q_num_answer_tuple.append((str(i), answers))
 	# print q_num_answer_tuple
 	answer_output(q_num_answer_tuple)
+
+# def process_questions(q_dict):
+# 	def main(j, q_dict):
+# 		desc = q_dict[j]
+# 		answers = process_question(j, desc)
+# 		q_num_answer_tuple.append((str(j), answers))
+
+# 	list_threads = []
+# 	q_num_answer_tuple = []
+# 	for i in range(89, 321):
+# 		t = Thread(target=main, args=(i, q_dict))
+# 		list_threads.append(t)
+# 		t.start()
+# 		if len(list_threads) >= 5:
+# 			for z in list_threads:
+# 				z.join()
+# 			list_threads = []
+# 	# print q_num_answer_tuple
+# 	answer_output(q_num_answer_tuple)
+
 
 
 q_dict = get_questions()
