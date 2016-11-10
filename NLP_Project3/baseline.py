@@ -2,6 +2,7 @@ import glob
 import nltk
 import re
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet as wn
 from fuzzywuzzy import fuzz
 # import the following customized script to tag DATE NER
 import timex
@@ -80,6 +81,14 @@ stopwords.update(['.', ',', '"', "'", '?', '!', ':', ';', '(', ')', '[', ']', '{
 
 def get_q_keywords(desc_token):
 	l_stopped = [w for w in desc_token if w.lower() not in stopwords]
+	keywords = []
+	for l in l_stopped:
+		keywords.append(l);
+		synsets = wn.synsets(l)
+		for s in synsets:
+			lems = map(lambda x : x.name().replace('_',' '), s.lemmas())
+			keywords+=lems
+		
 	return l_stopped
 
 ###############################################################################
@@ -220,26 +229,30 @@ def passage_retrieval(q_num, q_type, q_keywords):
 
 	# print q_keywords, "KEYWORD FIRST"
 	q_keywords = map(lambda x : wnl.lemmatize(x.lower()),q_keywords)		
+	print "KEYWORDS", q_keywords
 	for name in sorted(glob.glob(current_path), key=natural_sort_key):
 		# global doc
+		print "NAME!!!!!!!! :", name
 		with open(name) as f:
-			doc = f.read()
+			global doc
+			doc = f.read().decode("ascii","ignore").encode("ascii").rstrip()
 		single_doc=''
 		# Fetch TEXT only. a bit hack tho - need a better way to process text
 		# Did this because I wanted to fetch text by 'sentence' not 'line'
 		# - Rommie, 161104
 		doc = doc.replace('\r\n',' ')
 		
-		sentlist = nltk.tokenize.sent_tokenize(doc);
+		sentlist = nltk.tokenize.sent_tokenize(doc)
 			# print name
 			# bool for being inside text
 			# text_bool = False
 			# single_doc = ''
 		i=0
-		print "KEYWORDS", q_keywords
+		
 		while i < len(sentlist):
 			line = sentlist[i]
-			tmpline = line.lower().strip().decode("ascii","ignore").encode("ascii").rstrip()
+			print "CURRENT LINE: ", line
+			tmpline = line.lower().strip()
 			tmpline = nltk.tokenize.word_tokenize(tmpline)
 			tmpline = map(lambda x : wnl.lemmatize(x), tmpline)
 			iskwin = map(lambda x : x in tmpline, q_keywords)			
@@ -403,7 +416,7 @@ def process_questions(q_dict):
 
 
 q_dict = get_questions()
-# process_questions(q_dict)
+process_questions(q_dict)
 
 
 
