@@ -24,10 +24,10 @@
 93 1 Chancellor Kohl
 93 1 Mr. Salman Khurshid
 94 2 Escher Wyss
-94 3 Lois Whitcomb
-94 4 Donald G. Whitcomb
-94 4 Mr. Whitcomb
-94 4 Mr. Whitcomb
+94 3 Lois
+94 4 Donald G.
+94 4 Mr.
+94 4 Mr.
 95 1 Vo Van Kiet
 95 1 Paul Keating
 95 1 Vietnam
@@ -68,12 +68,12 @@
 102 1 Melvin Stewart
 102 1 Gaines
 102 1 Actually Nall
-103 100 
-103 100 
-103 100 
-103 100 
-103 100 
-104 1 Recalls Vichy
+103 1 2205
+103 1 1977
+103 2 1847
+103 2 1709
+103 4 0137
+104 1 Recalls
 104 1 Robert Badinter
 104 1 Badinter
 104 1 Jews Deported
@@ -98,7 +98,7 @@
 108 1 Holtville
 108 1 
 108 1 Pacheco
-109 1 Say Barbara Jordan
+109 1 Say
 109 1 
 109 1 
 109 1 Brackenridge Hospital
@@ -133,11 +133,11 @@
 115 2 Cuban
 115 2 Bellevue Hospital
 115 2 
-116 100 
-116 100 
-116 100 
-116 100 
-116 100 
+116 1 2111
+116 1 1973
+116 2 0629
+116 2 this month
+116 3 1878
 117 1 Manuela Hoelterhoff
 117 1 Public Library
 117 1 Annette
@@ -158,11 +158,11 @@
 120 1 Portland
 120 1 Maine
 120 1 Rhode Island
-121 100 
-121 100 
-121 100 
-121 100 
-121 100 
+121 1 1914
+121 1 One week later
+121 1 1927
+121 2 1696
+121 2 1988
 122 1 Snowy Winter
 122 1 
 122 1 
@@ -178,7 +178,7 @@
 124 1 
 124 1 
 124 1 
-125 1 Pablo Picasso
+125 1 Pablo
 125 1 Sotheby
 125 1 Sotheby
 125 1 Christie
@@ -208,36 +208,36 @@
 130 64 
 130 64 
 130 64 Le Canard
-131 100 
-131 100 
-131 100 
-131 100 
-131 100 
+131 1 1551
+131 1 1984
+131 2 1741
+131 2 1984
+131 2 1943
 132 1 Australia
 132 2 Australia
 132 3 Darwin
 132 3 Azaria
 132 3 Australia
-133 100 
-133 100 
-133 100 
-133 100 
-133 100 
+133 1 1629
+133 1 last year
+133 1 last February
+133 1 1869
+133 1 Two years later
 134 1 Africa
 134 1 
 134 1 
 134 1 
 134 1 Mandela
-135 100 
-135 100 
-135 100 
-135 100 
-135 100 
-136 100 
-136 100 
-136 100 
-136 100 
-136 100 
+135 1 2250
+135 1 this year
+135 1 last September
+135 2 1221
+135 2 today
+136 8 1519
+136 26 this year
+136 30 1536
+136 34 1200
+136 48 1615
 137 1 Coast Guard
 137 1 Maui Island
 137 1 Robert Bennett
@@ -308,11 +308,11 @@
 150 1 Dutch
 150 1 Europe
 150 1 
-151 100 
-151 100 
-151 100 
-151 100 
-151 100 
+151 1 1554
+151 1 1963
+151 1 this year
+151 1 1950
+151 2 0649
 152 1 Release
 152 1 Alexander Graham Bell
 152 1 Martin Luther
@@ -323,21 +323,21 @@
 153 1 Queen
 153 1 Johanna
 153 1 Grete Schickedanz
-154 100 
-154 100 
-154 100 
-154 100 
-154 100 
-155 100 
-155 100 
-155 100 
-155 100 
-155 100 
-156 100 
-156 100 
-156 100 
-156 100 
-156 100 
+154 1 1110
+154 2 1906
+154 4 0930
+154 4 today
+154 4 today
+155 3 1226
+155 3 1986
+155 4 2021
+155 4 1945
+155 5 1209
+156 1 next year
+156 1 yesterday
+156 2 next year
+156 5 yesterday
+156 5 Four years ago
 157 1 James Naismith
 157 1 Springfield College
 157 2 Santa Clara
@@ -357,7 +357,7 @@
 160 1 
 160 1 San Diego Padres
 160 1 
-160 2 Mark Langston
+160 2 Mark
 161 100 
 161 100 
 161 100 
@@ -403,11 +403,11 @@
 169 1 Canada
 169 2 Inuit
 169 2 Inuktitut
-170 100 
-170 100 
-170 100 
-170 100 
-170 100 
+170 1 2213
+170 1 1911
+170 1 yesterday
+170 1 today
+170 1 1911
 171 1 Namibia
 171 2 Botswana
 171 2 Hayman
@@ -427,12 +427,12 @@
 174 1 Jonathan Hadary
 174 1 Leon Czolgosz
 174 2 Anton Cermak
-174 2 William McKinley
-175 100 
-175 100 
-175 100 
-175 100 
-175 100 
+174 2 William
+175 1 1994
+175 2 1994
+175 2 yesterday
+175 9 today
+175 10 1994
 176 1 Sony
 176 2 Philco
 176 3 Radio Shack
@@ -473,16 +473,16 @@
 183 1 Silly Putty
 183 1 Hodgson
 183 1 Silly Putty
-184 100 
-184 100 
-184 100 
-184 100 
-184 100 
-185 100 
-185 100 
-185 100 
-185 100 
-185 100 
+184 1 1132
+184 1 today
+184 1 1961
+184 1 1933
+184 2 1424
+185 1 0621
+185 1 Today
+185 1 Today
+185 1 Today
+185 1 9107
 186 1 San Jose
 186 2 San Jose
 186 3 Milpitas
@@ -498,11 +498,11 @@
 188 1 
 188 1 
 188 1 Patent
-189 100 
-189 100 
-189 100 
-189 100 
-189 100 
+189 1 next month
+189 1 Today
+189 1 Today
+189 1 Today
+189 1 1980
 190 1 Tape Transcripts Private
 190 1 William Hoeveler
 190 1 Terry Bienstock
@@ -513,11 +513,11 @@
 191 1 Gombe Stream National Park
 191 1 
 191 1 Annual Lecture
-192 100 
-192 100 
-192 100 
-192 100 
-192 100 
+192 1 1055
+192 1 today
+192 2 0614
+192 3 1978
+192 3 1941
 193 1 Boston
 193 1 America
 193 1 
@@ -543,11 +543,11 @@
 197 1 Irish
 197 1 Cotton
 197 1 Tennessee
-198 100 
-198 100 
-198 100 
-198 100 
-198 100 
+198 1 2157
+198 1 last week
+198 1 1982
+198 2 2036
+198 2 last week
 199 1 Santa Clara
 199 2 Saratoga
 199 3 Los
@@ -557,28 +557,28 @@
 200 1 Henderson
 200 1 
 200 2 Writethru
-200 2 Sky Harbor Airport
+200 2 Sky Harbor
 201 1 Jim Henson
 201 1 Henson
 201 1 Gonzo
 201 1 Eisner
 201 1 Henson
-202 100 
-202 100 
-202 100 
-202 100 
-202 100 
+202 1 1789
+202 2 1015
+202 2 1789
+202 2 today
+202 3 0801
 203 1 Johannesburg
 203 1 Troyeville
 203 1 
 203 1 Five Freedoms Forum
 203 2 August
-204 100 
-204 100 
-204 100 
-204 100 
-204 100 
-205 1 Supply Important Computer Data
+204 1 2233
+204 1 Last month
+204 1 50 years ago
+204 1 Four years ago
+204 1 1911
+205 1 Supply Important Data
 205 1 Bjt
 205 1 Western Europe
 205 1 
@@ -613,12 +613,12 @@
 211 1 Lozada
 211 2 Eduardo Frei
 211 2 Eduardo Frei
-212 100 
-212 100 
-212 100 
-212 100 
-212 100 
-213 1 Ebenezer Scrooge
+212 1 1351
+212 1 1975
+212 2 1994
+212 3 0852
+212 3 Today
+213 1 Ebenezer
 213 1 Christmas Future
 213 1 Christmas Future
 213 1 
@@ -663,11 +663,11 @@
 221 1 Hilary
 221 1 Hilary
 221 1 Hilary
-222 100 
-222 100 
-222 100 
-222 100 
-222 100 
+222 1 1238
+222 1 1937
+222 1 1950
+222 1 1938
+222 1 1932
 223 1 Tar Baby
 223 1 Emmett
 223 1 Robert Waldman
@@ -698,41 +698,41 @@
 228 1 John Palmer
 228 1 Daniels
 228 1 Kathleen Sullivan
-229 100 
-229 100 
-229 100 
-229 100 
-229 100 
+229 1 0626
+229 2 0627
+229 2 1987
+229 2 1985
+229 2 1987
 230 1 Southern California
 230 1 Palmdale
 230 1 Valley
 230 1 Ontario
 230 1 
-231 100 
-231 100 
-231 100 
-231 100 
-231 100 
+231 1 this year
+231 5 1262
+231 9 1680
+231 9 5207
+231 12 1934
 232 1 Mass
 232 2 Calif
 232 2 
 232 2 
 232 2 
-233 100 
-233 100 
-233 100 
-233 100 
-233 100 
+233 1 eight days after
+233 2 2026
+233 2 today
+233 3 2013
+233 3 1986
 234 1 Popeyes Famous
 234 1 
 234 2 Lady Macbeth
 234 2 
 234 2 Carlo
-235 100 
-235 100 
-235 100 
-235 100 
-235 100 
+235 2 0159
+235 2 last year
+235 2 1960
+235 2 This year
+235 3 0947
 236 1 U.S.
 236 1 Satan
 236 1 
@@ -743,13 +743,13 @@
 237 1 Venetia
 237 1 Zimbabwe
 237 1 
-238 100 
-238 100 
-238 100 
-238 100 
-238 100 
+238 1 1984
+238 2 0159
+238 3 1829
+238 3 1982
+238 4 1989
 239 1 Clyde
-239 2 John Malick
+239 2 John
 239 2 Hays
 239 2 Wayne
 239 2 Dean Rusk
@@ -768,11 +768,11 @@
 242 1 Tennessee Flat Top Box
 242 1 Buck Owens
 242 1 Kathy Mattea
-243 100 
-243 100 
-243 100 
-243 100 
-243 100 
+243 4 today
+243 4 1948
+243 19 last year
+243 28 1951
+243 29 1994
 244 1 Sammy Fain
 244 1 Fain
 244 1 Tender
@@ -783,20 +783,20 @@
 245 1 Betrock
 245 1 John F. Kennedy
 245 1 Lolita
-246 100 
-246 100 
-246 100 
-246 100 
-246 100 
-247 100 
-247 100 
-247 100 
-247 100 
-247 100 
+246 1 1928
+246 1 1896
+246 1 1981
+246 1 1987
+246 3 1540
+247 1 1943
+247 2 1994
+247 2 1635
+247 2 This year
+247 2 1593
 248 1 Gave Name
 248 1 Line
 248 1 Roger Moore
-248 1 Mary Fanning Wickham Bond
+248 1 Mary Fanning Wickham
 248 1 Ian Fleming
 249 1 Greta
 249 2 Los Angeles
@@ -808,11 +808,11 @@
 250 1 Christian
 250 2 Vietnam
 250 2 India
-251 100 
-251 100 
-251 100 
-251 100 
-251 100 
+251 1 1059
+251 1 1939
+251 2 1345
+251 3 0446
+251 3 1939
 252 1 Challenge
 252 1 
 252 1 Robert J. Quinn
@@ -823,11 +823,11 @@
 253 1 Northspur
 253 1 Los Angeles
 253 1 Diesel
-254 100 
-254 100 
-254 100 
-254 100 
-254 100 
+254 1 1973
+254 1 1989
+254 1 1975
+254 1 1976
+254 2 1973
 255 1 Thailand
 255 1 
 255 2 Tak
@@ -838,11 +838,11 @@
 256 1 Wonder
 256 1 Garret
 256 1 Wonder
-257 100 
-257 100 
-257 100 
-257 100 
-257 100 
+257 1 0611
+257 1 000 years ago
+257 2 0426
+257 2 000 years ago
+257 3 1428
 258 1 Adobe
 258 1 Publisher
 258 1 San Jose
@@ -853,16 +853,16 @@
 259 1 Atlas Centaur
 259 2 Discovery
 259 2 Space Administration
-260 100 
-260 100 
-260 100 
-260 100 
-260 100 
-261 100 
-261 100 
-261 100 
-261 100 
-261 100 
+260 1 1500
+260 1 1981
+260 1 this month
+260 2 0629
+260 2 1566
+261 1 0605
+261 1 1987
+261 1 1990
+261 1 1987
+261 1 1978
 262 1 Reuben Award
 262 1 Mell Lazarus
 262 1 Grimm
@@ -883,11 +883,11 @@
 265 1 
 265 1 Alexandra Ripley
 265 1 Mr. Halmi
-266 100 
-266 100 
-266 100 
-266 100 
-266 100 
+266 1 1232
+266 1 1980
+266 1 1986
+266 1 1966
+266 1 1973
 267 1 Camilo Jose Cela
 267 1 Cela
 267 1 Vicente Aleixandre
@@ -903,12 +903,12 @@
 269 2 Robert B. Propst
 269 3 Robert B. Propst
 269 4 Version
-270 100 
-270 100 
-270 100 
-270 100 
-270 100 
-271 1 Dread Zeppelin
+270 1 1988
+270 1 1987
+270 3 1992
+270 3 Last January
+270 4 1990
+271 1 Dread
 271 1 Music Review
 271 1 Elvis
 271 1 Elvis
@@ -918,11 +918,11 @@
 272 1 Wilde
 272 1 
 272 2 
-273 100 
-273 100 
-273 100 
-273 100 
-273 100 
+273 1 2012
+273 1 1982
+273 1 2000
+273 2 2000
+273 2 1896
 274 1 Anna Hauptmann
 274 1 Robert Del Tufo
 274 1 Hauptmann
@@ -946,7 +946,7 @@
 278 1 Joanne Lipman
 278 1 
 278 1 Godfather
-278 1 Caesars Pizza
+278 1 Caesars
 278 1 David Novak
 279 1 California
 279 1 Yosemite
@@ -968,16 +968,16 @@
 282 1 Francois Mitterrand
 282 1 
 282 1 
-283 100 
-283 100 
-283 100 
-283 100 
-283 100 
-284 100 
-284 100 
-284 100 
-284 100 
-284 100 
+283 1 this month
+283 2 Twenty years ago
+283 2 1979
+283 3 9366
+283 3 Today
+284 1 0612
+284 1 this month
+284 1 1971
+284 1 1982
+284 1 last year
 285 1 
 285 1 
 285 1 Indian
@@ -1028,16 +1028,16 @@
 294 1 Balandin
 294 2 Emergency Hatch
 294 2 Solovyev
-295 100 
-295 100 
-295 100 
-295 100 
-295 100 
-296 100 
-296 100 
-296 100 
-296 100 
-296 100 
+295 1 next month
+295 1 Today
+295 1 Today
+295 1 Today
+295 1 1980
+296 1 next month
+296 1 Today
+296 1 Today
+296 1 Today
+296 1 1980
 297 1 Tape Transcripts Private
 297 1 William Hoeveler
 297 1 Terry Bienstock
@@ -1053,16 +1053,16 @@
 299 1 R-N.Y.
 299 1 
 299 1 Boston
-300 100 
-300 100 
-300 100 
-300 100 
-300 100 
-301 100 
-301 100 
-301 100 
-301 100 
-301 100 
+300 1 1960
+300 2 0336
+300 2 1990
+300 2 1956
+300 2 1986
+301 1 1960
+301 2 0336
+301 2 1990
+301 2 1956
+301 2 1987
 302 1 
 302 1 
 302 1 West Point
@@ -1088,16 +1088,16 @@
 306 1 Silly Putty
 306 1 Hodgson
 306 1 Silly Putty
-307 100 
-307 100 
-307 100 
-307 100 
-307 100 
+307 1 1257
+307 1 last month
+307 2 0826
+307 2 today
+307 2 today
 308 1 Vegas
 308 1 Henderson
 308 1 
 308 2 Writethru
-308 2 Sky Harbor Airport
+308 2 Sky Harbor
 309 1 Jim Henson
 309 1 Henson
 309 1 Gonzo
@@ -1118,21 +1118,21 @@
 312 1 Irish
 312 1 Cotton
 312 1 Tennessee
-313 100 
-313 100 
-313 100 
-313 100 
-313 100 
-314 100 
-314 100 
-314 100 
-314 100 
-314 100 
-315 100 
-315 100 
-315 100 
-315 100 
-315 100 
+313 1 2157
+313 1 last week
+313 1 1982
+313 2 2036
+313 2 last week
+314 1 2157
+314 1 last week
+314 1 1982
+314 2 2036
+314 2 last week
+315 1 2157
+315 1 last week
+315 1 1982
+315 2 2036
+315 2 last week
 316 1 San Jose
 316 2 San Jose
 316 3 Los Angeles
@@ -1143,9 +1143,9 @@
 317 1 
 317 2 N.C.
 317 2 Horsham
-318 1 Belmont Park
+318 1 Belmont
 318 1 Wand
-318 1 Hollywood Park
+318 1 Hollywood
 318 1 Unbridled
 318 1 New York
 319 1 Calder

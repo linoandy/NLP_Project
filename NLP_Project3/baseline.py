@@ -2,6 +2,9 @@ import glob
 import nltk
 import re
 from nltk.stem import WordNetLemmatizer
+from fuzzywuzzy import fuzz
+# import the following customized script to tag DATE NER
+import timex
 '''
 	PART 1. Question processing (list of keywords to IR)
 		method 1: leave out the question word <- Method chosen for baseline
@@ -45,7 +48,7 @@ from nltk.stem import WordNetLemmatizer
 starting_num = 89
 ending_num = 320
 current_num = starting_num
-window_keyword = 2
+window_keyword = 1
 
 # constants for question types; need to be more robust for part 2
 # baseline : WHO/WHERE/WHEN
@@ -93,7 +96,7 @@ OUT : Question type
 
 def get_q_type(desc_token):
 	first_word = desc_token[0]
-	print first_word
+	# print first_word
 	if(first_word == 'Who'):
 		return WHO_TYPE
 	if(first_word == 'Where'):
@@ -142,13 +145,19 @@ NER_TAG = [['PERSON'],['LOCATION', 'FACILITY', 'GPE'],['TIME','DATE']]
 # Exclude any sentence that does not have the correct NER type of the answer type
 # Returns : list of sentences that DO have correct NER type of the answer type
 def process_doc(single_doc, q_type, doc_num):
-	print "DOING PROCESS_DOC"
+	#print "DOING PROCESS_DOC"
 	# in order of type constants (0 : who, 1: where, 2: when)
 
 	# BASELINE ONLY!
 	# when NER doesn't work in nltk NER. might as well just skip it.
 	if q_type == WHEN_TYPE:
-		return []
+		sentences = nltk.tokenize.sent_tokenize(single_doc)
+		surviving_sentences = []
+		for sentence in sentences:
+			sentence_after_tagging = timex.tag(sentence)
+			if sentence_after_tagging.find('<TIMEX2>') != -1:
+				surviving_sentences.append((doc_num,sentence))
+		return surviving_sentences
 
 	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
 
@@ -173,7 +182,7 @@ def process_doc(single_doc, q_type, doc_num):
 
 
 def passage_retrieval(q_num, q_type, q_keywords):
-	print "DOING PASSAGE_RETRIEVAL"
+	#print "DOING PASSAGE_RETRIEVAL"
 	# get the path for the docs for current question
 	current_path = d_path + '/' + str(q_num) + '/*'
 	wnl = WordNetLemmatizer()
@@ -203,31 +212,34 @@ def passage_retrieval(q_num, q_type, q_keywords):
 			# bool for being inside text
 			# text_bool = False
 			# single_doc = ''
-		# i=0
-		# while i < len(sentlist):
-		# 	line = sentlist[i]
-		# 	tmpline = line.lower().strip().decode("ascii","ignore").encode("ascii").rstrip()
-		# 	tmpline = nltk.tokenize.word_tokenize(tmpline)
-		# 	tmpline = map(lambda x : wnl.lemmatize(x), tmpline)
-		# 	iskwin = map(lambda x : x in tmpline, q_keywords)
-		# 	if any(iskwin):
-		# 		k=0
-		# 		while (k<window_keyword) and i+k < len(sentlist):
-		# 			single_doc += sentlist[i+k] + ' '
-		# 			k+=1
-		# 		i=i+k 
-		# 	i+=1
-
-		for line in sentlist:
+		i=0
+		print "KEYWORDS", q_keywords
+		while i < len(sentlist):
+			line = sentlist[i]
 			tmpline = line.lower().strip().decode("ascii","ignore").encode("ascii").rstrip()
 			tmpline = nltk.tokenize.word_tokenize(tmpline)
 			tmpline = map(lambda x : wnl.lemmatize(x), tmpline)
-			# print tmpline, "TMPLINE"
-			# print q_keywords, "KEYWORD"
-			#is keyword in a sentence?
-			iskwin = map(lambda x : x in tmpline, q_keywords)
-			if any(iskwin):
-				single_doc += line + ' '
+			iskwin = map(lambda x : x in tmpline, q_keywords)			
+			if sum(x for x in iskwin) > len(iskwin) * 0.6:#all(iskwin):
+				k=0
+				# print line
+				while (k<window_keyword) and i+k < len(sentlist):
+					print sentlist[i+k]
+					single_doc += sentlist[i+k] + ' '
+					k+=1
+				i=i+k-1
+			i+=1
+
+		# for line in sentlist:
+		# 	tmpline = line.lower().strip().decode("ascii","ignore").encode("ascii").rstrip()
+		# 	tmpline = nltk.tokenize.word_tokenize(tmpline)
+		# 	tmpline = map(lambda x : wnl.lemmatize(x), tmpline)
+		# 	# print tmpline, "TMPLINE"
+		# 	# print q_keywords, "KEYWORD"
+		# 	#is keyword in a sentence?
+		# 	iskwin = map(lambda x : x in tmpline, q_keywords)
+		# 	if any(iskwin):
+		# 		single_doc += line + ' '
 		temp = name.split('/')
 		doc_num = temp[len(temp)-1]
 		#print single_doc
@@ -255,7 +267,7 @@ OUT : list of (doc_num, answer), both in string
 # Might have been better to return ner from previous part, and not
 # do ner again, but left it in case some manipulation is needed for part 2
 def answer_processing(s_tuple, q_type, q_keywords):
-	print "DOING ANSWER_PROCESSING"
+	#print "DOING ANSWER_PROCESSING"
 	sentences = s_tuple
 	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
 	# in string
@@ -265,30 +277,38 @@ def answer_processing(s_tuple, q_type, q_keywords):
 	if(num_answers_needed > 0):
 		for i in range(0,num_answers_needed):
 			sentences.append(('100','nil'))
-	for i in range(0, 5):
+	for i in range(0, len(sentences)):
 		doc_num = sentences[i][0]
 		sentence = sentences[i][1]
-		words = nltk.word_tokenize(sentence)
-		pos_tag = nltk.pos_tag(words)
-		ner_tree = nltk.ne_chunk(pos_tag)
-		#print ner_tree
-		# the list of tuples((word, pos),ner) to be considered for this sentence
-		matching_tuples = []
-		for subtree in ner_tree.subtrees():
-			if subtree.label() in NER_TAG[q_type] and subtree.pos()[0][0][1]=='NNP':
-				print subtree
-				iskwin = map(lambda x : x in subtree.pos()[0][0][0], q_keywords)
-				if not any(iskwin):
-					matching_tuples = subtree.pos()
-		# t : ((word, pos), ner)
-		answer = ''
-		for t in matching_tuples:
-			#print t
-			if t[0][0] not in q_keywords:
-				answer += t[0][0] + ' '
-		# remove any possible trailing whitespaces
-		answer = answer.rstrip()
-		answers.append((doc_num,answer))
+		if q_type == WHEN_TYPE:
+			sentence_after_tagging = timex.tag(sentence)
+			when_answers = re.findall('<TIMEX2>(.*?)</TIMEX2>', sentence_after_tagging)
+			# in case answer comes out as empty, output an empty string
+			when_answer = when_answers[0] if len(when_answers) != 0 else ''
+			answers.append((doc_num, when_answer))
+
+		else:		
+			words = nltk.word_tokenize(sentence)
+			pos_tag = nltk.pos_tag(words)
+			ner_tree = nltk.ne_chunk(pos_tag)
+			#print ner_tree
+			# the list of tuples((word, pos),ner) to be considered for this sentence
+			matching_tuples = []
+			for subtree in ner_tree.subtrees():
+				if subtree.label() in NER_TAG[q_type] and subtree.pos()[0][0][1]=='NNP':
+					print subtree
+					iskwin = map(lambda x : x in subtree.pos()[0][0][0], q_keywords)
+					if not any(iskwin):
+						matching_tuples = subtree.pos()
+			# t : ((word, pos), ner)
+			answer = ''
+			for t in matching_tuples:
+				#print t
+				if t[0][0] not in q_keywords:
+					answer += t[0][0] + ' '
+			# remove any possible trailing whitespaces
+			answer = answer.rstrip()
+			answers.append((doc_num,answer))
 	print answers
 	return answers
 
@@ -359,7 +379,7 @@ def process_questions(q_dict):
 
 
 q_dict = get_questions()
-process_questions(q_dict)
+# process_questions(q_dict)
 
 
 
