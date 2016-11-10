@@ -24,10 +24,10 @@
 93 1 Chancellor Kohl
 93 1 Mr. Salman Khurshid
 94 2 Escher Wyss
-94 3 Lois
-94 4 Donald G.
-94 4 Mr.
-94 4 Mr.
+94 3 Lois Whitcomb
+94 4 Donald G. Whitcomb
+94 4 Mr. Whitcomb
+94 4 Mr. Whitcomb
 95 1 Vo Van Kiet
 95 1 Paul Keating
 95 1 Vietnam
@@ -73,7 +73,7 @@
 103 100 
 103 100 
 103 100 
-104 1 Recalls
+104 1 Recalls Vichy
 104 1 Robert Badinter
 104 1 Badinter
 104 1 Jews Deported
@@ -98,7 +98,7 @@
 108 1 Holtville
 108 1 
 108 1 Pacheco
-109 1 Say
+109 1 Say Barbara Jordan
 109 1 
 109 1 
 109 1 Brackenridge Hospital
@@ -178,7 +178,7 @@
 124 1 
 124 1 
 124 1 
-125 1 Pablo
+125 1 Pablo Picasso
 125 1 Sotheby
 125 1 Sotheby
 125 1 Christie
@@ -357,7 +357,7 @@
 160 1 
 160 1 San Diego Padres
 160 1 
-160 2 Mark
+160 2 Mark Langston
 161 100 
 161 100 
 161 100 
@@ -427,7 +427,7 @@
 174 1 Jonathan Hadary
 174 1 Leon Czolgosz
 174 2 Anton Cermak
-174 2 William
+174 2 William McKinley
 175 100 
 175 100 
 175 100 
@@ -557,7 +557,7 @@
 200 1 Henderson
 200 1 
 200 2 Writethru
-200 2 Sky Harbor
+200 2 Sky Harbor Airport
 201 1 Jim Henson
 201 1 Henson
 201 1 Gonzo
@@ -578,7 +578,7 @@
 204 100 
 204 100 
 204 100 
-205 1 Supply Important Data
+205 1 Supply Important Computer Data
 205 1 Bjt
 205 1 Western Europe
 205 1 
@@ -618,7 +618,7 @@
 212 100 
 212 100 
 212 100 
-213 1 Ebenezer
+213 1 Ebenezer Scrooge
 213 1 Christmas Future
 213 1 Christmas Future
 213 1 
@@ -749,7 +749,7 @@
 238 100 
 238 100 
 239 1 Clyde
-239 2 John
+239 2 John Malick
 239 2 Hays
 239 2 Wayne
 239 2 Dean Rusk
@@ -796,7 +796,7 @@
 248 1 Gave Name
 248 1 Line
 248 1 Roger Moore
-248 1 Mary Fanning Wickham
+248 1 Mary Fanning Wickham Bond
 248 1 Ian Fleming
 249 1 Greta
 249 2 Los Angeles
@@ -908,7 +908,7 @@
 270 100 
 270 100 
 270 100 
-271 1 Dread
+271 1 Dread Zeppelin
 271 1 Music Review
 271 1 Elvis
 271 1 Elvis
@@ -946,7 +946,7 @@
 278 1 Joanne Lipman
 278 1 
 278 1 Godfather
-278 1 Caesars
+278 1 Caesars Pizza
 278 1 David Novak
 279 1 California
 279 1 Yosemite
@@ -1097,7 +1097,7 @@
 308 1 Henderson
 308 1 
 308 2 Writethru
-308 2 Sky Harbor
+308 2 Sky Harbor Airport
 309 1 Jim Henson
 309 1 Henson
 309 1 Gonzo
@@ -1143,9 +1143,9 @@
 317 1 
 317 2 N.C.
 317 2 Horsham
-318 1 Belmont
+318 1 Belmont Park
 318 1 Wand
-318 1 Hollywood
+318 1 Hollywood Park
 318 1 Unbridled
 318 1 New York
 319 1 Calder

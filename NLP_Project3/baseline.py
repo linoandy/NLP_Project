@@ -142,6 +142,7 @@ NER_TAG = [['PERSON'],['LOCATION', 'FACILITY', 'GPE'],['TIME','DATE']]
 # Exclude any sentence that does not have the correct NER type of the answer type
 # Returns : list of sentences that DO have correct NER type of the answer type
 def process_doc(single_doc, q_type, doc_num):
+	print "DOING PROCESS_DOC"
 	# in order of type constants (0 : who, 1: where, 2: when)
 
 	# BASELINE ONLY!
@@ -172,6 +173,7 @@ def process_doc(single_doc, q_type, doc_num):
 
 
 def passage_retrieval(q_num, q_type, q_keywords):
+	print "DOING PASSAGE_RETRIEVAL"
 	# get the path for the docs for current question
 	current_path = d_path + '/' + str(q_num) + '/*'
 	wnl = WordNetLemmatizer()
@@ -201,6 +203,21 @@ def passage_retrieval(q_num, q_type, q_keywords):
 			# bool for being inside text
 			# text_bool = False
 			# single_doc = ''
+		# i=0
+		# while i < len(sentlist):
+		# 	line = sentlist[i]
+		# 	tmpline = line.lower().strip().decode("ascii","ignore").encode("ascii").rstrip()
+		# 	tmpline = nltk.tokenize.word_tokenize(tmpline)
+		# 	tmpline = map(lambda x : wnl.lemmatize(x), tmpline)
+		# 	iskwin = map(lambda x : x in tmpline, q_keywords)
+		# 	if any(iskwin):
+		# 		k=0
+		# 		while (k<window_keyword) and i+k < len(sentlist):
+		# 			single_doc += sentlist[i+k] + ' '
+		# 			k+=1
+		# 		i=i+k 
+		# 	i+=1
+
 		for line in sentlist:
 			tmpline = line.lower().strip().decode("ascii","ignore").encode("ascii").rstrip()
 			tmpline = nltk.tokenize.word_tokenize(tmpline)
@@ -238,6 +255,7 @@ OUT : list of (doc_num, answer), both in string
 # Might have been better to return ner from previous part, and not
 # do ner again, but left it in case some manipulation is needed for part 2
 def answer_processing(s_tuple, q_type, q_keywords):
+	print "DOING ANSWER_PROCESSING"
 	sentences = s_tuple
 	# http://nbviewer.jupyter.org/github/gmonce/nltk_parsing/blob/master/1.%20NLTK%20Syntax%20Trees.ipynb
 	# in string
