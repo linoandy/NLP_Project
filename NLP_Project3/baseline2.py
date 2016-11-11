@@ -7,6 +7,7 @@ from fuzzywuzzy import fuzz
 from threading import Thread
 # import the following customized script to tag DATE NER
 import timex
+import operator
 '''
 	PART 1. Question processing (list of keywords to IR)
 		method 1: leave out the question word <- Method chosen for baseline
@@ -289,6 +290,19 @@ def passage_retrieval(q_num, q_type, q_keywords):
 	return retrieved_sentences
 
 
+'''sorting keywords by distance to keywords'''
+def sort_keywords(sentence, answer_tuple, key_list):
+	answer_ordered = {}
+	for answer in answer_tuple:
+		total_len = []
+		for key in key_list:
+			if key in sentence:
+				total_len.append(sentence.index(key)-sentence.index(answer[1]))
+		answer_ordered.update({answer:sum(total_len)*1.0/len(total_len)})
+	return sorted(answer_ordered.items(),key=operator.itemgetter(1))
+
+
+
 ###############################################################################
 ###############################################################################
 # ANSWER PROCESSING
@@ -344,8 +358,12 @@ def answer_processing(s_tuple, q_type, q_keywords):
 						# matching_tuples = subtree.pos()
 						answer = ' '.join(map(lambda x : x[0][0], subtree.pos()))
 						if answer not in map(lambda x : x[1],answers):
-							tmp.append(answer)
-							answers.append((doc_num,answer))
+							tmp.append((doc_num,answer))
+						
+
+			k_sorted = sort_keywords(words, tmp, q_keywords)
+			answers+=k_sorted;
+			print answers
 			print "SENTENCE : ", sentence, "ANSWER : ", tmp
 			# t : ((word, pos), ner)
 			# answer = ''
