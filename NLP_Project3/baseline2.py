@@ -293,13 +293,26 @@ def passage_retrieval(q_num, q_type, q_keywords):
 '''sorting keywords by distance to keywords'''
 def sort_keywords(sentence, answer_tuple, key_list):
 	answer_ordered = {}
+	global sent_tok
+	wnl = WordNetLemmatizer()
+	sent_tok = map(lambda x : wnl.lemmatize(x), nltk.tokenize.word_tokenize(sentence))
+	print "SENTENCE FOR SORTKEY " ,sentence
 	for answer in answer_tuple:
+		print answer[1]
+		global ans
+		ans = map(lambda x : wnl.lemmatize(x), nltk.tokenize.word_tokenize(answer[1]))
+		print ans
 		total_len = []
+		global key
 		for key in key_list:
+			key = wnl.lemmatize(key)
+			print key
 			if key in sentence:
-				total_len.append(sentence.index(key)-sentence.index(answer[1]))
-		answer_ordered.update({answer:sum(total_len)*1.0/len(total_len)})
-	return sorted(answer_ordered.items(),key=operator.itemgetter(1))
+				total_len.append(\
+					min(abs(sentence.index(key)-sentence.index(ans[0])),abs(sentence.index(key)-sentence.index(ans[len(ans)-1]))))
+		answer_ordered.update({answer:sum(total_len)*1.0/len(total_len) if len(total_len)>0 else 0})
+	print sorted(answer_ordered.items(),key=operator.itemgetter(1))
+	return sorted(answer_ordered.keys(),key=operator.itemgetter(1))
 
 
 
@@ -361,7 +374,7 @@ def answer_processing(s_tuple, q_type, q_keywords):
 							tmp.append((doc_num,answer))
 						
 
-			k_sorted = sort_keywords(words, tmp, q_keywords)
+			k_sorted = sort_keywords(sentence, tmp, q_keywords)
 			answers+=k_sorted;
 			print answers
 			print "SENTENCE : ", sentence, "ANSWER : ", tmp
@@ -437,6 +450,7 @@ def answer_output(answer_tuple):
 
 def process_questions(q_dict):
 	# [(q_num_0,[(doc_num_0, answer_0),.. (doc_num_4, answer_4)],(q_num_1,... ]
+	global q_num_answer_tuple
 	q_num_answer_tuple = []
 	for i in range(89, 321):
 		desc = q_dict[i]
