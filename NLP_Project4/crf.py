@@ -14,6 +14,7 @@ import re
 import nltk
 import csv
 import random
+import similarity
 
 def BIO_tagger(file): # this function processes the document passed in, and replace CUE tags with BIO tags
     token_lists = []
@@ -228,6 +229,7 @@ def word2features(sent, i):
         'word.istitle=%s' % word.istitle(),
         # 'word.isdigit=%s' % word.isdigit(),
         'postag=' + postag,
+        # 'cue=%s' % similarity.calculation(word.encode('utf-8'), word_list)
         # 'word.maymight=%s' % str(word.lower() in ['may', 'might', 'should', 'suggest', 'predict', 'likely', 'claim', 'consistently']),
         # 'postag[:2]=' + postag[:2],
     ])
@@ -289,7 +291,7 @@ def sent2tokens(sent):
 # Extract the features from the data:
 
 # In[7]:
-
+# word_list = similarity.uncertain_word()
 X_train = [sent2features(s) for s in train_sents]
 y_train = [sent2labels(s) for s in train_sents]
 X_test = [sent2features(s) for s in test_sents]

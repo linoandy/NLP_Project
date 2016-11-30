@@ -1,4 +1,4 @@
-import fuzzywuzzy
+from fuzzywuzzy import fuzz
 import glob
 import re
 
@@ -42,21 +42,40 @@ def breakup_data():
 	        development_set.append(file_name)
 	return training_set, development_set
 
-def uncertain_word(dataset):
-    for filename in dataset:
-        words = []
-        list_of_tokens = BIO_tagger(filename)
-        for token in list_of_tokens:
-        	if token[2] == 'I-CUE' or token[2] == 'B-CUE':
-        		words.append(token[0])
-    return words
-
-
-def main(test_word):
+def uncertain_word():
 	training_data, development_data = breakup_data()
-	uncertain_word_list = uncertain_word(training_data)
-	print uncertain_word_list
+	words = []
+	for filename in training_data:
+		list_of_tokens = BIO_tagger(filename)
+		for token in list_of_tokens:
+			if (token[2] == 'I-CUE' or token[2] == 'B-CUE') and token[0] not in words:
+				words.append(token[0].lower())
+	return words
 
-if __name__ == '__main__':
-	main('haha')
+def calculation(test_word, uncertain_word_list):
+	# # break up data set into training set and development set
+	# # save all CUE words in training set to a list
+	# global uncertain_word_list
+	# if len(uncertain_word_list) == 0:
+	# 	uncertain_word_list = uncertain_word()
+	# calculate fuzzy ratio of the target word
+	total_score = 0.0
+	total_score_possible = 100.0 * len(uncertain_word_list)
+	for word in uncertain_word_list:
+		total_score += fuzz.ratio(test_word.lower(), word)
+	similar_ratio = total_score / total_score_possible	
+	# determine if the target word is similar to CUE word
+	if similar_ratio > 0.19:
+		is_similar = True
+	else:
+		is_similar = False
+	return is_similar
+
+# # break up data set into training set and development set
+# # save all CUE words in training set to a list
+# global uncertain_word_list
+# if len(uncertain_word_list) == 0:
+# 	uncertain_word_list = uncertain_word()
+# # uncertain_word_list = []
+
 
