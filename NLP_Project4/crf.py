@@ -14,7 +14,9 @@ import re
 import nltk
 import csv
 import random
-import similarity
+# import similarity
+import json
+
 
 def BIO_tagger(file): # this function processes the document passed in, and replace CUE tags with BIO tags
     token_lists = []
@@ -221,6 +223,7 @@ def word2features(sent, i):
     else:
         features.append('BOS')
 
+    uncertainty = word_list[word.encode('utf-8').lower()] if word.encode('utf-8').lower() in word_list else False
     features.extend([
         'word.lower=' + word.lower(),
         # 'word[-3:]=' + word[-3:],
@@ -229,7 +232,7 @@ def word2features(sent, i):
         'word.istitle=%s' % word.istitle(),
         # 'word.isdigit=%s' % word.isdigit(),
         'postag=' + postag,
-        # 'cue=%s' % similarity.calculation(word.encode('utf-8'), word_list)
+        'cue=%s' % uncertainty,
         # 'word.maymight=%s' % str(word.lower() in ['may', 'might', 'should', 'suggest', 'predict', 'likely', 'claim', 'consistently']),
         # 'postag[:2]=' + postag[:2],
     ])
@@ -291,7 +294,8 @@ def sent2tokens(sent):
 # Extract the features from the data:
 
 # In[7]:
-# word_list = similarity.uncertain_word()
+with open('/Users/linoandy/GitHub/NLP_Project1/NLP_Project4/uncertainty.json') as json_data:
+    word_list = json.load(json_data)
 X_train = [sent2features(s) for s in train_sents]
 y_train = [sent2labels(s) for s in train_sents]
 X_test = [sent2features(s) for s in test_sents]

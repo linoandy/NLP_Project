@@ -1,6 +1,8 @@
 from fuzzywuzzy import fuzz
 import glob
+import json
 import re
+from threading import Thread
 
 def BIO_tagger(file): # this function processes the document passed in, and replace CUE tags with BIO tags
     token_lists = []
@@ -35,7 +37,8 @@ def breakup_data():
 	development_set = []
 	path = "./nlp_project2_uncertainty/train/*.txt"
 	for file_name in glob.glob(path):
-	    training_set_threshold = len(glob.glob(path)) * 0.9
+		# for the purpose of this project, this time we save all data into training data set, so we set threshold to 1
+	    training_set_threshold = len(glob.glob(path)) * 1
 	    if int(re.findall('[0-9]+', file_name)[1]) < training_set_threshold:
 	        training_set.append(file_name)
 	    else:
@@ -44,15 +47,19 @@ def breakup_data():
 
 def uncertain_word():
 	training_data, development_data = breakup_data()
+	# this list contains all UNCERTAIN words in corpus
+	uncertain_words = []
+	# this list contains all words in corpus
 	words = []
 	for filename in training_data:
 		list_of_tokens = BIO_tagger(filename)
 		for token in list_of_tokens:
+			words.append(token[0].lower())
 			if (token[2] == 'I-CUE' or token[2] == 'B-CUE') and token[0] not in words:
-				words.append(token[0].lower())
-	return words
+				uncertain_words.append(token[0].lower())
+	return uncertain_words, words
 
-def calculation(test_word, uncertain_word_list):
+def calculation(test_word, uncertain_word_list, dictionary):
 	# # break up data set into training set and development set
 	# # save all CUE words in training set to a list
 	# global uncertain_word_list
@@ -65,17 +72,33 @@ def calculation(test_word, uncertain_word_list):
 		total_score += fuzz.ratio(test_word.lower(), word)
 	similar_ratio = total_score / total_score_possible	
 	# determine if the target word is similar to CUE word
-	if similar_ratio > 0.19:
+	if similar_ratio > 0.21:
 		is_similar = True
 	else:
 		is_similar = False
-	return is_similar
+	dictionary[test_word.lower()] = is_similar
+	print test_word, is_similar
+	# return is_similar
 
-# # break up data set into training set and development set
-# # save all CUE words in training set to a list
-# global uncertain_word_list
-# if len(uncertain_word_list) == 0:
-# 	uncertain_word_list = uncertain_word()
-# # uncertain_word_list = []
+def build_uncertainty_dict():
+	list_uncertain_word, list_words = uncertain_word()
+	uncertain_dictionary = {}
+	list_threads = []
+	for a in list_words:
+		# print a, ' ', calculation(a, list_uncertain_word)
+		t = Thread(target=calculation, args=(a, list_uncertain_word, uncertain_dictionary))
+		list_threads.append(t)
+		t.start()
+		if len(list_threads) >= 100 or a == list_words[-1]:
+			for z in list_threads:
+				z.join()
+			list_threads = []
+		# uncertain_dictionary[a] = calculation(a, list_uncertain_word)
+	with open('uncertainty.json', 'w') as f:
+		f.write(json.dumps(uncertain_dictionary, ensure_ascii=False))
+	return uncertain_dictionary
+
+print build_uncertainty_dict()
+
 
 
