@@ -294,7 +294,7 @@ def sent2tokens(sent):
 # Extract the features from the data:
 
 # In[7]:
-with open('/Users/linoandy/GitHub/NLP_Project1/NLP_Project4/uncertainty.json') as json_data:
+with open('/Users/linoandy/GitHub/NLP_Project1/NLP_Project4/uncertainty21.json') as json_data:
     word_list = json.load(json_data)
 X_train = [sent2features(s) for s in train_sents]
 y_train = [sent2labels(s) for s in train_sents]

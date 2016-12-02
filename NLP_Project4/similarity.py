@@ -72,7 +72,7 @@ def calculation(test_word, uncertain_word_list, dictionary):
 		total_score += fuzz.ratio(test_word.lower(), word)
 	similar_ratio = total_score / total_score_possible	
 	# determine if the target word is similar to CUE word
-	if similar_ratio > 0.21:
+	if similar_ratio > 0.22:
 		is_similar = True
 	else:
 		is_similar = False
