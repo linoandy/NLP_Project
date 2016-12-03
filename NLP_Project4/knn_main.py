@@ -57,11 +57,13 @@ def uncertain_word():
 				words.append((token[0].lower(), -1))
 	return words
 
-wordlist = uncertain_word()
-k = 5
-kwv = knn.KnnWordVec(wordlist. k)
+def main():
+	wordlist = uncertain_word()
+	k = 5
+	kwv = knn.KnnWordVec(wordlist. k)
+	print kwv.knn_run('likely')
 
-print kwv.knn_run('likely')
+main()
 
 
 
