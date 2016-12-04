@@ -40,7 +40,7 @@ def breakup_data():
 	    training_set_threshold = len(glob.glob(path)) * 1
 	    if int(re.findall('[0-9]+', file_name)[1]) < training_set_threshold:
 	        training_set.append(file_name)
-	    else:
+	    elif token[0] not in words:
 	        development_set.append(file_name)
 	return training_set, development_set
 
@@ -59,9 +59,33 @@ def uncertain_word():
 
 def main():
 	wordlist = uncertain_word()
-	k = 5
-	kwv = knn.KnnWordVec(wordlist. k)
-	print kwv.knn_run('likely')
+	k = 3 # change k here
+	kwv = knn.KnnWordVec(wordlist, k)
+	print "start evaluating words"
+	dictionary = {}
+
+	def result(target_word, model, main_dictionary):
+		main_dictionary[target_word] = model.knn_run(target_word)
+		print target_word, main_dictionary[target_word]
+
+	list_threads = []
+	n = 1
+	for word in wordlist:
+		dictionary[word[0]] = kwv.knn_run(word[0])
+		print word, dictionary[word[0]]
+		# t = Thread(target=result, args=(word[0], kwv, dictionary))
+		# list_threads.append(t)
+		# t.start()
+		# if len(list_threads) >= 100 or word == wordlist[-1]:
+		# 	for z in list_threads:
+		# 		z.join()
+		# 	list_threads = []
+		# n += 1
+
+	with open('word_embedding.json', 'w') as f:
+		f.write(json.dumps(dictionary, ensure_ascii=False))
+
+	return dictionary
 
 main()
 

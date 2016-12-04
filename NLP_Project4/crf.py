@@ -296,6 +296,8 @@ def sent2tokens(sent):
 # In[7]:
 with open('/Users/linoandy/GitHub/NLP_Project1/NLP_Project4/uncertainty21.json') as json_data:
     word_list = json.load(json_data)
+with open('/Users/linoandy/GitHub/NLP_Project1/NLP_Project4/uncertainty21.json') as json_data:
+    word_embedding = json.load(json_data)
 X_train = [sent2features(s) for s in train_sents]
 y_train = [sent2labels(s) for s in train_sents]
 X_test = [sent2features(s) for s in test_sents]
