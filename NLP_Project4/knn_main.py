@@ -76,7 +76,7 @@ def main():
 		# t = Thread(target=result, args=(word[0], kwv, dictionary))
 		# list_threads.append(t)
 		# t.start()
-		# if len(list_threads) >= 100 or word == wordlist[-1]:
+		# if len(list_threads) >= 5 or n == len(wordlist):
 		# 	for z in list_threads:
 		# 		z.join()
 		# 	list_threads = []
