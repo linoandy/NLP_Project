@@ -40,7 +40,7 @@ def breakup_data():
 	    training_set_threshold = len(glob.glob(path)) * 1
 	    if int(re.findall('[0-9]+', file_name)[1]) < training_set_threshold:
 	        training_set.append(file_name)
-	    elif token[0] not in words:
+	    else:
 	        development_set.append(file_name)
 	return training_set, development_set
 
@@ -53,7 +53,7 @@ def uncertain_word():
 		for token in list_of_tokens:
 			if (token[2] == 'I-CUE' or token[2] == 'B-CUE') and token[0] not in words:
 				words.append((token[0].lower(), 1))
-			else:
+			elif token[0] not in words:
 				words.append((token[0].lower(), -1))
 	return words
 
