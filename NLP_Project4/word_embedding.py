@@ -1,8 +1,12 @@
 import glob
 import re
 from threading import Thread
-import knn
+import gensim
 import json
+
+WORD2VEC = './brown_model'
+model = gensim.models.Word2Vec.load('./brown_model')
+
 
 def BIO_tagger(file): # this function processes the document passed in, and replace CUE tags with BIO tags
     token_lists = []
@@ -59,9 +63,20 @@ def uncertain_word():
 	return words
 
 def main():
-	wordlist = uncertain_word()
-	k = 3 # change k here
-	kwv = knn.KnnWordVec(wordlist, k)
+	#wordlist = uncertain_word()
+	wordlist = []
+	uncertain_set = []
+
+	with open('word_list.txt', 'r') as f:
+		for line in f:
+			wordlist.append(line.strip())
+	with open('uncertain_list.txt', 'r') as f:
+		for line in f:
+			uncertain_set.append(line.strip())
+
+	print wordlist
+	#k = 3 # change k  here
+	#kwv = knn.KnnWordVec(wordlist, k)
 	print "start evaluating words"
 	dictionary = {}
 
@@ -71,9 +86,50 @@ def main():
 
 	list_threads = []
 	n = 1
-	for word in wordlist:
-		dictionary[word[0]] = kwv.knn_run(word[0])
-		print word, dictionary[word[0]]
+	certain_set = []
+	#for w in wordlist:
+	#	if(w[1] == 1):
+	#		uncertain_set.append(w[0])
+
+	def categorize(word):
+		for sw in synset:
+			try:
+				sim_score = model.similarity(word, sw)
+				if(sim_score > .9):
+					return 1
+			except:
+				continue
+			
+		return -1
+	expanded_set = []
+
+	def categorize2():
+
+		for w in uncertain_set:
+			try:
+				most_sim = model.most_similar(positive=[w])
+				#print most_sim[0][0]
+				expanded_set.append((w, most_sim[0][0], most_sim[1][0]))
+				print most_sim[0][0]
+			except:
+				continue
+		return expanded_set
+
+
+	ex_s = categorize2()
+	for s in expanded_set:
+		print s[0] + ' ' + s[1] + ' ' + s[2]
+	for s in expanded_set:
+		dictionary[s[0]] = 1
+		dictionary[s[1]] = 1
+		dictionary[s[2]] = 1
+
+
+
+
+
+		#dictionary[word[0]] = categorize(word[0])
+		#print word, dictionary[word[0]]
 		# t = Thread(target=result, args=(word[0], kwv, dictionary))
 		# list_threads.append(t)
 		# t.start()
@@ -85,6 +141,9 @@ def main():
 
 	with open('word_embedding.json', 'w') as f:
 		f.write(json.dumps(dictionary, ensure_ascii=False))
+	with open('expanded_set.txt', 'w') as f:
+		for s in expanded_set:
+			f.write(s[0] + ' ' + s[1] + ' ' + s[2] + '\n')
 
 	return dictionary
 
